@@ -4,12 +4,16 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+<div class="d-flex flex-column align-items-center">
   Hi {{ user.username }}!
   <p><a href="{% url 'logout' %}">Log Out</a></p>
   <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
+</div>
 {% else %}
+<div class="d-flex flex-column align-items-center">
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">Log In</a>
   <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+</div>
 {% endif %}
 {% endblock %}
