@@ -7,6 +7,9 @@
   <title>{% block title %}Outdoor Squad{% endblock %}</title>
 </head>
 <body>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href={% url 'home' %}>Outdoor Squad</a>
+  </nav>
   <main>
     {% block content %}
     {% endblock %}

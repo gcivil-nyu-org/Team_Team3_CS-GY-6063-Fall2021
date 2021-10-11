@@ -12,8 +12,9 @@
 {% else %}
 <div class="d-flex flex-column align-items-center">
   <p>You are not logged in</p>
+  <a href="{% url 'signup' %}">Sign Up</a>
   <a href="{% url 'login' %}">Log In</a>
   <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
 </div>
 {% endif %}
-{% endblock %}
+{% endblock %} 
