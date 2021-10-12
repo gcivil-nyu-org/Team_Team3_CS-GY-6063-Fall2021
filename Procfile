@@ -1,1 +1,1 @@
-web: gunicorn <project-name>.wsgi
+web: gunicorn --chdir config config.wsgi
