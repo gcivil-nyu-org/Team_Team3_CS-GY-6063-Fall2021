@@ -1,1 +1,1 @@
-# Team Project repo
+# Outdoor Squad
