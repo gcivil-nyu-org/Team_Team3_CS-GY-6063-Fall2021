@@ -1,4 +1,7 @@
 import django_heroku
+from dotenv import load_dotenv
+load_dotenv()  # loads the configs from .env
+
 
 """
 Django settings for config project.
@@ -127,8 +130,8 @@ LOGOUT_REDIRECT_URL = 'home'
 #sends live emails
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'outdoorsquadfall2021@gmail.com'
-EMAIL_HOST_PASSWORD = 'yayy123!!'
+EMAIL_HOST_USER = str(os.getenv('EMAIL_HOST_USER'))
+EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_HOST_PASSWORD'))
 EMAIL_PORT = 587
 
 django_heroku.settings(locals())
