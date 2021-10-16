@@ -1,21 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Interactive maps for Django web apps</title>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
-  </head>
-  <body>
-   <h1>Map</h1>
-   <div id='map' style='width: 100%; height: 400px;'></div>
-   <script>
-     mapboxgl.accessToken = '{{ mapbox_access_token }}';
-     var map = new mapboxgl.Map({
-       container: 'map',
-       style: 'mapbox://styles/mapbox/streets-v11',
-       center: [-73.98627859258755, 40.695065862718806],
-       zoom: 13
-     });
-   </script> 
-  </body>
-</html>
+<head>
+<title>Load data from an external GeoJSON file</title>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js"></script>
+</head>
+<body>
+<div id='map' style='width: 100%; height: 400px;'></div>
+ 
+<script>
+mapboxgl.accessToken = '{{ mapbox_access_token }}';
+const map = new mapboxgl.Map({
+container: 'map', // container ID
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [-73.98627859258755, 40.695065862718806],
+zoom: 13
+});
+ 
+map.on('load', () => {
+map.addSource('outdoorsquad', {
+type: 'geojson',
+// Use a URL for the value for the `data` property.
+data: 'https://api.mapbox.com/datasets/v1/swathijain/ckuu3tyz9908529nz966yvw3c/features?access_token={{ mapbox_access_token }}'
+});
+ 
+map.addLayer({
+'id': 'places',
+'type': 'circle',
+'source': 'outdoorsquad',
+'paint': {
+'circle-radius': 8,
+'circle-stroke-width': 2,
+'circle-color': 'red',
+'circle-stroke-color': 'white'
+}
+});
