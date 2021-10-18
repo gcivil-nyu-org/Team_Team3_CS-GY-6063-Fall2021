@@ -42,7 +42,7 @@ map.addLayer({
 map.on('click', 'places', (e) => {
 // Copy coordinates array.
 const coordinates = e.features[0].geometry.coordinates.slice();
-const description = '<a href="/' + e.features[0].properties.objectid + '" class="btn btn-primary btn-sm" target="_blank">click me</a>';
+const description = '<a href="/parks/' + e.features[0].properties.objectid + '" class="btn btn-primary btn-sm" target="_blank">See more info</a>';
 
 // Ensure that if the map is zoomed out such that multiple
 // copies of the feature are visible, the popup appears
