@@ -40,23 +40,39 @@
       });
 
       map.on('click', 'places', (e) => {
-      // Copy coordinates array.
-      console.log(e);
-      const coordinates = e.features[0].geometry.coordinates.slice();
-      const description = e.features[0].properties.objectid;
+        // Copy coordinates array.
+        console.log(e);
+        const coordinates = e.features[0].geometry. coordinates.slice();
+        const description = e.features[0].properties. objectid;
 
  
-      // Ensure that if the map is zoomed out such that multiple
-      // copies of the feature are visible, the popup appears
-      // over the copy being pointed to.
-      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-      }
- 
-      new mapboxgl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(description)
-        .addTo(map);
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0]   ? 360 : -360;
+        }
+
+
+        const getAddress = async () => {
+        await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?access_token={{ mapbox_access_token }}`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((myJson) => {  
+          const ADDRESS_INDEX = 0;
+          const address = myJson.features[ADDRESS_INDEX].place_name; 
+
+          new mapboxgl.Popup()
+          .setLngLat(coordinates)
+          .setHTML(address)
+          .addTo(map);
+
+          return address;
+          });
+        }
+
+      getAddress().then(data => (address = data));
       });
  
       // Change the cursor to a pointer when the mouse is over the places layer.
@@ -68,7 +84,7 @@
       map.on('mouseleave', 'places', () => {
         map.getCanvas().style.cursor = '';
       });
-      });
+    });
     </script>
   </body>
 </html>
