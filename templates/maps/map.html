@@ -41,7 +41,6 @@
 
       map.on('click', 'places', (e) => {
         // Copy coordinates array.
-        console.log(e);
         const coordinates = e.features[0].geometry. coordinates.slice();
         const description = e.features[0].properties. objectid;
 
