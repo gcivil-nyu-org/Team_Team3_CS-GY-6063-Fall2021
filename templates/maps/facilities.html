@@ -1,0 +1,38 @@
+<!-- templates/registration/login.html -->
+{% extends 'base.html' %}
+
+{% block title %}Facilities{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-column align-items-center">
+  <div> this will be the page for the facility with mapbox objectid: {{ id }} </div> 
+  {% comment %} <div>Name : {{ name }}</div>
+  <div>Description : {{ description }}</div> {% endcomment %}
+  <div>Dimensions : {{ dimensions }}</div>
+  <div>Accessible : {{ accessible }}</div>
+  <div>Wheelchair : {{ wheelchair }}</div>
+  <div>Bocce : {{ bocce }}</div>
+  <div>Frisbee : {{ frisbee }}</div>
+  <div>Track : {{ track }}</div>
+  <div>T Ball : {{ tBall }}</div>
+  <div>Adult Baseball : {{ adultBaseball }}</div>
+  <div>Adult Football: {{ adultFootball }}</div>
+  <div>Adult Softball : {{ adultSoftball }}</div>
+  <div>Basketball : {{ basketball }}</div>
+  <div>Cricket : {{ cricket }}</div>
+  <div>Flag Football: {{ flagFootball }}</div>
+  <div>Handball : {{ handball }}</div>
+  <div>Hockey : {{ hockey }}</div>
+  <div>Kickball : {{ kickball }}</div>
+  <div>Lacrosse : {{ lacrosse }}</div>
+  <div>Little League Baseball One : {{ littleLeagueBaseballOne }}</div>
+  <div>Little League Baseball Two: {{ littleLeagueBaseballTwo }}</div>  
+  <div>Little League Softball: {{ littleLeagueSoftball }}</div>
+  <div>Netball : {{ netball }}</div>
+  <div>Rugby : {{ rugby }}</div>
+  <div>Volleyball : {{ volleyball }}</div>
+  <div>Youth Football: {{ youthFootball}}</div>
+  <div>Track : {{ track }}</div>
+</div>
+{% endblock %} 
