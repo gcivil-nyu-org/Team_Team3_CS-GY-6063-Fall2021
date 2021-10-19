@@ -5,34 +5,43 @@
 
 {% block content %}
 
-<div class="d-flex flex-column align-items-center">
-  <div> this will be the page for the facility with mapbox objectid: {{ id }} </div> 
+<div style="margin-left: 1rem">
+  <h1> this will be the page for the facility with mapbox objectid: {{ id }} </h1> 
   {% comment %} <div>Name : {{ name }}</div>
   <div>Description : {{ description }}</div> {% endcomment %}
-  <div>Dimensions : {{ dimensions }}</div>
-  <div>Accessible : {{ accessible }}</div>
-  <div>Wheelchair : {{ wheelchair }}</div>
-  <div>Bocce : {{ bocce }}</div>
-  <div>Frisbee : {{ frisbee }}</div>
-  <div>Track : {{ track }}</div>
-  <div>T Ball : {{ tBall }}</div>
-  <div>Adult Baseball : {{ adultBaseball }}</div>
-  <div>Adult Football: {{ adultFootball }}</div>
-  <div>Adult Softball : {{ adultSoftball }}</div>
-  <div>Basketball : {{ basketball }}</div>
-  <div>Cricket : {{ cricket }}</div>
-  <div>Flag Football: {{ flagFootball }}</div>
-  <div>Handball : {{ handball }}</div>
-  <div>Hockey : {{ hockey }}</div>
-  <div>Kickball : {{ kickball }}</div>
-  <div>Lacrosse : {{ lacrosse }}</div>
-  <div>Little League Baseball One : {{ littleLeagueBaseballOne }}</div>
-  <div>Little League Baseball Two: {{ littleLeagueBaseballTwo }}</div>  
-  <div>Little League Softball: {{ littleLeagueSoftball }}</div>
-  <div>Netball : {{ netball }}</div>
-  <div>Rugby : {{ rugby }}</div>
-  <div>Volleyball : {{ volleyball }}</div>
-  <div>Youth Football: {{ youthFootball}}</div>
-  <div>Track : {{ track }}</div>
+
+  <h2>Facilitiy information</h2>
+  <div>
+    <ul>
+      <li>Dimensions : {{ dimensions }}</li>
+      <li>Accessible : {{ accessible }}</li>
+      <li>Wheelchair : {{ wheelchair }}</li>
+    <ul>
+  </div>
+  <div>
+    <h2>Sports Available</h2>
+      <ul>
+      <li>Bocce : {{ bocce }}</li>
+      <li>Frisbee : {{ frisbee }}</li>
+      <li>Track : {{ track }}</li>
+      <li>T Ball : {{ tBall }}</li>
+      <li>Adult Baseball : {{ adultBaseball }}</li>
+      <li>Adult Football: {{ adultFootball }}</li>
+      <li>Adult Softball : {{ adultSoftball }}</li>
+      <li>Basketball : {{ basketball }}</li>
+      <li>Cricket : {{ cricket }}</li>
+      <li>Flag Football: {{ flagFootball }}</li>
+      <li>Handball : {{ handball }}</li>
+      <li>Hockey : {{ hockey }}</li>
+      <li>Kickball : {{ kickball }}</li>
+      <li>Lacrosse : {{ lacrosse }}</li> 
+      <li>Little League Softball: {{  littleLeagueSoftball }}</li>
+      <li>Netball : {{ netball }}</li>
+      <li>Rugby : {{ rugby }}</li>
+      <li>Volleyball : {{ volleyball }}</li>
+      <li>Youth Football: {{ youthFootball}}</li>
+      <li>Track : {{ track }}</li>
+    <ul>
+  </div>
 </div>
 {% endblock %} 
