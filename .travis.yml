@@ -4,6 +4,6 @@ python:
 - 3.7
 script:
 - black .
-- flake8
+- flake8 --max-line-length=100
 after_script:
 - coveralls
