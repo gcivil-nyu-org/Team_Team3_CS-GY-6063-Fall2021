@@ -6,7 +6,10 @@
 {% if user.is_authenticated %}
 <div class="d-flex flex-column align-items-center">
   <h1>Hi {{ user.first_name }} {{ user.last_name }}!</h1>
+  <p>You're logged in!</p>
   <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
+  <img src="https://c.stocksy.com/a/Sfb200/z9/621454.jpg" width = 400 height =600 alt="">
+
 </div>
 {% else %}
 <div class="d-flex flex-column align-items-center">
