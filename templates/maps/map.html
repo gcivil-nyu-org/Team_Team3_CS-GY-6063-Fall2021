@@ -9,7 +9,7 @@
 
 {% block content %}
     <h1>Map Page</h1>
-    <div id='map' style='width: 100%; height: 400px;'>
+    <div id='map' style='width: 100%; height: 800px;'>
     </div>
     <script>
       mapboxgl.accessToken = '{{ mapbox_access_token }}';
@@ -17,7 +17,7 @@
         container: 'map', // container ID
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [-73.98627859258755, 40.695065862718806],
-        zoom: 13
+        zoom: 17
       });
  
       map.on('load', () => {
