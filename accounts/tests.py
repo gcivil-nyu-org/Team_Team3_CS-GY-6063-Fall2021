@@ -11,7 +11,6 @@ from .tokens import account_activation_token
 class BaseTest(TestCase):
     def setUp(self):
         self.signup_url=reverse('signup')
-        self.activate_url=r"^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,6}-[0-9A-Za-z]{1,32})/$"
         self.user={
             'username':'testuser',
             'email':'testemail@gmail.com',
