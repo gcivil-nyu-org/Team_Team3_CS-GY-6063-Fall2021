@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "userprofile.apps.UserprofileConfig",
+    "crispy_forms",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -137,5 +139,7 @@ EMAIL_HOST_PASSWORD = str(os.getenv("EMAIL_HOST_PASSWORD"))
 EMAIL_PORT = 587
 
 MAPBOX_TOKEN = str(os.getenv("MAPBOX_TOKEN"))
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 django_heroku.settings(locals())
