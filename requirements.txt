@@ -6,3 +6,4 @@ black
 flake8
 coverage
 coveralls
+django-crispy-forms
