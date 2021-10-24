@@ -30,15 +30,13 @@ class RegistrationTest(BaseTest):
         response=self.client.post(self.signup_url,self.user)
         self.assertEqual(response.status_code,200)
 
-class UserActivationTest(BaseTest):
+class UserActivationTest(TestCase):
     def test_user_activate_success(self):
-        user=User.objects.create_user('testuser1','test@gmail.com')
+        user=User.objects.create_user('testuser1')
         user.set_password('OutdoorSquad')
-        user.is_active=False
-        user.save()
         uid=urlsafe_base64_encode(force_bytes(user.pk))
         token=account_activation_token.make_token(user)
         response=self.client.get(reverse('activate',kwargs={'uidb64':uid,'token':token}))
         self.assertEqual(response.status_code,200)
-        user=User.objects.get(email='test@gmail.com')
+        user=User.objects.get(username='testuser1')
         self.assertTrue(user.is_active)
