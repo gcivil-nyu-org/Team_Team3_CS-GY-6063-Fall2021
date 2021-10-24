@@ -28,6 +28,3 @@ class Profile(models.Model):
     location = models.CharField(max_length=50)
     distance = models.IntegerField(default=0)
     car = models.BooleanField(default=False)
-
-    
-    
