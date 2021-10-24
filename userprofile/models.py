@@ -25,6 +25,6 @@ class Profile(models.Model):
     volleyball = models.BooleanField(default=False)
     youthFootball = models.BooleanField(default=False)
     hiking = models.BooleanField(default=False)
-    location = models.CharField(max_length=50)
+    location = models.CharField(blank = True, null=True, max_length=50)
     distance = models.IntegerField(default=0)
     car = models.BooleanField(default=False)
