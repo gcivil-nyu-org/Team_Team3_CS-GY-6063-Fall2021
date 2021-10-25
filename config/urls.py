@@ -29,5 +29,6 @@ urlpatterns = [
     ),  # new
     path("maps/", include("maps.urls")),
     path("facilities/", include("facilities.urls")),
+    path("", include("events.urls")),
     path("userprofile/", include("userprofile.urls")),
 ]
