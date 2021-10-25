@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.contrib.auth import authenticate
 
 
+# A LOGGED IN USER IS STILL ABLE TO ACCESS THE LOGIN PAGE MANUALLY
+# INCLUDE TEST FOR THIS AFTER UPDATING CODE
 
 class TestUserLogin(TestCase):
 
@@ -27,11 +29,6 @@ class TestUserLogin(TestCase):
         self.assertIsNone(user)
 
 class TestUserLoginViews(TestCase):
-
-        def setUp(self):
-            self.user = User.objects.create(username='test_login')
-            self.user.set_password('secret_111')
-            self.user.save()
 
         def test_view_url_exists_in_expected_location(self):
             response = self.client.get('/accounts/login/')
