@@ -29,5 +29,6 @@ urlpatterns = [
     ),  # new
     path("maps/", include("maps.urls")),
     path("facilities/", include("facilities.urls")),
+    path("add_event/",  TemplateView.as_view(template_name="events/add_event.html"), name="add-event"),
     path("userprofile/", include("userprofile.urls")),
 ]
