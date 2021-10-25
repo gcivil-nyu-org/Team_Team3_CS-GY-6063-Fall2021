@@ -1,8 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
-from userprofile.models import Profile
-from django.contrib.auth import authenticate
+
 
 class TestUserLoginViews(TestCase):
 
