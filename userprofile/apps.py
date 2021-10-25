@@ -7,3 +7,4 @@ class UserprofileConfig(AppConfig):
 
     def ready(self):
         import userprofile.signals
+        userprofile.signals
