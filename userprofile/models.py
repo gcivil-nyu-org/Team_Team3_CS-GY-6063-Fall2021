@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+    
 class Profile(models.Model):
-    user = models.OneToOneField(User,null=True,blank=True, on_delete=models.CASCADE)
-    profilename = models.CharField(max_length=50)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profilename = models.CharField(default= 'Outdoor Squad Member', max_length=50)
     bocce = models.BooleanField(default=False)
     frisbee = models.BooleanField(default=False)
     tBall = models.BooleanField(default=False)
@@ -25,6 +26,13 @@ class Profile(models.Model):
     volleyball = models.BooleanField(default=False)
     youthFootball = models.BooleanField(default=False)
     hiking = models.BooleanField(default=False)
-    location = models.CharField(blank = True, null=True, max_length=50)
+    location = models.CharField(default ='NYC', max_length=50)
     distance = models.IntegerField(default=0)
     car = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
+    def save(self, *args, **kwargs):
+        super(Profile, self).save(*args, **kwargs)
+
