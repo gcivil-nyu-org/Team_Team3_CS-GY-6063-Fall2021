@@ -1,7 +1,10 @@
-import django_heroku
 from dotenv import load_dotenv
 import os
+from pathlib import Path
 
+if '/app' in os.environ['HOME']:
+    import django_heroku
+    
 load_dotenv()  # loads the configs from .env
 
 """
@@ -14,7 +17,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -83,7 +86,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -127,6 +130,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 # EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 # EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
@@ -141,5 +146,5 @@ EMAIL_PORT = 587
 MAPBOX_TOKEN = str(os.getenv("MAPBOX_TOKEN"))
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-django_heroku.settings(locals())
+if '/app' in os.environ['HOME']:
+    django_heroku.settings(locals(), test_runner=False)
