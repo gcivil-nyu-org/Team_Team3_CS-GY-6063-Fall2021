@@ -1,0 +1,11 @@
+language:
+- python
+python:
+- 3.7
+script:
+- black .
+- flake8 --max-line-length=100
+- python3 manage.py collectstatic --no-input
+- coverage run --source="." manage.py test
+after_script:
+- coveralls

@@ -1,3 +1,15 @@
 from django.test import TestCase
+from config.settings import MAPBOX_TOKEN
 
-# Create your tests here.
+class MapsViewTest(TestCase):
+    def test_returns_success(self):
+        response = self.client.get('/maps/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'maps/map.html')
+        self.assertContains(response, MAPBOX_TOKEN)
+
+class FacilitiesViewTest(TestCase):
+    def test_returns_success(self):
+        response = self.client.get('/facilities/17308')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'maps/facilities.html')
