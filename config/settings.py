@@ -4,7 +4,6 @@ from pathlib import Path
 
 if '/app' in os.environ['HOME']:
     import django_heroku
-    django_heroku.settings(locals())
     
 load_dotenv()  # loads the configs from .env
 
@@ -148,3 +147,5 @@ MAPBOX_TOKEN = str(os.getenv("MAPBOX_TOKEN"))
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+if '/app' in os.environ['HOME']:
+    django_heroku.settings(locals())
