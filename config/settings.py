@@ -148,3 +148,4 @@ MAPBOX_TOKEN = str(os.getenv("MAPBOX_TOKEN"))
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+django_heroku.settings(locals(), test_runner=False)
