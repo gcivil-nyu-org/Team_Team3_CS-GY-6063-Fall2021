@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
+from .forms import ProfileUpdateForm
 
 
 class TestUserProfileViews(TestCase):
@@ -34,19 +35,12 @@ class TestUserProfileViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'userprofile/profile.html')
 
-from .forms import ProfileUpdateForm
-from .models import Profile
-
 class TestUserProfileCreation(TestCase):
 
     def setUp(self):
         self.user = User.objects.create(username='test_login')
         self.user.set_password('secret_111')
         self.user.save()
-        
-        # self.client.login(username = 'test_login', password = 'secret_111')
-        #self.client.get('/userprofile/')
-
 
     def test_form_valid(self):
         form_data = {
@@ -85,6 +79,4 @@ class TestUserProfileCreation(TestCase):
         } 
         response = self.client.post('/userprofile/', form_data)
         self.assertContains(response, 'testuser12')
-        #self.assertTrue(Profile.objects.filter(profilename='testuser12').exists())
-
-#NEED TESTS FOR WHEN A USER UPDATES THEIR PROFILE
+        
