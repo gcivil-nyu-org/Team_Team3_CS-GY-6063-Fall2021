@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image
 
-    
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profilename = models.CharField(default= 'Outdoor Squad Member', max_length=50)
+    profilename = models.CharField(default="Outdoor Squad Member", max_length=50)
+    image = models.ImageField(default="default.jpg", upload_to="profile_pics")
     bocce = models.BooleanField(default=False)
     frisbee = models.BooleanField(default=False)
     tBall = models.BooleanField(default=False)
@@ -26,13 +28,19 @@ class Profile(models.Model):
     volleyball = models.BooleanField(default=False)
     youthFootball = models.BooleanField(default=False)
     hiking = models.BooleanField(default=False)
-    location = models.CharField(default ='NYC', max_length=50)
+    location = models.CharField(default="NYC", max_length=50)
     distance = models.IntegerField(default=0)
     car = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f"{self.user.username} Profile"
 
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)
 
+        img = Image.open(self.image.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
