@@ -7,3 +7,5 @@ flake8
 coverage
 coveralls
 django-crispy-forms
+PIL
+Pillow
