@@ -2,9 +2,9 @@ from dotenv import load_dotenv
 import os
 from pathlib import Path
 
-if '/app' in os.environ['HOME']:
+ if '/app' in os.environ['HOME']:
     import django_heroku
-    
+
 load_dotenv()  # loads the configs from .env
 
 """
@@ -131,7 +131,7 @@ STATIC_URL = "/static/"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+STATIC_ROOT = os.path.join(PROJECT_DIR, "static")
 
 # EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 # EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
@@ -142,9 +142,11 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = str(os.getenv("EMAIL_HOST_USER"))
 EMAIL_HOST_PASSWORD = str(os.getenv("EMAIL_HOST_PASSWORD"))
 EMAIL_PORT = 587
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
 MAPBOX_TOKEN = str(os.getenv("MAPBOX_TOKEN"))
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-if '/app' in os.environ['HOME']:
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+ if '/app' in os.environ['HOME']:
     django_heroku.settings(locals(), test_runner=False)
