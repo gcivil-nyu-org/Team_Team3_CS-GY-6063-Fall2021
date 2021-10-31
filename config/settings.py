@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 from pathlib import Path
 
- if '/app' in os.environ['HOME']:
+if "/app" in os.environ["HOME"]:
     import django_heroku
 
 load_dotenv()  # loads the configs from .env
@@ -148,5 +148,5 @@ MEDIA_URL = "/media/"
 MAPBOX_TOKEN = str(os.getenv("MAPBOX_TOKEN"))
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
- if '/app' in os.environ['HOME']:
+if "/app" in os.environ["HOME"]:
     django_heroku.settings(locals(), test_runner=False)
