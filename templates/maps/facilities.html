@@ -43,6 +43,6 @@
       <li>Track : {{ track }}</li>
     <ul>
   </div>
-  <button class="btn btn-primary" onclick="location.href = '/events/add_event'">Add Event</button>
+  <a class="btn btn-primary" href="{% url 'add-event' id %}">Add Event</a>
 </div>
 {% endblock %} 
