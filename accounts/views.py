@@ -1,7 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+
 # from django.shortcuts import redirect
 from django.contrib.auth import login
+
 # from django.contrib.auth import authenticate
 from .forms import SignupForm
 from django.contrib.sites.shortcuts import get_current_site
