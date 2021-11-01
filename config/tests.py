@@ -30,17 +30,19 @@ class TestUserLogin(TestCase):
         )
         self.assertIsNone(user)
 
-    # Idea: Log Out is only in the dropdown. Tets that only a logged in user can see this string in the dropdown
+    # Idea: Log Out is only in the dropdown.
+    #Only a logged in user can see this string in the dropdown
     def test_logged_in_user_sees_dashboard_dropdown(self):
         c = Client()
-        status = c.login(username="test_login", password="secret_111")
+        c.login(username="test_login", password="secret_111")
         response = c.get(reverse("login"))
         self.assertContains(response, "Log Out")
 
-    # Idea: Tets that a logged out user cannot see the dropdown, because response does not contain Log Out
+    # Idea: Tets that a logged out user cannot see the dropdown
+    #because response does not contain Log Out
     def logged_out_user_can_log_in(self):
         c = Client()
-        status = c.logout()
+        c.logout()
         response = c.get(reverse("logout"))
         self.assertNotContains(response, "Log Out")
 
