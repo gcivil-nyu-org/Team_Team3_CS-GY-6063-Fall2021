@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.views.generic.edit import UpdateView
 from .models import Event
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
   CreateView,
   ListView, 
   DetailView,
   UpdateView,
+  DeleteView
   )
 from django import forms
 
@@ -46,7 +47,7 @@ class EventsCreateView(LoginRequiredMixin, CreateView):
     form.instance.locationId = self.kwargs.get('id', None)
     return super().form_valid(form)
 
-class EventUpdateView(LoginRequiredMixin, UpdateView):
+class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
   form_class = CreateEventForm
   model = Event
 
@@ -55,5 +56,20 @@ class EventUpdateView(LoginRequiredMixin, UpdateView):
     form.instance.locationId = self.kwargs.get('id', None)
     return super().form_valid(form)
 
-def add_event(request, id):
-  return render(request, "events/add_event.html", {"id": id})
+  def test_func(self):
+    event = self.get_object()
+    if self.request.user == event.owner:
+      return True
+    return False
+
+class EventDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+  model = Event
+  template_name = 'events/event_confirm_delete.html'
+  success_url = '/'
+
+  def test_func(self):
+    event = self.get_object()
+    if self.request.user == event.owner:
+      return True
+    return False
+
