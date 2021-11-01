@@ -3,7 +3,9 @@
 {% block content %}
     {% for event in events %}
       <div style="margin-left: 1rem">
-        <h1>{{event.name}} </h1> 
+        <h1>    
+          <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
+        </h1> 
         <p>{{event.description}}</p>
         <p>{{event.address}}</p>
         <p>{{event.date}}</p>

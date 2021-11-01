@@ -1,10 +1,12 @@
-from django.forms import widgets
 from django.shortcuts import render
+from django.views.generic.edit import UpdateView
 from .models import Event
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
   CreateView,
   ListView, 
-  DetailView
+  DetailView,
+  UpdateView,
   )
 from django import forms
 
@@ -35,7 +37,7 @@ class CreateEventForm(forms.ModelForm):
     fields = ['name', 'description', 'address', 'date']
     widgets = {'date' : DateInput()}
 
-class EventsCreateView(CreateView):
+class EventsCreateView(LoginRequiredMixin, CreateView):
   form_class = CreateEventForm
   model = Event
 
@@ -44,7 +46,14 @@ class EventsCreateView(CreateView):
     form.instance.locationId = self.kwargs.get('id', None)
     return super().form_valid(form)
 
+class EventUpdateView(LoginRequiredMixin, UpdateView):
+  form_class = CreateEventForm
+  model = Event
 
+  def form_valid(self, form):
+    form.instance.owner = self.request.user
+    form.instance.locationId = self.kwargs.get('id', None)
+    return super().form_valid(form)
 
 def add_event(request, id):
   return render(request, "events/add_event.html", {"id": id})
