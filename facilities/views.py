@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from maps.facilities_data import read_facilities_data
 import json
+
 # import ast
 
 
