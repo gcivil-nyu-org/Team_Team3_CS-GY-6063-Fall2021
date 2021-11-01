@@ -8,4 +8,5 @@ class Event(models.Model):
   address = models.TextField();
   locationId = models.CharField(max_length=100);
   date = models.DateTimeField();
+  dateCreated = models.DateTimeField(default=timezone.now)
   owner = models.ForeignKey(User, on_delete=models.DO_NOTHING);
