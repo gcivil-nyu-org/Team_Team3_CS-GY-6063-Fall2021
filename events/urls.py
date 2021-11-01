@@ -1,7 +1,5 @@
-from django.conf.urls import url
 from django.urls import path
 from .views import EventsListView, EventsCreateView, EventDetailView, EventUpdateView, EventDeleteView
-from . import views
 
 urlpatterns = [
   path('', EventsListView.as_view(), name='events-list'),

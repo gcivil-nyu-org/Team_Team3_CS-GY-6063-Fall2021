@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.views.generic.edit import UpdateView
 from .models import Event
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
@@ -11,13 +10,6 @@ from django.views.generic import (
   )
 from django import forms
 
-# Create your views here.
-def event(request):
-  context = {
-    'event': Event.objects.all().last()
-  }
-
-  return render(request, "events/event.html", context)
 
 class EventsListView(ListView):
   model = Event
@@ -38,6 +30,12 @@ class CreateEventForm(forms.ModelForm):
     fields = ['name', 'description', 'address', 'date']
     widgets = {'date' : DateInput()}
 
+class UpdateEventForm(forms.ModelForm):
+  class Meta:
+    model = Event
+    fields = ['name', 'description', 'address', 'locationId', 'date']
+    widgets = {'date' : DateInput()}
+
 class EventsCreateView(LoginRequiredMixin, CreateView):
   form_class = CreateEventForm
   model = Event
@@ -48,12 +46,11 @@ class EventsCreateView(LoginRequiredMixin, CreateView):
     return super().form_valid(form)
 
 class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-  form_class = CreateEventForm
+  form_class = UpdateEventForm
   model = Event
 
   def form_valid(self, form):
     form.instance.owner = self.request.user
-    form.instance.locationId = self.kwargs.get('id', None)
     return super().form_valid(form)
 
   def test_func(self):
