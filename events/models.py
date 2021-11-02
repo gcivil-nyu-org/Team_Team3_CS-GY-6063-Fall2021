@@ -13,5 +13,5 @@ class Event(models.Model):
   owner = models.ForeignKey(User, on_delete=models.DO_NOTHING);
 
   def get_absolute_url(self):
-      return reverse("event-detail", kwargs={"pk": self.pk})
+    return reverse("event-detail", kwargs={"pk": self.pk})
   

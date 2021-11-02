@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <div style="display: flex; flex-direction:row; flex-wrap: wrap; margin: 1rem">
+
     {% for event in events %}
-      <div style="margin-left: 1rem">
+      <div class="card" style="width: 20rem; margin: 1rem">
+        <div class="card-body">
         <h1>    
           <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
         </h1> 
         <p>{{event.description}}</p>
         <p>{{event.address}}</p>
         <p>{{event.date}}</p>
-        <p>{{event.owner}}</p>
+        <p>Creator: {{event.owner}}</p>
+        </div>
       </div>
     {% endfor %}
+  </div>
+
 {% endblock content %} 

@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="content-section">
+    <div class="content-section" style="margin: 1rem">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
@@ -11,7 +11,7 @@
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="btn btn-primary" style="margin: 1rem 0" type="submit">Submit</button>
             </div>
         </form>
     </div>
