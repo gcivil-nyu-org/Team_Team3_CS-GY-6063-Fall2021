@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div style="margin-left: 1rem; text-align: center">
+    <h1>{{object.name}} </h1> 
+    <p>{{object.description}}</p>
+    <p>{{object.address}}</p>
+    <p>{{object.date}}</p>
+    <p>Creator: {{object.owner}}</p>
+
+
+    <a class="btn btn-primary" href="{% url 'event-update' object.id %}">Update Event</a>
+    <a class="btn btn-danger" href="{% url 'event-delete' object.id %}">Delete Event</a>
+    <div style="margin-top: 1rem">
+      <a href="{% url 'show' object.locationId %}">View all events at this location</a>
+    <div>
+  </div>
+{% endblock content %} 
