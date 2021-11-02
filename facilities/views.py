@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from maps.facilities_data import read_facilities_data
+from events.models import Event
+
 import json
 # import ast
 
@@ -36,6 +38,7 @@ def show(request, id):
     wheelchair = currentFacility["wheelchair"]
     youthFootball = currentFacility["youth_foot"]
 
+    eventsAtLocation = Event.objects.filter(locationId = id);
     return render(
         request,
         "maps/facilities.html",
@@ -69,5 +72,6 @@ def show(request, id):
             "volleyball": volleyball,
             "wheelchair": wheelchair,
             "youthFootball": youthFootball,
+            "events": eventsAtLocation
         },
     )

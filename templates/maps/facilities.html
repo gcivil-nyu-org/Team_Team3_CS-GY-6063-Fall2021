@@ -6,19 +6,19 @@
 {% block content %}
 
 <div style="margin-left: 1rem">
-  <h1> this will be the page for the facility with mapbox objectid: {{ id }} </h1> 
+  <h1> Location {{ id }} </h1> 
   {% comment %} <div>Name : {{ name }}</div>
   <div>Description : {{ description }}</div> {% endcomment %}
 
-  <h2>Facility information</h2>
-  <div>
-    <ul>
-      <li>Dimensions : {{ dimensions }}</li>
-      <li>Accessible : {{ accessible }}</li>
-      <li>Wheelchair : {{ wheelchair }}</li>
-    <ul>
-  </div>
-  <div>
+    <h2>Facility information</h2>
+    <div>
+      <ul>
+        <li>Dimensions : {{ dimensions }}</li>
+        <li>Accessible : {{ accessible }}</li>
+        <li>Wheelchair : {{ wheelchair }}</li>
+      <ul>
+    </div>
+    <div>
     <h2>Sports Available</h2>
       <ul>
       <li>Bocce : {{ bocce }}</li>
@@ -43,6 +43,28 @@
       <li>Track : {{ track }}</li>
     <ul>
   </div>
+    
+    
+  <h2>Events at this location</h2>
+  <div style="display: flex; flex-direction:row; flex-wrap: wrap">
+    {% for event in events %}
+      <div class="card" style="width: 20rem; margin: 1rem">
+        <div class="card-body">
+        <h1>    
+          <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
+        </h1> 
+        <p>{{event.description}}</p>
+        <p>{{event.address}}</p>
+        <p>{{event.date}}</p>
+        <p>Creator: {{event.owner}}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+
+
   <a class="btn btn-primary" href="{% url 'add-event' id %}">Create Event</a>
+
 </div>
 {% endblock %} 
