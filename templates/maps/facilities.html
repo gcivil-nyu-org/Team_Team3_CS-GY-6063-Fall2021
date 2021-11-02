@@ -48,7 +48,7 @@
   <h2>Events at this location</h2>
   <div style="display: flex; flex-direction:row; flex-wrap: wrap">
     {% for event in events %}
-      <div class="card" style="width: 20rem; margin: 1rem">
+      <div class="card" style="width: 20rem; margin: 1rem; border: 0.1rem solid black">
         <div class="card-body">
         <h1>    
           <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
@@ -64,7 +64,7 @@
 
 
 
-  <a class="btn btn-primary" href="{% url 'add-event' id %}">Create Event</a>
+  <a class="btn btn-primary" href="{% url 'add-event' id %}" style="margin-bottom: 1rem">Create Event</a>
 
 </div>
 {% endblock %} 
