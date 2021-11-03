@@ -3,11 +3,12 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <div class="content-section" style="margin: 1.5rem">
+
+  <div class="content-section" style="background-color: white">
       <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
       </div>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" style="background-color: white;">
           {% csrf_token %}
           <fieldset class="form-group">
               <legend class="border-bottom mb-4">{{user.username}}'s Profile Info</legend>

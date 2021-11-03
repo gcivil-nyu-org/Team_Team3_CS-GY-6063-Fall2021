@@ -5,18 +5,19 @@
 
 {% block content %}
 <div class="d-flex flex-column align-items-center">
-  <h2>Log In</h2>
-  <form method="post">
+  <h2 style="color: white">Log In</h2>
+  <form method="post" style="color: white">
     {% csrf_token %}
     {{ form.as_p }}
+    
     <div class="d-flex flex-column align-items-center">
       <button class="btn btn-primary" type="submit">Log In</button>
       
       <p class="mt-2">
         <div>
-          <a href="{% url 'signup' %}">Sign Up</a>
+          <a href="{% url 'signup' %}" style="color: white;">Sign Up</a>
         </div>
-        <a href="{% url 'password_reset' %}">Forgot your password?</a>
+        <a href="{% url 'password_reset' %}" style="color: white;">Forgot your password?</a>
       </p>
     </div>
   </form>

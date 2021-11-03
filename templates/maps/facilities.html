@@ -4,7 +4,7 @@
 {% block title %}Facilities{% endblock %}
 
 {% block content %}
-
+<div style="background-color: white;">
 <div style="margin-left: 1rem">
   <h1> Location {{ id }} </h1> 
   {% comment %} <div>Name : {{ name }}</div>
@@ -66,5 +66,6 @@
 
   <a class="btn btn-primary" href="{% url 'add-event' id %}" style="margin-bottom: 1rem">Create Event</a>
 
+</div>
 </div>
 {% endblock %} 

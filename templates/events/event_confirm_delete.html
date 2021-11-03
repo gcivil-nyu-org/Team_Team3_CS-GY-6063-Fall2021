@@ -2,7 +2,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="content-section" style="text-align: center">
+    <div class="content-section" style="text-align: center; height: 800px; width: 100%; background-color:white">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
@@ -15,4 +15,5 @@
             </div>
         </form>
     </div>
+
 {% endblock content %}
