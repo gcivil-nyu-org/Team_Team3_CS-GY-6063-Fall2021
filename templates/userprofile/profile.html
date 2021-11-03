@@ -3,19 +3,20 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <div class="content-section">
+
+  <div class="content-section" style="background-color: white">
       <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
       </div>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" style="background-color: white;">
           {% csrf_token %}
           <fieldset class="form-group">
               <legend class="border-bottom mb-4">{{user.username}}'s Profile Info</legend>
               {{ u_form|crispy }}
               {{ p_form|crispy }}
           </fieldset>
-          <div class="form-group">
-              <button class="btn btn-outline-info" type="submit">Update</button>
+          <div class="form-group" style="margin-top: 1rem">
+              <button class="btn btn-primary" type="submit">Update</button>
           </div>
     </form>
   </div>

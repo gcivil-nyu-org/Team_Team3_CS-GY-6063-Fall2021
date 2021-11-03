@@ -6,12 +6,22 @@
 <head>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Outdoor Squad{% endblock %}</title>
 </head>
 {% endblock %}
-<body>
 
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+<style>
+  body {
+    background-image: url("https://i.ibb.co/zZRS5GM/pexels-digital-buggu-186405.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+</style>
+
+<body>
+  
+  <nav class="navbar navbar-expand-sm navbar-dark">
     <div class="container-fluid">
       <a style="margin-left: 1rem" class="navbar-brand ml-5" href="{% url 'home' %}">Outdoor Squad</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,22 +32,22 @@
         {% if user.is_authenticated %}
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'home' %}">Home</a>
+            <a class="nav-link" style="color: white" href="{% url 'home' %}">Home</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" style="color: white" href="#">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/maps">Map</a>
+            <a class="nav-link" style="color: white" href="/maps">Map</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Events</a>
+            <a class="nav-link" style="color: white" href="{% url 'events-list'%}">Events</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/userprofile">Profile</a>
+            <a class="nav-link" style="color: white" href="/userprofile">Profile</a>
           </li>
         </ul>
-        <ul style="margin-right: 1rem" class="navbar-nav ms-auto">
+        <ul style="margin-right: 4rem" class="navbar-nav ms-auto">
           <li>
             <div class="dropdown">
               <a style="margin-right: 1rem" href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -58,21 +68,18 @@
         {% else %}
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'home' %}">Home</a>
+            <a class="nav-link" style="color: white" href="{% url 'home' %}">Home</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" style="color: white" href="#">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/maps">Map</a>
+            <a class="nav-link" style="color: white" href="/maps">Explore</a>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact Us</a>
-          </li>
-          <li>
-            <a style="margin-right: 1rem" class="btn btn-primary" href="{% url 'login' %}">Log In</a>
+            <a class="nav-link" style="color: white" href="{% url 'login' %}">Log In</a>
           </li>
         </ul>
         {% endif %}

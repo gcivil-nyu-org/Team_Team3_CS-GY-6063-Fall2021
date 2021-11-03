@@ -5,16 +5,19 @@
 {% block content %}
 {% if user.is_authenticated %}
 <div class="d-flex flex-column align-items-center">
-  <h1>Hi {{ user.first_name }} {{ user.last_name }}!</h1>
-  <p>You're logged in!</p>
-  <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
-  <img src="https://c.stocksy.com/a/Sfb200/z9/621454.jpg" width = 400 height =600 alt="">
-
+  <h1 style="color: white;">Hi {{ user.first_name }} {{ user.last_name }}!</h1>
+  <p style="color: white;">Upcoming Events</p>
 </div>
 {% else %}
-<div class="d-flex flex-column align-items-center">
-  <p>This is the home page. You are not logged in</p>
-  <img src="https://i.pinimg.com/originals/4d/ff/59/4dff59affbdc58bb1fc34c110570c09c.jpg" width = 600 height =400 alt="">
-</div>
+<div class=" d-flex justify-content-center align-items-center" style="margin-top: 18%">
+  <h1 style="color:white";> Explore new ways to stay active in NYC. 
+    <div class="d-flex flex-column align-items-center">
+      <h1 style="color: white">Find your Outdoor Squad!</h1>
+        <button class="btn btn-light";">
+        <a href="{% url 'signup' %}" style="text-decoration:none; color:black">Sign Up</a>
+    </div>
+  </h1>
+</div> 
+
 {% endif %}
 {% endblock %} 
