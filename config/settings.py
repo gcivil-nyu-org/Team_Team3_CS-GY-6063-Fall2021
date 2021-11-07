@@ -149,5 +149,5 @@ MEDIA_URL = "/media/"
 MAPBOX_TOKEN = str(os.getenv("MAPBOX_TOKEN"))
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
- if "/app" in os.environ["HOME"]:
+if "/app" in os.environ["HOME"]:
     django_heroku.settings(locals(), test_runner=False)
