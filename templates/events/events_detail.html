@@ -8,6 +8,8 @@
     <p>{{object.date}}</p>
     <p>Creator: {{object.owner}}</p>
 
+    <a class="btn btn-primary" href="{% url 'join-event' object.id %}">Join Event</a>
+    <a class="btn btn-primary" href="{% url 'unjoin-event' object.id %}">Unjoin Event</a>
 
     <a class="btn btn-primary" href="{% url 'event-update' object.id %}">Update Event</a>
     <a class="btn btn-danger" href="{% url 'event-delete' object.id %}">Delete Event</a>
