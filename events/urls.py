@@ -1,5 +1,4 @@
 from django.urls import path
-from . import views
 from .views import EventsListView, EventsCreateView, EventDetailView, EventUpdateView, EventDeleteView, event_add_attendance, event_cancel_attendance
 
 urlpatterns = [

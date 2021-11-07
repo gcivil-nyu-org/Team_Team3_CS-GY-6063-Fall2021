@@ -16,7 +16,11 @@
     <div style="margin-top: 1rem">
       <a href="{% url 'show' object.locationId %}">View all events at this location</a>
     <div>
-  </div>
 
+    <h2>Attendees</h2>
+      {% for attendee in attendees %}  
+        <p>{{attendee}}</p>
+    {% endfor %}
+  </div>
 
 {% endblock content %} 
