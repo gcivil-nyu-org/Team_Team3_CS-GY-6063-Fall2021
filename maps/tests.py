@@ -6,7 +6,7 @@ from maps.facilities_data import read_facilities_data
 
 class MapsViewTest(TestCase):
     def test_returns_success(self):
-        response = self.client.get("/maps/")
+        response = self.client.get("/maps/map")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "maps/map.html")
         self.assertContains(response, MAPBOX_TOKEN)
