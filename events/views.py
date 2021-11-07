@@ -23,8 +23,13 @@ class EventDetailView(DetailView):
   template_name = 'events/events_detail.html'
 
   def get_context_data(self, **kwargs):
+    isAttending = False
     context = super(EventDetailView, self).get_context_data(**kwargs)
     context['attendees'] = EventRegistration.objects.filter(event = context["object"]);
+    for attendee in context['attendees']:
+      if attendee.user == self.request.user:
+        isAttending = True
+    context['isAttending'] = isAttending
     return context
 
 @login_required
