@@ -20,11 +20,13 @@ class Event(models.Model):
     return EventRegistration.objects.filter(event = self)
 
   def add_user_to_list_of_attendees(self, user):
-    EventRegistration.objects.create(user = user,  event = self, time_registered = timezone.now())
+    registration = EventRegistration.objects.create(user = user,  event = self, time_registered = timezone.now())
+    return registration
 
   def remove_user_from_list_of_attendees(self, user):
       registration = EventRegistration.objects.get(user = user, event = self)
       registration.delete()
+      return True
 
   def get_absolute_url(self):
     return reverse("event-detail", kwargs={"pk": self.pk})

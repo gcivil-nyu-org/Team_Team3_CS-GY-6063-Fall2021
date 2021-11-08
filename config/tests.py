@@ -72,7 +72,6 @@ class TestHomePageView(TestCase, RequestFactory):
             username="test_login", password="secret_111", email= "testemail@gmail.com")
 
     def test_context(self):
-        factory = RequestFactory()
         request = self.factory.get('/')
         request.user = self.user
         response = HomePageView.as_view(template_name="home.html")(request)

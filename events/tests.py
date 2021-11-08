@@ -36,3 +36,29 @@ class EventsViewTest(TestCase):
     c.login(username = 'test_login', password = 'secret_111')
     response = c.get(reverse('event-update', kwargs={'pk':1}))
     self.assertEqual(response.status_code, 200)
+
+  def test_get_registration(self):
+    time = timezone.now() + datetime.timedelta(days=30)
+    event =  Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user)
+    test = event.get_registrations()
+    self.assertEqual(test.count(), 0)
+
+  def test_get_absolute_url(self):
+    time = timezone.now() + datetime.timedelta(days=30)
+    event =  Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user)
+    url = event.get_absolute_url()
+    self.assertEqual(url, '/events/2/')
+
+  def test_add_user_to_list_of_attendees(self):
+    time = timezone.now() + datetime.timedelta(days=30)
+    event =  Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user)
+    registration = event.add_user_to_list_of_attendees(self.user)
+    self.assertEqual(type(registration).__name__, 'EventRegistration')
+
+  def test_remove_user_from_list_of_attendees(self):
+    time = timezone.now() + datetime.timedelta(days=30)
+    event =  Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user)
+    registration = event.add_user_to_list_of_attendees(self.user)
+    removeRegistration = event.remove_user_from_list_of_attendees(self.user)
+    self.assertEqual(removeRegistration, True)
+    
