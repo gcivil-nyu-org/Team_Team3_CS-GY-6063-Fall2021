@@ -31,7 +31,7 @@ class EventsViewTest(TestCase):
     response = c.get(reverse('add-event', kwargs={'id':1}))
     self.assertEqual(response.status_code, 200)
 
-  def update_event(self):
+  def test_update_event(self):
     c = Client()
     c.login(username = 'test_login', password = 'secret_111')
     response = c.get(reverse('event-update', kwargs={'pk':1}))
