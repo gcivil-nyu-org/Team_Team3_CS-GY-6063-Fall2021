@@ -58,7 +58,6 @@ class EventsViewTest(TestCase):
   def test_remove_user_from_list_of_attendees(self):
     time = timezone.now() + datetime.timedelta(days=30)
     event =  Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user)
-    registration = event.add_user_to_list_of_attendees(self.user)
+    event.add_user_to_list_of_attendees(self.user)
     removeRegistration = event.remove_user_from_list_of_attendees(self.user)
     self.assertEqual(removeRegistration, True)
-    
