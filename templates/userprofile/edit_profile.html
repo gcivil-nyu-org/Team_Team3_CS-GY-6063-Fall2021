@@ -4,7 +4,7 @@
 
 {% block content %}
 
-  <div class="content-section" style="background-color: white">
+  <div class="content-section" style="padding-left: 2%; padding-bottom: 2%; background-color: white">
       <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
       </div>
@@ -19,6 +19,12 @@
           <div class="form-group" style="margin-top: 1rem">
               <button class="btn btn-primary" type="submit">Update</button>
               <a href="{% url 'profile_page' %}" style="text-decoration:none;">Go Back</a>
+              
+              <p>
+                <br>
+                <a href="{% url 'profile_delete' %}" style="text-decoration:none; color: red">Delete Profile</a>
+              </p>
+              
           </div>
     </form>
   </div>

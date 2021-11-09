@@ -40,3 +40,8 @@ class ProfileUpdateForm(forms.ModelForm):
             "distance",
             "car",
         ]
+
+class UserDeleteProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = []
