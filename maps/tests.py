@@ -146,6 +146,15 @@ class FacilitiesViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "maps/facilities.html")
 
+    def test_can_see_name(self):
+        response=self.client.get("/facilities/18627")
+        self.assertContains(response, "Bridge Park 3")
+
+    #decided that checking that response contains coords suffices
+    def test_can_see_lattitue(self):
+        response=self.client.get("/facilities/18627")
+        self.assertContains(response, "-73.98585882204912,40.70050871357319")
+
 
 class MapsFacilitiesDataTest(TestCase):
     # test idea: checking if particular key (objectid) with a particular name is in parsed json file

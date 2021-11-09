@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from maps.facilities_data import read_facilities_data
 from events.models import Event
+from config.settings import MAPBOX_TOKEN
 
 import json
 
@@ -38,6 +39,7 @@ def show(request, id):
     volleyball = currentFacility["volleyball"]
     wheelchair = currentFacility["wheelchair"]
     youthFootball = currentFacility["youth_foot"]
+    coordinates = currentFacility['geometry']['coordinates']
 
     eventsAtLocation = Event.objects.filter(locationId = id);
     return render(
@@ -73,6 +75,8 @@ def show(request, id):
             "volleyball": volleyball,
             "wheelchair": wheelchair,
             "youthFootball": youthFootball,
-            "events": eventsAtLocation
+            "events": eventsAtLocation,
+            "coordinates": coordinates,
+            "mapbox_access_token": MAPBOX_TOKEN
         },
     )
