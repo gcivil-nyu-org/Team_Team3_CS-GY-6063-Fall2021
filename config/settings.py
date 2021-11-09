@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "accounts",
     "maps",
     "events.apps.EventsConfig",
+    "multiselectfield",
 ]
 
 MIDDLEWARE = [

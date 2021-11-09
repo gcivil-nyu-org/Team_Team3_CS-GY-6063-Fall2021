@@ -1,6 +1,30 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from multiselectfield import MultiSelectField
+
+LOCATION_CHOICES = (
+    ("select", "SELECT"),
+    ("manhattan", "MANHATTAN"),
+    ("queens", "QUEENS"),
+    ("bronx", "BRONX"),
+    ("brooklyn", "BROOKLYN"),
+    ("staten_island", "STATEN ISLAND"),
+)
+
+BOROUGH_CHOICES = (
+    ("manhattan", "MANHATTAN"),
+    ("queens", "QUEENS"),
+    ("bronx", "BRONX"),
+    ("brooklyn", "BROOKLYN"),
+    ("staten_island", "STATEN ISLAND"),
+)
+
+CAR = (
+    ("select", "SELECT"),
+    ("yes", "YES"),
+    ("no", "NO"),
+)
 
 
 class Profile(models.Model):
@@ -28,9 +52,19 @@ class Profile(models.Model):
     volleyball = models.BooleanField(default=False)
     youthFootball = models.BooleanField(default=False)
     hiking = models.BooleanField(default=False)
-    location = models.CharField(default="NYC", max_length=50)
-    distance = models.IntegerField(default=0)
-    car = models.BooleanField(default=False)
+    location = models.CharField(
+        verbose_name="Borough",
+        max_length=20,
+        choices=LOCATION_CHOICES,
+        default="select",
+    )
+    distance = MultiSelectField(
+        verbose_name="Boroughs Willing to Travel:",
+        choices=BOROUGH_CHOICES,
+        max_choices=5,
+        blank=True,
+    )
+    car = models.CharField(max_length=10, choices=CAR, default="select")
 
     def __str__(self):
         return f"{self.user.username} Profile"
