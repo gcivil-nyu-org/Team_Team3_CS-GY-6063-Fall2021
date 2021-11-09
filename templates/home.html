@@ -8,6 +8,21 @@
   <h1 style="color: white;">Hi {{ user.first_name }} {{ user.last_name }}!</h1>
   <p style="color: white;">Upcoming Events</p>
 </div>
+  <div style="display: flex; flex-direction:row; flex-wrap: wrap; margin: 1rem">
+  {% for event in events %}
+        <div class="card" style="width: 20rem; margin: 1rem; border: 0.1rem solid black">
+          <div class="card-body">
+          <h1>    
+            <a href="{% url 'event-detail' event.event.id %}">{{event.event.name}}</a>
+          </h1> 
+          <p>{{event.event.description}}</p>
+          <p>{{event.event.address}}</p>
+          <p>{{event.event.date}}</p>
+          <p>Creator: {{event.event.owner}}</p>
+          </div>
+        </div>
+  {% endfor %}
+  </div>
 {% else %}
 <div class=" d-flex justify-content-center align-items-center" style="margin-top: 18%">
   <h1 style="color:white";> Explore new ways to stay active in NYC. 

@@ -1,8 +1,9 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
+from django.test.client import RequestFactory
 from django.urls import reverse
 from django.contrib.auth import authenticate
-
+from .views import HomePageView
 
 # A LOGGED IN USER IS STILL ABLE TO ACCESS THE LOGIN PAGE MANUALLY
 # INCLUDE TEST FOR THIS AFTER UPDATING CODE
@@ -40,7 +41,7 @@ class TestUserLogin(TestCase):
 
     # Idea: Tets that a logged out user cannot see the dropdown
     #because response does not contain Log Out
-    def logged_out_user_can_log_in(self):
+    def  logged_out_user_can_log_in(self):
         c = Client()
         c.logout()
         response = c.get(reverse("logout"))
@@ -62,3 +63,16 @@ class TestUserLoginViews(TestCase):
         response = c.get(reverse("login"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "registration/login.html")
+
+class TestHomePageView(TestCase, RequestFactory):
+    def setUp(self):
+        # Every test needs access to the request factory.
+        self.factory = RequestFactory()
+        self.user = User.objects.create_user(
+            username="test_login", password="secret_111", email= "testemail@gmail.com")
+
+    def test_context(self):
+        request = self.factory.get('/')
+        request.user = self.user
+        response = HomePageView.as_view(template_name="home.html")(request)
+        self.assertIsInstance(response.context_data, dict)

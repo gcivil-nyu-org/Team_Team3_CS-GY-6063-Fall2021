@@ -1,4 +1,6 @@
-from .models import Event
+from django.contrib.auth.decorators import login_required
+from .models import Event, EventRegistration
+from django.shortcuts import redirect 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
   CreateView,
@@ -19,6 +21,27 @@ class EventsListView(ListView):
 class EventDetailView(DetailView):
   model = Event
   template_name = 'events/events_detail.html'
+
+  def get_context_data(self, **kwargs):
+    isAttending = False
+    context = super(EventDetailView, self).get_context_data(**kwargs)
+    context['attendees'] = EventRegistration.objects.filter(event = context["object"]);
+    for attendee in context['attendees']:
+      if attendee.user == self.request.user:
+        isAttending = True
+    context['isAttending'] = isAttending
+    return context
+
+@login_required
+def event_add_attendance(request, pk):
+  this_event = Event.objects.get(pk=pk)
+  this_event.add_user_to_list_of_attendees(user=request.user)
+  return redirect("event-detail", pk)
+
+def event_cancel_attendance(request, pk):
+  this_event = Event.objects.get(pk=pk)
+  this_event.remove_user_from_list_of_attendees(request.user)
+  return redirect("event-detail", pk)
 
 class DateInput(forms.DateTimeInput):
   input_type='datetime-local'

@@ -7,14 +7,23 @@
     <p>{{object.address}}</p>
     <p>{{object.date}}</p>
     <p>Creator: {{object.owner}}</p>
-
+  
+  {% if isAttending %}
+      <a class="btn btn-primary" href="{% url 'unjoin-event' object.id %}">Unjoin Event</a>
+  {% else %}
+    <a class="btn btn-primary" href="{% url 'join-event' object.id %}">Join Event</a>
+  {% endif %}
 
     <a class="btn btn-primary" href="{% url 'event-update' object.id %}">Update Event</a>
     <a class="btn btn-danger" href="{% url 'event-delete' object.id %}">Delete Event</a>
     <div style="margin-top: 1rem">
       <a href="{% url 'show' object.locationId %}">View all events at this location</a>
     <div>
-  </div>
 
+    <h2>Attendees</h2>
+      {% for attendee in attendees %}  
+        <p>{{attendee}}</p>
+    {% endfor %}
+  </div>
 
 {% endblock content %} 
