@@ -53,9 +53,17 @@ class Profile(models.Model):
     youthFootball = models.BooleanField(default=False)
     hiking = models.BooleanField(default=False)
     location = models.CharField(
-        max_length=20, choices=LOCATION_CHOICES, default="select"
+        verbose_name="Borough",
+        max_length=20,
+        choices=LOCATION_CHOICES,
+        default="select",
     )
-    distance = MultiSelectField(choices=BOROUGH_CHOICES, max_choices=5, blank=True)
+    distance = MultiSelectField(
+        verbose_name="Boroughs Willing to Travel:",
+        choices=BOROUGH_CHOICES,
+        max_choices=5,
+        blank=True,
+    )
     car = models.CharField(max_length=10, choices=CAR, default="select")
 
     def __str__(self):
