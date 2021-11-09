@@ -47,11 +47,11 @@ class TestUserProfileCreation(TestCase):
             "tennis": True,
             "frisbee": False,
             "hiking": True,
-            "location": "MANHATTAN",
-            "distance": "MANHATTAN",
+            "location": "select",
+            "car": "YES",
         }
         form = ProfileUpdateForm(data=form_data)
-        self.assertTrue(form.is_valid())
+        self.assertFalse(form.is_valid())
 
     def test_form_invalid_text(self):
         form_data = {
