@@ -47,8 +47,8 @@ class TestUserProfileCreation(TestCase):
             "tennis": True,
             "frisbee": False,
             "hiking": True,
-            "location": "nyc",
-            "distance": 1,
+            "location": "MANHATTAN",
+            "distance": "MANHATTAN",
         }
         form = ProfileUpdateForm(data=form_data)
         self.assertTrue(form.is_valid())
@@ -59,8 +59,8 @@ class TestUserProfileCreation(TestCase):
             "tennis": "true",
             "frisbee": False,
             "hiking": True,
-            "location": "nyc",
-            "distance": "one mile",
+            "location": "MANHATTAN",
+            "distance": 5,
         }
         form = ProfileUpdateForm(data=form_data)
         self.assertFalse(form.is_valid())
@@ -73,8 +73,8 @@ class TestUserProfileCreation(TestCase):
             "tennis": True,
             "frisbee": False,
             "hiking": True,
-            "location": "nyc",
-            "distance": 1,
+            "location": "MANHATTAN",
+            "distance": "MANHATTAN",
         }
         response = self.client.post("/userprofile/", form_data)
         self.assertContains(response, "testuser12")
