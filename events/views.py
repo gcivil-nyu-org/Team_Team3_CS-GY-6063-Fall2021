@@ -10,6 +10,8 @@ from django.views.generic import (
   DeleteView
   )
 from django import forms
+from maps.facilities_data import read_facilities_data
+import json
 
 
 class EventsListView(ListView):
@@ -65,6 +67,19 @@ class EventsCreateView(LoginRequiredMixin, CreateView):
   def form_valid(self, form):
     form.instance.owner = self.request.user
     form.instance.locationId = self.kwargs.get('id', None)
+    data = json.loads(read_facilities_data())
+    currentFacility = data[str(self.kwargs.get('id', None))]
+    borough = currentFacility['borough']
+    if borough == 'B':
+      form.instance.borough = 'Brooklyn'
+    elif borough == 'M':
+      form.instance.borough = 'Manhattan'
+    elif borough == 'X':
+      form.instance.borough = 'Bronx'
+    elif borough == 'R':
+      form.instance.borough = 'Staten Island'
+    else:
+      form.instance.borough = 'Queens'
     return super().form_valid(form)
 
 class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
