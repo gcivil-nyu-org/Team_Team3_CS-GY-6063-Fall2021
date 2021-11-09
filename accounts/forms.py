@@ -6,6 +6,11 @@ from django.contrib.auth.models import User
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text="Required")
 
+    def clean_email(self):
+        if User.objects.filter(email=self.cleaned_data["email"]).exists():
+            raise forms.ValidationError("The given email is already registered")
+        return self.cleaned_data["email"]
+
     class Meta:
         model = User
         fields = (
