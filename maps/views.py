@@ -119,3 +119,9 @@ def football_map(request):
     return render(
         request, "maps/football.html", {"mapbox_access_token": mapbox_access_token}
     )
+
+def hiking_map(request):
+    mapbox_access_token = MAPBOX_TOKEN
+    return render(
+        request, "maps/hiking.html", {"mapbox_access_token": mapbox_access_token}
+    )
