@@ -16,5 +16,6 @@ def read_facilities_data():
             currentObj = data["features"][i]
             objId = currentObj["properties"]["objectid"]
             res[objId] = currentObj["properties"]
+            res[objId]['geometry'] = currentObj['geometry']
         dic = res
         return json.dumps(dic)
