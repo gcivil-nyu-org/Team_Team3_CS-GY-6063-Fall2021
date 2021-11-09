@@ -8,3 +8,4 @@ coverage
 coveralls
 django-crispy-forms
 Pillow
+django-multiselectfield
