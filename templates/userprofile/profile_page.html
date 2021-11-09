@@ -1,0 +1,29 @@
+<!-- templates/userprofile/edit_profile.html -->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="d-flex flex-column align-items-center">
+    <h1 style="color: white;">{{ user.username }}'s' Profile Page</h1>
+
+    <div class="content-section" style="background-color: white">
+        <div class="media">
+            <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        </div>
+
+        <div>
+            <h4 class="border-bottom mb-4">{{ user.first_name }} {{ user.last_name }}</h4>
+            <p>Username: {{ user.username }}</p>
+            <p>Email: {{user.email}}</p>
+            <p class="border-bottom mb-4">Interests</p>
+
+            <!-- <p>{{ user.profile.basketball }}</p>  -->
+            <p>ADD CODE TO DISPLAY ACTIVITES</p>
+        </div>
+
+        <a href="{% url 'profile_edit' %}" style="text-decoration:none;">Edit Profile</a>
+
+  </div>
+</div>
+{% endblock %}

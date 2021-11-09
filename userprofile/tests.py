@@ -32,7 +32,7 @@ class TestUserProfileViews(TestCase):
         c.login(username="test_login", password="secret_111")
         response = c.get(reverse("user-profile"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "userprofile/profile.html")
+        self.assertTemplateUsed(response, "userprofile/edit_profile.html")
 
 
 class TestUserProfileCreation(TestCase):

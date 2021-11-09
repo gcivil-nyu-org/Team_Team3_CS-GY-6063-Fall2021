@@ -24,4 +24,15 @@ def profile(request):
 
     context = {"u_form": u_form, "p_form": p_form}
 
-    return render(request, "userprofile/profile.html", context)
+    return render(request, "userprofile/edit_profile.html", context)
+
+
+@login_required
+def profile_page(request):
+
+    u_form = UserUpdateForm(instance=request.user)
+    p_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {"u_form": u_form, "p_form": p_form}
+
+    return render(request, "userprofile/profile_page.html", context)
