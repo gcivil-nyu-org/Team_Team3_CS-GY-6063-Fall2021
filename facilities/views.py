@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from maps.facilities_data import read_facilities_data
+from maps.facilities_data import read_facilities_data, read_hiking_data
 from events.models import Event
 from config.settings import MAPBOX_TOKEN
 
@@ -78,5 +78,37 @@ def show(request, id):
             "events": eventsAtLocation,
             "coordinates": coordinates,
             "mapbox_access_token": MAPBOX_TOKEN
+        },
+    )
+
+def trails(request, id):
+    data = json.loads(read_hiking_data())
+    currentTrail = data[str(id)]
+
+    name = currentTrail["Name"]
+    location = currentTrail["Location"]
+    park = currentTrail["Park_Name"]
+    length = currentTrail["Length"]
+    difficulty = currentTrail["Difficulty"]
+    details = currentTrail["Other_Details"]
+    accessible = currentTrail["Accessible"]
+    limited_access = currentTrail["Limited_Access"]
+
+    eventsAtLocation = Event.objects.filter(locationId = id)
+
+    return render(
+        request, 
+        "maps/trails.html", 
+        {
+            "id": id,
+            "name": name,
+            "location" : location,
+            "park" : park,
+            "length": length,
+            "difficulty": difficulty,
+            "details": details,
+            "accessible": accessible,
+            "limited_access": limited_access,
+            "events": eventsAtLocation
         },
     )

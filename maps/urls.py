@@ -20,4 +20,5 @@ urlpatterns = [
     url("tennis", views.tennis_map, name="tennis_map"),
     url("lacrosse", views.lacrosse_map, name="lacrosse_map"),
     url("football", views.football_map, name="football_map"),
+    url("hiking", views.hiking_map, name="hiking_map"),
 ]
