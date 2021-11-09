@@ -30,3 +30,4 @@ def read_hiking_data():
             res[objId] = currentObj["properties"]
         dic = res
         return json.dumps(dic)
+    
