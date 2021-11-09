@@ -51,7 +51,7 @@ class TestUserProfileCreation(TestCase):
             "distance": 1,
         }
         form = ProfileUpdateForm(data=form_data)
-        self.assertTrue(form.is_valid())
+        self.assertFalse(form.is_valid())
 
     def test_form_invalid_text(self):
         form_data = {
