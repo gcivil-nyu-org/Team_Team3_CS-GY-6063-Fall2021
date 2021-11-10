@@ -10,7 +10,7 @@ class Event(models.Model):
   locationId = models.CharField(max_length=100);
   date = models.DateTimeField();
   dateCreated = models.DateTimeField(default=timezone.now)
-  owner = models.ForeignKey(User, on_delete=models.DO_NOTHING);
+  owner = models.ForeignKey(User, on_delete=models.CASCADE);
   borough = models.CharField(max_length=20);
   
   class Meta:
@@ -34,7 +34,7 @@ class Event(models.Model):
 
 class EventRegistration(models.Model):
     event = models.ForeignKey(Event,verbose_name='Event', on_delete=models.CASCADE)
-    user = models.ForeignKey(User,verbose_name='Attendee', on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User,verbose_name='Attendee', on_delete=models.CASCADE)
     time_registered = models.DateTimeField()
     def __str__(self):
       return self.user.username
