@@ -2,5 +2,6 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r"", views.profile, name="user-profile"),
+    url("edit_profile", views.profile, name="profile_edit"),
+    url("profile", views.profile_page, name="profile_page"),
 ]
