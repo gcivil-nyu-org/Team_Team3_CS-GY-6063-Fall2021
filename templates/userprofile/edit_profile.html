@@ -12,19 +12,16 @@
           {% csrf_token %}
           <fieldset class="form-group">
               <legend class="border-bottom mb-4">{{user.username}}'s Profile Info</legend>
-              <legend class="border-bottom mb-4">{{user.email}}'s Profile Info</legend>
               {{ u_form|crispy }}
               {{ p_form|crispy }}
           </fieldset>
           <div class="form-group" style="margin-top: 1rem">
               <button class="btn btn-primary" type="submit">Update</button>
-              <a href="{% url 'profile_page' %}" style="text-decoration:none;">Go Back</a>
-              
+              <a href="{% url 'profile_page' %}" style="text-decoration:none;">Go Back</a>   
               <p>
                 <br>
                 <a href="{% url 'profile_delete' %}" style="text-decoration:none; color: red">Delete Profile</a>
-              </p>
-              
+              </p>            
           </div>
     </form>
   </div>

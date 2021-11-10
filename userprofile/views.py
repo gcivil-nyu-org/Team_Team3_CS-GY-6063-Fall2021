@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import logout as auth_logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from .forms import UserDeleteProfileForm, UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth.models import User
 
 
 @login_required
@@ -44,8 +46,25 @@ def delete_profile(request):
 
         if delete_form.is_valid():
 
-            user = request.user
-            user.delete()
+            try:
+                u = User.objects.get(username = request.user)
+                u.delete()
+                messages.success(request, "The user is deleted")            
+
+            except User.DoesNotExist:
+                messages.error(request, "User does not exist")
+
+            # u = User.objects.get(username = request.user)
+            # u.delete()
+
+            # user = request.user
+            # user.delete()
+
+            # user_pk = request.user.pk
+            # auth_logout(request)
+            # User = get_user_model()
+            # User.objects.filter(pk=user_pk).delete()
+
             messages.info(request, 'Your account has been deleted.')
             return redirect('home')
     else:
