@@ -11,7 +11,8 @@ class Event(models.Model):
   date = models.DateTimeField();
   dateCreated = models.DateTimeField(default=timezone.now)
   owner = models.ForeignKey(User, on_delete=models.DO_NOTHING);
-
+  borough = models.CharField(max_length=20);
+  
   class Meta:
         verbose_name = "event"
         verbose_name_plural = "events"

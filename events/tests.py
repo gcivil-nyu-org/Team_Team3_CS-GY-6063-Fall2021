@@ -4,6 +4,7 @@ from django.utils import timezone
 from events.models import Event
 from django.urls import reverse
 import datetime
+from events.views import event_add_attendance, event_cancel_attendance
 
 class EventsViewTest(TestCase):
 
@@ -61,3 +62,19 @@ class EventsViewTest(TestCase):
     event.add_user_to_list_of_attendees(self.user)
     removeRegistration = event.remove_user_from_list_of_attendees(self.user)
     self.assertEqual(removeRegistration, True)
+
+  def test_event_add_and_cancel_attendance(self):
+    c = Client()
+    c.login(username = 'test_login', password = 'secret_111')
+    response = c.get(reverse('event-detail', kwargs={'pk':1}))
+    self.assertEqual(response.status_code, 200)    
+    response.user = self.user
+    event_add_attendance(response, 1)
+    event_cancel_attendance(response, 1)
+    self.assertTemplateUsed(response, "events/events_detail.html")
+
+  def test_create_event_view(self):
+    c = Client()
+    c.login(username = 'test_login', password = 'secret_111')
+    response = c.get(reverse('add-event', kwargs={'id':15385}))
+    self.assertEqual(response.status_code, 200)  
