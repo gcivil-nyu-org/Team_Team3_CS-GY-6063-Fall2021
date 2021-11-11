@@ -1,7 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
-from .forms import ProfileUpdateForm
 
 
 class TestUserProfileViews(TestCase):
@@ -46,47 +45,3 @@ class TestUserProfileViews(TestCase):
         response = c.get(reverse("profile_page"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "userprofile/profile_page.html")
-
-class TestUserProfileCreation(TestCase):
-    def setUp(self):
-        self.user = User.objects.create(username="test_login")
-        self.user.set_password("secret_111")
-        self.user.save()
-
-    def test_form_valid(self):
-        form_data = {
-            "profilename": "testuser12",
-            "tennis": True,
-            "frisbee": False,
-            "hiking": True,
-            "location": "nyc",
-            "distance": 1,
-        }
-        form = ProfileUpdateForm(data=form_data)
-        self.assertFalse(form.is_valid())
-
-    def test_form_invalid_text(self):
-        form_data = {
-            "profilename": "testuser12",
-            "tennis": "true",
-            "frisbee": False,
-            "hiking": True,
-            "location": "nyc",
-            "distance": "one mile",
-        }
-        form = ProfileUpdateForm(data=form_data)
-        self.assertFalse(form.is_valid())
-
-    def test_create_profile_saves_correct_data(self):
-
-        self.client.login(username="test_login", password="secret_111")
-        form_data = {
-            "profilename": "testuser12",
-            "tennis": True,
-            "frisbee": False,
-            "hiking": True,
-            "location": "nyc",
-            "distance": 1,
-        }
-        response = self.client.post("/userprofile/edit_profile/", form_data)
-        self.assertContains(response, "testuser12")

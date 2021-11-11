@@ -52,14 +52,6 @@ def delete_profile(request):
             except User.DoesNotExist:
                 messages.error(request, "User does not exist")
 
-            # user = request.user
-            # user.delete()
-
-            # user_pk = request.user.pk
-            # auth_logout(request)
-            # User = get_user_model()
-            # User.objects.filter(pk=user_pk).delete()
-
             messages.info(request, 'Your account has been deleted.')
             return redirect('home')
     else:
