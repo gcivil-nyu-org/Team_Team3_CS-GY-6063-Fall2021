@@ -17,8 +17,8 @@
             <p>Username: {{ user.username }}</p>
             <p>Email: {{ user.email }}</p>
             <p>Location: {{ user.profile.location }}</p>
-            <p>Willing to Travel: {{ user.profile.distance }}</p>
-            <p class="border-bottom mb-4">Interests</p>
+            <p>Willing to Travel To: {{ user.profile.distance }}</p>
+            <p class="border-bottom mb-4">Interests:</p>
             {% for key, value in profile_dic.items %}
                 {% if value == True %}
                     {{ key }}  
