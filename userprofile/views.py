@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import UserDeleteProfileForm, UserUpdateForm, ProfileUpdateForm
+from django.forms.models import model_to_dict
 
 
 @login_required
@@ -30,10 +31,8 @@ def profile(request):
 @login_required
 def profile_page(request):
 
-    u_form = UserUpdateForm(instance=request.user)
-    p_form = ProfileUpdateForm(instance=request.user.profile)
-
-    context = {"u_form": u_form, "p_form": p_form}
+    profile_dic = model_to_dict(request.user.profile)
+    context = {"profile_dic": profile_dic}
 
     return render(request, "userprofile/profile_page.html", context)
 
@@ -41,9 +40,8 @@ def profile_page(request):
 def delete_profile(request):
     if request.method == "POST":
         delete_form = UserDeleteProfileForm(request.POST, instance=request.user)
-
+        
         if delete_form.is_valid():
-
             try:
                 u = User.objects.get(username = request.user)
                 u.delete()

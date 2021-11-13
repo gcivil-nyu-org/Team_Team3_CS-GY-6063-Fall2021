@@ -45,3 +45,4 @@ class TestUserProfileViews(TestCase):
         response = c.get(reverse("profile_page"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "userprofile/profile_page.html")
+
