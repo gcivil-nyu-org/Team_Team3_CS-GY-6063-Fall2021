@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     "userprofile.apps.UserprofileConfig",
     "crispy_forms",
     "django.contrib.admin",
