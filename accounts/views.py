@@ -1,8 +1,10 @@
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 # from django.shortcuts import redirect
 from django.contrib.auth import login
+from django.urls import reverse
+from django.contrib import messages
 
 # from django.contrib.auth import authenticate
 from .forms import SignupForm
@@ -53,10 +55,11 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
-        # return redirect('home')
-        return HttpResponse(
-            "Thank you for your email confirmation. Now you can login your account."
+        messages.success(
+            request,
+            "Thank you for your email confirmation. Now you can login to your account.",
         )
+        return HttpResponseRedirect(reverse("home"))
     else:
-        return HttpResponse("Activation link is invalid!")
+        messages.error(request, "Activation link is invalid!")
+        return HttpResponseRedirect(reverse("home"))

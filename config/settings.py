@@ -148,6 +148,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
 MAPBOX_TOKEN = str(os.getenv("MAPBOX_TOKEN"))
+MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 if "/app" in os.environ["HOME"]:
