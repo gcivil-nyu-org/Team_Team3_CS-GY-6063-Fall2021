@@ -40,6 +40,7 @@ def event_add_attendance(request, pk):
   this_event.add_user_to_list_of_attendees(user=request.user)
   return redirect("event-detail", pk)
 
+@login_required
 def event_cancel_attendance(request, pk):
   this_event = Event.objects.get(pk=pk)
   this_event.remove_user_from_list_of_attendees(request.user)
