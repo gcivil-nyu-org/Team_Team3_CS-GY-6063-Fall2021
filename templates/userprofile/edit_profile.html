@@ -6,7 +6,7 @@
 
   <div class="content-section" style="padding: 2%; background-color: white">
       <div class="media">
-        <img class="rounded-circle account-img" src="{% static '{{ user.profile.image.url }}' %}">
+        <img class="rounded-circle account-img" src={% static "{{ user.profile.image.url }}" %}>
       </div>
     <div class="form-group col-sm-4 col-sm-offset-4  align=center">
     <form method="POST" enctype="multipart/form-data" style="background-color: white;">
