@@ -23,7 +23,14 @@
     <h2>Sports Available</h2>
     {% for key, value in sports.items %}
       {% if value == 'Yes' %}
-        <ul> <li>{{ key }}: {{ value}}</li></ul>
+        <ul> 
+          <li>
+            {{ key }}: {{ value}}
+            <div>
+              <a class="btn btn-primary" href="{% url 'add-event' key id %}" style="margin-bottom: 1rem">Create A {{key}} Event</a>
+            </div>
+          </li>
+        </ul>
       {% endif %}
     {% endfor %}
   </div>
@@ -38,7 +45,11 @@
           <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
         </h1>
         <p>{{event.description}}</p>
+        <p>Sport: {{event.sport}}</p>
         <p>{{event.address}}</p>
+        {% if event.borough != "" %}
+          <p>Borough: {{event.borough}}</p>
+        {% endif %}
         <p>{{event.date}}</p>
         <p>Creator: {{event.owner}}</p>
         </div>
@@ -49,7 +60,6 @@
 
 
 
-  <a class="btn btn-primary" href="{% url 'add-event' id %}" style="margin-bottom: 1rem">Create Event</a>
 
 </div>
 </div>

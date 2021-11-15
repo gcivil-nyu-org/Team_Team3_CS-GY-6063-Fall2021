@@ -31,7 +31,11 @@
           <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
         </h1> 
         <p>{{event.description}}</p>
+        <p>Sport: {{event.sport}}</p>
         <p>{{event.address}}</p>
+        {% if event.borough != "" %}
+          <p>Borough: {{event.borough}}</p>
+        {% endif %}
         <p>{{event.date}}</p>
         <p>Creator: {{event.owner}}</p>
         </div>
@@ -41,7 +45,7 @@
 
 
 
-  <a class="btn btn-primary" href="{% url 'add-event' id %}" style="margin-bottom: 1rem">Create Event</a>
+  <a class="btn btn-primary" href="{% url 'add-event' "Hiking" id %}" style="margin-bottom: 1rem">Create Hiking Event</a>
 
 </div>
 </div>

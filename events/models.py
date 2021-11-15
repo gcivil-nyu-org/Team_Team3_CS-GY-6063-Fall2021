@@ -4,14 +4,15 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 class Event(models.Model):
-  name = models.CharField(max_length=100);
-  description = models.TextField();
-  address = models.TextField();
-  locationId = models.CharField(max_length=100);
-  date = models.DateTimeField();
+  name = models.CharField(max_length=100)
+  description = models.TextField()
+  address = models.TextField()
+  locationId = models.CharField(max_length=100)
+  date = models.DateTimeField()
   dateCreated = models.DateTimeField(default=timezone.now)
-  owner = models.ForeignKey(User, on_delete=models.CASCADE);
-  borough = models.CharField(max_length=20);
+  owner = models.ForeignKey(User, on_delete=models.CASCADE)
+  borough = models.CharField(max_length=20)
+  sport = models.CharField(max_length=30)
   
   class Meta:
         verbose_name = "event"

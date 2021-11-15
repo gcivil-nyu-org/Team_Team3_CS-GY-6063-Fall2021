@@ -28,7 +28,7 @@ class EventsViewTest(TestCase):
   def test_create_event(self):
     c = Client()
     c.login(username = 'test_login', password = 'secret_111')
-    response = c.get(reverse('add-event', kwargs={'id':1}))
+    response = c.get(reverse('add-event', kwargs={'id':1, 'sport': 'baseball'}))
     self.assertEqual(response.status_code, 200)
 
   def test_update_event(self):
@@ -75,5 +75,5 @@ class EventsViewTest(TestCase):
   def test_create_event_view(self):
     c = Client()
     c.login(username = 'test_login', password = 'secret_111')
-    response = c.get(reverse('add-event', kwargs={'id':15385}))
+    response = c.get(reverse('add-event', kwargs={'id':15385, 'sport': 'baseball'}))
     self.assertEqual(response.status_code, 200)  

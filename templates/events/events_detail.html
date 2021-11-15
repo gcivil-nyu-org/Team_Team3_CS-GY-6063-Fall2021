@@ -4,6 +4,7 @@
   <div style="text-align: center; background-color: white; height: 800px; width: 100%;">
     <h1>{{object.name}} </h1> 
     <p>{{object.description}}</p>
+    <p>Sport: {{object.sport}}</p>
     <p>{{object.address}}</p>
     <p>Borough: {{object.borough}}</p>
     <p>{{object.date}}</p>
@@ -18,7 +19,11 @@
     <a class="btn btn-primary" href="{% url 'event-update' object.id %}">Update Event</a>
     <a class="btn btn-danger" href="{% url 'event-delete' object.id %}">Delete Event</a>
     <div style="margin-top: 1rem">
-      <a href="{% url 'show' object.locationId %}">View all events at this location</a>
+      {% if object.sport == 'Hiking' %}
+        <a href="{% url 'trails' object.locationId %}">View all events at this location</a>
+      {% else %}
+        <a href="{% url 'show' object.locationId %}">View all events at this location</a>
+      {% endif %}    
     <div>
 
     <h2>Attendees</h2>

@@ -10,7 +10,11 @@
           <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
         </h1> 
         <p>{{event.description}}</p>
+        <p>Sport: {{event.sport}}</p>
         <p>{{event.address}}</p>
+        {% if event.borough != "" %}
+          <p>Borough: {{event.borough}}</p>
+        {% endif %}
         <p>{{event.date}}</p>
         <p>Creator: {{event.owner}}</p>
         </div>
