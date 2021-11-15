@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Flag Football Locations{% endblock %}
+{% block title %}Sport Specific Locations{% endblock %}
 {% block headcontent %}
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css" rel="stylesheet">
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js"></script>
@@ -15,8 +15,8 @@
         const map = new mapboxgl.Map({
         container: 'map', // container ID
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-73.98542090029771, 40.6731326280087],
-        zoom: 15
+        center: [-73.98627859258755, 40.695065862718806],
+        zoom: 14
       });
  
       map.on('load', () => {
@@ -27,8 +27,7 @@
       map.addImage('custom-marker', image);
       map.addSource('outdoorsquad', {
         type: 'geojson',
-      // Use a URL for the value for the `data` property.
-        data: 'https://api.mapbox.com/datasets/v1/jk1257/ckvpcpjz99f3m27mnfmu5lfgx/features?access_token={{ mapbox_access_token }}'
+        data: 'https://api.mapbox.com/datasets/v1/jk1257/{{ dataset_id }}/features?access_token={{ mapbox_access_token }}'
       });
  
       map.addControl(new mapboxgl.NavigationControl());
@@ -44,16 +43,7 @@
       map.on('click', 'places', (e) => {
         //  coordinates array.
         const coordinates = e.features[0].geometry. coordinates.slice();
-        const description = '<a href="/facilities/' + e.features[0].properties.objectid + '" class="btn d-block btn-primary btn-sm" target="_blank">See more info</a>';
-
- 
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0]   ? 360 : -360;
-        }
-
+        const objectid = e.features[0].properties.objectid;
 
         const getAddress = async () => {
         await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?access_token={{ mapbox_access_token }}`)
@@ -63,16 +53,23 @@
         .then((myJson) => {  
           const ADDRESS_INDEX = 0;
           const address = myJson.features[ADDRESS_INDEX].place_name; 
-
+          console.log(address); 
+          const description = '<a href="/facilities/' + objectid + '" class="btn d-block btn-primary btn-sm" target="_blank">See more info</a>';
           new mapboxgl.Popup()
           .setLngLat(coordinates)
-          .setHTML(address + description)
+          .setHTML(address + ' ' + (description))
           .addTo(map);
-
           return address;
           });
         }
-
+        
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0]   ? 360 : -360;
+        }
+        
       getAddress().then(data => (address = data));
       });
  
