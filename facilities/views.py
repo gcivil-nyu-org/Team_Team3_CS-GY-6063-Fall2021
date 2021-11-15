@@ -38,7 +38,7 @@ def show(request, id):
 
     name = currentFacility["name"]
     accessible = currentFacility["accessible"]
-    description = currentFacility["descriptio"]
+    # description = currentFacility["descriptio"]
     dimensions = currentFacility["dimensions"]
     wheelchair = currentFacility["wheelchair"]
     coordinates = currentFacility['geometry']['coordinates']
