@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 
 from events.models import EventRegistration
-    
+
 class HomePageView(TemplateView):
     template_name = "home.html"
 

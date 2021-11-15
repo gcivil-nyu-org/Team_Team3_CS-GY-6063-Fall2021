@@ -21,7 +21,11 @@
     <a class="btn btn-primary" href="{% url 'event-update' object.id %}">Update Event</a>
     <a class="btn btn-danger" href="{% url 'event-delete' object.id %}">Delete Event</a>
     <div style="margin-top: 1rem">
+    {% if object.sport == 'hiking' %}
+      <a href="{% url 'trails' object.locationId %}">View all events at this location</a>
+    {% else %}
       <a href="{% url 'show' object.sport object.locationId %}">View all events at this location</a>
+    {% endif %}
     <div>
 
     <h2>Attendees</h2>

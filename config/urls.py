@@ -14,14 +14,23 @@ Including another URLconf
 """
 # config/urls.py
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path, include
-from django.views.generic.base import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic.base import TemplateView
 from config.views import HomePageView
+from accounts.forms import EmailValidationOnForgotPassword
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path(
+        "accounts/password_reset/",
+        auth_views.PasswordResetView.as_view(
+            form_class=EmailValidationOnForgotPassword
+        ),
+        name="password_reset",
+    ),
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("", HomePageView.as_view(template_name="home.html"), name="home"),  # new

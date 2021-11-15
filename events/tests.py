@@ -17,9 +17,8 @@ class EventsViewTest(TestCase):
 
   def test_events_list_view(self):
     response = self.client.get('/events/')
-    self.assertEqual(response.status_code, 200)
-    self.assertTemplateUsed(response, 'events/events_list.html')
-  
+    self.assertEqual(response.status_code, 302)
+      
   def test_events_detail_view(self):
     c = Client()
     c.login(username = 'test_login', password = 'secret_111')

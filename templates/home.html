@@ -3,6 +3,11 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+    {% endfor %}
+{% endif %}
 {% if user.is_authenticated %}
 <div class="d-flex flex-column align-items-center">
   <h1 style="color: white;">Hi {{ user.first_name }} {{ user.last_name }}!</h1>
