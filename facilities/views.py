@@ -8,7 +8,7 @@ import json
 # import ast
 
 
-def show(request, id):
+def show(request, sport, id):
     data = json.loads(read_facilities_data())
     currentFacility = data[str(id)]
 
@@ -46,6 +46,7 @@ def show(request, id):
         request,
         "maps/facilities.html",
         {
+            "sport": sport,
             "id": id,
             "currentFacility": currentFacility,
             "track": track,

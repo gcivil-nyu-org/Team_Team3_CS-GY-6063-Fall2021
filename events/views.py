@@ -67,9 +67,11 @@ class EventsCreateView(LoginRequiredMixin, CreateView):
   def form_valid(self, form):
     form.instance.owner = self.request.user
     form.instance.locationId = self.kwargs.get('id', None)
+    form.instance.sport = self.kwargs.get('sport', None)
     data = json.loads(read_facilities_data())
     currentFacility = data[str(self.kwargs.get('id', None))]
     borough = currentFacility['borough']
+    
     if borough == 'B':
       form.instance.borough = 'Brooklyn'
     elif borough == 'M':

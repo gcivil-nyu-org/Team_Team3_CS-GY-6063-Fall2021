@@ -44,7 +44,7 @@
       map.on('click', 'places', (e) => {
         //  coordinates array.
         const coordinates = e.features[0].geometry. coordinates.slice();
-        const description = '<a href="/facilities/' + e.features[0].properties.objectid + '" class="btn d-block btn-primary btn-sm" target="_blank">See more info</a>';
+        const description = '<a href="/facilities/tennis/' + e.features[0].properties.objectid + '" class="btn d-block btn-primary btn-sm" target="_blank">See more info</a>';
 
  
         // Ensure that if the map is zoomed out such that multiple

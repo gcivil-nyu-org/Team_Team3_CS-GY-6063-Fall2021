@@ -8,5 +8,5 @@ urlpatterns = [
   path("<pk>/unjoin/", event_cancel_attendance, name="unjoin-event"),
   path('<pk>/update/', EventUpdateView.as_view(), name='event-update'),
   path('<pk>/delete/', EventDeleteView.as_view(), name='event-delete'),
-  path("new/<id>/", EventsCreateView.as_view(), name="add-event"),
+  path("new/<sport>/<id>/", EventsCreateView.as_view(), name="add-event"),
 ]
