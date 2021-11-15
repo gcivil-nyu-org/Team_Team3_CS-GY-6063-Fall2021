@@ -40,7 +40,7 @@ class UserActivationTest(TestCase):
         response = self.client.get(
             reverse("activate", kwargs={"uidb64": uid, "token": token})
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         user = User.objects.get(username="testuser1")
         self.assertTrue(user.is_active)
 
@@ -52,5 +52,5 @@ class UserActivationTest(TestCase):
             response = self.client.get(
                 reverse("activate", kwargs={"uidb64": "123", "token": token})
             )
-            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.status_code, 302)
             user = User.objects.get(username="testuser3")
