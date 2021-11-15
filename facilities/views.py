@@ -13,27 +13,27 @@ def show(request, id):
     currentFacility = data[str(id)]
 
     sports = {
-         'bocce': currentFacility['bocce'],
-         'track': currentFacility["track_and"],
-         'frisbee': currentFacility["frisbee"],
-         'tBall': currentFacility["t_ball"],
-         'adultBaseball': currentFacility["adult_base"],
-         'adultFootball': currentFacility["adult_foot"],
-         'adultSoftball': currentFacility["adult_soft"],
-         'basketball': currentFacility["basketball"],
-         'cricket': currentFacility["cricket"],
-         'flagFootball': currentFacility["flagfootba"],
-         'handball': currentFacility["handball"],
-         'hockey': currentFacility["hockey"],
-         'kickball': currentFacility["kickball"],
-         'lacrosse': currentFacility["lacrosse"],
+         'Bocce': currentFacility['bocce'],
+         'Track': currentFacility["track_and"],
+         'Frisbee': currentFacility["frisbee"],
+         'T Ball': currentFacility["t_ball"],
+         'Baseball': currentFacility["adult_base"],
+         'Football': currentFacility["adult_foot"],
+         'Softball': currentFacility["adult_soft"],
+         'Basketball': currentFacility["basketball"],
+         'Cricket': currentFacility["cricket"],
+         'Flag Football': currentFacility["flagfootba"],
+         'Handball': currentFacility["handball"],
+         'Hockey': currentFacility["hockey"],
+         'Kickball': currentFacility["kickball"],
+         'Lacrosse': currentFacility["lacrosse"],
          # littleLeagueBaseballOne = currentFacility["ll_baseb_1"]
          # littleLeagueBaseballTwo = currentFacility["ll_baseb_2"]
          # littleLeagueSoftball = currentFacility["ll_softbal"]
-         'netball': currentFacility["netball"],
-         'rugby': currentFacility["rugby"],
-         'tennis': currentFacility["tennis"],
-         'volleyball': currentFacility["volleyball"]
+         'Netball': currentFacility["netball"],
+         'Rugby': currentFacility["rugby"],
+         'Tennis': currentFacility["tennis"],
+         'Volleyball': currentFacility["volleyball"]
     }
 
     name = currentFacility["name"]
@@ -42,7 +42,7 @@ def show(request, id):
     dimensions = currentFacility["dimensions"]
     wheelchair = currentFacility["wheelchair"]
     coordinates = currentFacility['geometry']['coordinates']
-    
+
     eventsAtLocation = Event.objects.filter(locationId = id);
     return render(
         request,
