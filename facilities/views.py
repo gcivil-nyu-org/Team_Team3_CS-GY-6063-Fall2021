@@ -102,6 +102,7 @@ def trails(request, id):
         "maps/trails.html", 
         {
             "id": id,
+            "sport": "hiking",
             "name": name,
             "location" : location,
             "park" : park,

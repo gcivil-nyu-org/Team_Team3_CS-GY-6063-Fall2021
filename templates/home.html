@@ -16,7 +16,11 @@
             <a href="{% url 'event-detail' event.event.id %}">{{event.event.name}}</a>
           </h1> 
           <p>{{event.event.description}}</p>
+          <p>Sport: {{event.event.sport.capitalize}}</p>
           <p>{{event.event.address}}</p>
+          {% if event.event.borough != "" %}
+            <p>Borough: {{event.event.borough}}</p>
+          {% endif %}
           <p>{{event.event.date}}</p>
           <p>Creator: {{event.event.owner}}</p>
           </div>
