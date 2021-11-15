@@ -30,15 +30,15 @@ def show(request, id):
     hockey = currentFacility["hockey"]
     kickball = currentFacility["kickball"]
     lacrosse = currentFacility["lacrosse"]
-    littleLeagueBaseballOne = currentFacility["ll_baseb_1"]
-    littleLeagueBaseballTwo = currentFacility["ll_baseb_2"]
-    littleLeagueSoftball = currentFacility["ll_softbal"]
+    # littleLeagueBaseballOne = currentFacility["ll_baseb_1"]
+    # littleLeagueBaseballTwo = currentFacility["ll_baseb_2"]
+    # littleLeagueSoftball = currentFacility["ll_softbal"]
     netball = currentFacility["netball"]
     rugby = currentFacility["rugby"]
     tennis = currentFacility["tennis"]
     volleyball = currentFacility["volleyball"]
     wheelchair = currentFacility["wheelchair"]
-    youthFootball = currentFacility["youth_foot"]
+    # youthFootball = currentFacility["youth_foot"]
     coordinates = currentFacility['geometry']['coordinates']
 
     eventsAtLocation = Event.objects.filter(locationId = id);
@@ -66,15 +66,15 @@ def show(request, id):
             "hockey": hockey,
             "kickball": kickball,
             "lacrosse": lacrosse,
-            "littleLeagueBaseBallOne": littleLeagueBaseballOne,
-            "littleLeagueBaseBallTwo": littleLeagueBaseballTwo,
-            "littleLeagueSoftball": littleLeagueSoftball,
+            # "littleLeagueBaseBallOne": littleLeagueBaseballOne,
+            # "littleLeagueBaseBallTwo": littleLeagueBaseballTwo,
+            # "littleLeagueSoftball": littleLeagueSoftball,
             "netball": netball,
             "rugby": rugby,
             "tennis": tennis,
             "volleyball": volleyball,
             "wheelchair": wheelchair,
-            "youthFootball": youthFootball,
+            # "youthFootball": youthFootball,
             "events": eventsAtLocation,
             "coordinates": coordinates,
             "mapbox_access_token": MAPBOX_TOKEN
@@ -97,8 +97,8 @@ def trails(request, id):
     eventsAtLocation = Event.objects.filter(locationId = id)
 
     return render(
-        request, 
-        "maps/trails.html", 
+        request,
+        "maps/trails.html",
         {
             "id": id,
             "name": name,
