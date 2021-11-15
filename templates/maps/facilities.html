@@ -21,6 +21,11 @@
     </div>
     <div>
     <h2>Sports Available</h2>
+    {% for key, value in sports.items %}
+      {% if value == 'Yes' %}
+        <li>{{ key }}: {{ value}}</li>
+      {% endif %}
+    {% endfor %}
       <ul>
       <li>Bocce : {{ bocce }}</li>
       <li>Frisbee : {{ frisbee }}</li>
