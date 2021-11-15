@@ -13,7 +13,8 @@ class Event(models.Model):
   owner = models.ForeignKey(User, on_delete=models.CASCADE)
   borough = models.CharField(max_length=20)
   sport = models.CharField(max_length=30)
-  
+  numberOfPlayers = models.IntegerField("Number of People Needed:");
+
   class Meta:
         verbose_name = "event"
         verbose_name_plural = "events"

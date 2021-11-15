@@ -22,6 +22,7 @@
           </h1> 
           <p>{{event.event.description}}</p>
           <p>Sport: {{event.event.sport.capitalize}}</p>
+          <p>Number of People Needed: {{event.event.numberOfPlayers}}</p>
           <p>{{event.event.address}}</p>
           {% if event.event.borough != "" %}
             <p>Borough: {{event.event.borough}}</p>
