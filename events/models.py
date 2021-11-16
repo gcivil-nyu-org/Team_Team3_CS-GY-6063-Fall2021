@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.core.exceptions import ValidationError
 
 class Event(models.Model):
   name = models.CharField(max_length=100)
@@ -15,6 +16,11 @@ class Event(models.Model):
   sport = models.CharField(max_length=30)
   numberOfPlayers = models.IntegerField("Number of People Needed:");
 
+  def clean(self, *args, **kwargs):
+    if self.date < timezone.now():
+      raise ValidationError("The date cannot be in the past!")
+      super(Event, self).clean(*args, **kwargs)
+  
   class Meta:
         verbose_name = "event"
         verbose_name_plural = "events"
