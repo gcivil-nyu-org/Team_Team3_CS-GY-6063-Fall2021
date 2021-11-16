@@ -163,7 +163,7 @@ class FacilitiesViewTest(TestCase):
         
     def test_can_see_sport(self):
         response=self.client.get("/facilities/15184")
-        self.assertContains(response, "Baseball: Yes")
+        self.assertContains(response, "Baseball")
 
 class MapsFacilitiesDataTest(TestCase):
     # test idea: checking if particular key (objectid) with a particular name is in parsed json file
