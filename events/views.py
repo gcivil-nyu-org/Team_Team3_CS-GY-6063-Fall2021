@@ -11,6 +11,8 @@ from django.views.generic import (
   )
 from django import forms
 from maps.facilities_data import read_facilities_data
+from django.utils import timezone
+from datetime import timedelta
 import json
 
 
@@ -32,6 +34,8 @@ class EventDetailView(DetailView):
       if attendee.user == self.request.user:
         isAttending = True
     context['isAttending'] = isAttending
+    date = self.object.date + timedelta( hours =2) 
+    context['can_delete'] = date > timezone.now()
     return context
 
 @login_required
@@ -107,4 +111,5 @@ class EventDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     if self.request.user == event.owner:
       return True
     return False
+
 

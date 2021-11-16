@@ -16,7 +16,9 @@
   {% endif %}
 
     <a class="btn btn-primary" href="{% url 'event-update' object.id %}">Update Event</a>
-    <a class="btn btn-danger" href="{% url 'event-delete' object.id %}">Delete Event</a>
+    {% if can_delete %}
+      <a class="btn btn-danger" href="{% url 'event-delete' object.id %}">Delete Event</a>
+    {% endif %}
     <div style="margin-top: 1rem">
       <a href="{% url 'show' object.locationId %}">View all events at this location</a>
     <div>
