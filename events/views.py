@@ -9,10 +9,11 @@ from django.views.generic import (
   UpdateView,
   DeleteView
   )
+from django.core.exceptions import ValidationError
 from django import forms
-from maps.facilities_data import read_facilities_data
 from django.utils import timezone
 from datetime import timedelta
+from maps.facilities_data import read_facilities_data, read_hiking_data
 import json
 
 
@@ -57,35 +58,66 @@ class DateInput(forms.DateTimeInput):
 class CreateEventForm(forms.ModelForm):
   class Meta:
     model = Event
-    fields = ['name', 'description', 'address', 'date']
+    fields = ['name', 'description', 'address', 'date', 'numberOfPlayers']
     widgets = {'date' : DateInput()}
 
 class UpdateEventForm(forms.ModelForm):
   class Meta:
     model = Event
-    fields = ['name', 'description', 'address', 'locationId', 'date']
+    fields = ['name', 'description', 'address', 'date', 'numberOfPlayers']
     widgets = {'date' : DateInput()}
 
+def get_sport_key(sport):
+  return {
+  'Bocce': 'bocce',
+  'Track': "track_and",
+  'Frisbee':"frisbee",
+  'Baseball': "adult_base",
+  'Football': "adult_foot",
+  'Softball': "adult_soft",
+  'Basketball': "basketball",
+  'Cricket': "cricket",
+  'Flag Football': "flagfootba",
+  'Handball': "handball",
+  'Hockey': "hockey",
+  'Kickball': "kickball",
+  'Lacrosse': "lacrosse",
+  'Netball': "netball",
+  'Rugby': "rugby",
+  'Tennis':"tennis",
+  'Volleyball': "volleyball"
+  }[sport]
 class EventsCreateView(LoginRequiredMixin, CreateView):
   form_class = CreateEventForm
   model = Event
-
+    
   def form_valid(self, form):
     form.instance.owner = self.request.user
     form.instance.locationId = self.kwargs.get('id', None)
-    data = json.loads(read_facilities_data())
-    currentFacility = data[str(self.kwargs.get('id', None))]
-    borough = currentFacility['borough']
-    if borough == 'B':
-      form.instance.borough = 'Brooklyn'
-    elif borough == 'M':
-      form.instance.borough = 'Manhattan'
-    elif borough == 'X':
-      form.instance.borough = 'Bronx'
-    elif borough == 'R':
-      form.instance.borough = 'Staten Island'
-    else:
-      form.instance.borough = 'Queens'
+    form.instance.sport = self.kwargs.get('sport', None)
+    data =  json.loads(read_hiking_data()) if self.kwargs.get('sport', None) == 'Hiking' else json.loads(read_facilities_data())
+
+    if self.kwargs.get('sport', None) != 'Hiking':
+      currentFacility = data[str(self.kwargs.get('id', None))]
+
+      sportIsAvailable = currentFacility[get_sport_key(str(self.kwargs.get('sport', None)))]
+      if sportIsAvailable != 'Yes':
+        raise ValidationError(
+          str(self.kwargs.get('sport', None)) + " is not available at this facility."
+        )
+    
+      borough = currentFacility['borough']
+
+      if borough == 'B':
+        form.instance.borough = 'Brooklyn'
+      elif borough == 'M':
+        form.instance.borough = 'Manhattan'
+      elif borough == 'X':
+        form.instance.borough = 'Bronx'
+      elif borough == 'R':
+        form.instance.borough = 'Staten Island'
+      else:
+        form.instance.borough = 'Queens'
     return super().form_valid(form)
 
 class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
