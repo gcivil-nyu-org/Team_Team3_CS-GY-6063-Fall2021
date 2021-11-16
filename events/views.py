@@ -34,8 +34,9 @@ class EventDetailView(DetailView):
       if attendee.user == self.request.user:
         isAttending = True
     context['isAttending'] = isAttending
-    date = self.object.date + timedelta( hours =2) 
-    context['can_delete'] = date > timezone.now()
+    context['isOwner'] = self.object.owner == self.request.user
+    date = self.object.date - timedelta(hours =2) 
+    context['canDelete'] = date > timezone.now()
     return context
 
 @login_required

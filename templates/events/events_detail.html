@@ -9,16 +9,20 @@
     <p>{{object.date}}</p>
     <p>Creator: {{object.owner}}</p>
   
-  {% if isAttending %}
+    {% if isAttending %}
       <a class="btn btn-primary" href="{% url 'unjoin-event' object.id %}">Unjoin Event</a>
-  {% else %}
-    <a class="btn btn-primary" href="{% url 'join-event' object.id %}">Join Event</a>
-  {% endif %}
+    {% else %}
+      <a class="btn btn-primary" href="{% url 'join-event' object.id %}">Join Event</a>
+    {% endif %}
 
-    <a class="btn btn-primary" href="{% url 'event-update' object.id %}">Update Event</a>
-    {% if can_delete %}
+    {% if isOwner %}
+     <a class="btn btn-primary" href="{% url 'event-update' object.id %}">Update Event</a>
+    {% endif %}
+
+    {% if canDelete and isOwner %}
       <a class="btn btn-danger" href="{% url 'event-delete' object.id %}">Delete Event</a>
     {% endif %}
+
     <div style="margin-top: 1rem">
       <a href="{% url 'show' object.locationId %}">View all events at this location</a>
     <div>
