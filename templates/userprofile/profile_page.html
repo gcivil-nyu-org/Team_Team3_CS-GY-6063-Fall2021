@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="d-flex flex-column align-items-center">
-    <h1 style="color: white;">{{ user.username }}'s' Profile Page</h1>
+    <h1 style="color: white;">{{ user.username }}'s Profile Page</h1>
 
     <div class="content-section" style="padding:1%; background-color: white">
         <div class="media">
@@ -19,11 +19,13 @@
             <p>Location: {{ user.profile.location }}</p>
             <p>Willing to Travel To: {{ user.profile.distance }}</p>
             <p class="border-bottom mb-4">Interests:</p>
-            {% for key, value in profile_dic.items %}
-                {% if value == True %}
-                    {{ key }}  
-                {% endif %}
-            {% endfor %}
+            <ul>
+                {% for key, value in profile_dic.items %}
+                    {% if value == True %}
+                        <li>{{ key }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
         </div>
         <br>
         <a href="{% url 'profile_edit' %}" style="text-decoration:none;">Edit Profile</a>
