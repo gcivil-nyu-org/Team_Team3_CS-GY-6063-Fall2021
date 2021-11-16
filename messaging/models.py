@@ -16,3 +16,4 @@ class MessageModel(models.Model):
   body = models.CharField(max_length=1000)
   date = models.DateTimeField(default=timezone.now)
   is_read = models.BooleanField(default=False)
+  
