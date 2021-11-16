@@ -60,7 +60,7 @@ class UpdateEventForm(forms.ModelForm):
   class Meta:
     model = Event
     fields = ['name', 'description', 'address', 'date', 'numberOfPlayers']
-    widgets = {'date' : DateInput()}
+    date = forms.DateField(widget=DateInput(), initial=DateInput())
 
 def get_sport_key(sport):
   return {
