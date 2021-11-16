@@ -9,3 +9,5 @@ coveralls
 django-crispy-forms
 Pillow
 django-multiselectfield
+django-storages
+boto3
