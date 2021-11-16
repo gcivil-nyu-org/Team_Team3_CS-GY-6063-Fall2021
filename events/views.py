@@ -59,7 +59,7 @@ class UpdateEventForm(forms.ModelForm):
   class Meta:
     model = Event
     fields = ['name', 'description', 'address', 'locationId', 'date']
-    widgets = {'date' : DateInput()}
+    date = forms.DateField(widget=DateInput(), initial=DateInput())
 
 class EventsCreateView(LoginRequiredMixin, CreateView):
   form_class = CreateEventForm

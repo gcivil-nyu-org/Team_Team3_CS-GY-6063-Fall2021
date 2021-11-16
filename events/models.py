@@ -5,20 +5,20 @@ from django.urls import reverse
 from django.core.exceptions import ValidationError
 
 class Event(models.Model):
+
+  def no_past(value):
+    if value < timezone.now():
+      raise ValidationError("The date cannot be in the past!")
+      
   name = models.CharField(max_length=100);
   description = models.TextField();
   address = models.TextField();
   locationId = models.CharField(max_length=100);
-  date = models.DateTimeField();
+  date = models.DateTimeField(verbose_name="Event Date", validators=[no_past]);
   dateCreated = models.DateTimeField(default=timezone.now)
   owner = models.ForeignKey(User, on_delete=models.CASCADE);
   borough = models.CharField(max_length=20);
 
-  def clean(self, *args, **kwargs):
-    if self.date < timezone.now():
-      raise ValidationError("The date cannot be in the past!")
-      super(Event, self).clean(*args, **kwargs)
-  
   class Meta:
         verbose_name = "event"
         verbose_name_plural = "events"
