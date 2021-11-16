@@ -9,6 +9,7 @@ from django.views.generic import (
   UpdateView,
   DeleteView
   )
+from django.core.exceptions import ValidationError
 from django import forms
 from maps.facilities_data import read_facilities_data, read_hiking_data
 import json
@@ -61,10 +62,30 @@ class UpdateEventForm(forms.ModelForm):
     fields = ['name', 'description', 'address', 'date', 'numberOfPlayers']
     widgets = {'date' : DateInput()}
 
+def get_sport_key(sport):
+  return {
+  'Bocce': 'bocce',
+  'Track': "track_and",
+  'Frisbee':"frisbee",
+  'Baseball': "adult_base",
+  'Football': "adult_foot",
+  'Softball': "adult_soft",
+  'Basketball': "basketball",
+  'Cricket': "cricket",
+  'Flag Football': "flagfootba",
+  'Handball': "handball",
+  'Hockey': "hockey",
+  'Kickball': "kickball",
+  'Lacrosse': "lacrosse",
+  'Netball': "netball",
+  'Rugby': "rugby",
+  'Tennis':"tennis",
+  'Volleyball': "volleyball"
+  }[sport]
 class EventsCreateView(LoginRequiredMixin, CreateView):
   form_class = CreateEventForm
   model = Event
-
+    
   def form_valid(self, form):
     form.instance.owner = self.request.user
     form.instance.locationId = self.kwargs.get('id', None)
@@ -73,6 +94,13 @@ class EventsCreateView(LoginRequiredMixin, CreateView):
 
     if self.kwargs.get('sport', None) != 'Hiking':
       currentFacility = data[str(self.kwargs.get('id', None))]
+
+      sportIsAvailable = currentFacility[get_sport_key(str(self.kwargs.get('sport', None)))]
+      if sportIsAvailable != 'Yes':
+        raise ValidationError(
+          str(self.kwargs.get('sport', None)) + " is not available at this facility."
+        )
+    
       borough = currentFacility['borough']
 
       if borough == 'B':
