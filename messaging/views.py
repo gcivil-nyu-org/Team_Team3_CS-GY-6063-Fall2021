@@ -79,3 +79,4 @@ class ThreadView(View):
     }
     return render(request, 'messaging/thread.html', context)
     
+    
