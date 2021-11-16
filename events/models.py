@@ -14,7 +14,7 @@ class Event(models.Model):
   owner = models.ForeignKey(User, on_delete=models.CASCADE)
   borough = models.CharField(max_length=20)
   sport = models.CharField(max_length=30)
-  numberOfPlayers = models.IntegerField("Number of People Needed:");
+  numberOfPlayers = models.PositiveIntegerField("Number of People Needed:")
 
   def clean(self, *args, **kwargs):
     if self.date < timezone.now():
