@@ -9,6 +9,7 @@ from django.contrib import messages
 # Create your views here.
 class CreateThread(View):
 
+
   def get(self, request, *args, **kwargs):
     form = ThreadForm()
     context = {
@@ -19,27 +20,27 @@ class CreateThread(View):
   def post(self, request, *args, **kwargs):
     form = ThreadForm(request.POST)
     username = request.POST.get('username')
-    try:
-        receiver = User.objects.get(username=username)
-        if ThreadModel.objects.filter(user=request.user, receiver=receiver).exists():
-            thread = ThreadModel.objects.filter(user=request.user, receiver=receiver)[0]
-            return redirect('thread', pk=thread.pk)
-        elif ThreadModel.objects.filter(user=receiver, receiver=request.user).exists():
-            thread = ThreadModel.objects.filter(user=receiver, receiver=request.user)[0]
-            return redirect('thread', pk=thread.pk)
-            
-        if form.is_valid():
-            thread = ThreadModel(
-                user=request.user,
-                receiver=receiver
-            )
-            thread.save()
-
+    
+    if User.objects.filter(username=username).exists(): 
+      receiver = User.objects.get(username=username)
+      if ThreadModel.objects.filter(user=request.user, receiver=receiver).exists():
+        thread = ThreadModel.objects.filter(user=request.user, receiver=receiver)[0]
         return redirect('thread', pk=thread.pk)
-    except:
-        messages.error(request, 'Invalid username!')
-        return redirect('create-thread')
-
+      elif ThreadModel.objects.filter(user=receiver, receiver=request.user).exists():
+        thread = ThreadModel.objects.filter(user=receiver, receiver=request.user)[0]
+        return redirect('thread', pk=thread.pk)
+      else: 
+        if form.is_valid():
+          thread = ThreadModel(
+          user=request.user,
+          receiver=receiver
+          )
+        thread.save()
+        return redirect('thread', pk=thread.pk)
+    else:
+      messages.error(request, 'Invalid username!')
+      return redirect('create-thread')
+        
 class ListThreads(View):
 
   def get(self, request, *args, **kwargs):
