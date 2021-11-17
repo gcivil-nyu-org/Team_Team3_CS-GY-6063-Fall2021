@@ -13,9 +13,9 @@
     <p>{{object.date}}</p>
     <p>Creator: {{object.owner}}</p>
   
-    {% if isAttending %}
+    {% if isAttending and canUnjoin %}
       <a class="btn btn-primary" href="{% url 'unjoin-event' object.id %}">Unjoin Event</a>
-    {% else %}
+    {% elif not isAttending %}
       <a class="btn btn-primary" href="{% url 'join-event' object.id %}">Join Event</a>
     {% endif %}
 

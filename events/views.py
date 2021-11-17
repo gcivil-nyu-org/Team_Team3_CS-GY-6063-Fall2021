@@ -36,8 +36,11 @@ class EventDetailView(DetailView):
         isAttending = True
     context['isAttending'] = isAttending
     context['isOwner'] = self.object.owner == self.request.user
-    date = self.object.date - timedelta(hours =2) 
-    context['canDelete'] = date > timezone.now()
+    deleteTime = self.object.date - timedelta(hours =24)
+    unjoinTime = self.object.date - timedelta(hours =2)
+    context['canDelete'] = deleteTime > timezone.now()
+    context['canUnjoin'] = unjoinTime > timezone.now()
+    
     return context
 
 @login_required
