@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "maps",
     "events.apps.EventsConfig",
     "multiselectfield",
-    "storages"
+    "storages",
     "messaging"
 ]
 

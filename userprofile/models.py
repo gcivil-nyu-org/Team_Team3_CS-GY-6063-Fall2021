@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 from multiselectfield import MultiSelectField
-# from django.core.files.storage import default_storage as storage
+from django.core.files.storage import default_storage as storage
 
 
 LOCATION_CHOICES = (
@@ -73,25 +73,11 @@ class Profile(models.Model):
 
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)
-
-        img = Image.open(self.image.name)
-
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.image.name)
-
-        # x = self.cleaned_data.get('x')
-        # y = self.cleaned_data.get('y')
-        # w = self.cleaned_data.get('width')
-        # h = self.cleaned_data.get('height')
-
-        # image = Image.open(self.image.path)
-        # cropped_image = image.crop((x, y, w + x, h + y))
-        # resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
-
-        # fh = storage.open(self.image.path, "wb")
-        # picture_format = 'png'
-        # resized_image.save(fh, picture_format)
-        # fh.close()        
-        # return user
+        if self.image:
+            size = 200, 200
+            image = Image.open(self.image)
+            image.thumbnail(size, Image.ANTIALIAS)
+            fh = storage.open(self.image.name, "w")
+            format = 'png'  # You need to set the correct image format here
+            image.save(fh, format)
+            fh.close()
