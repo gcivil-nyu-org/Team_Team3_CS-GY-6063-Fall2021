@@ -146,24 +146,24 @@ class HikingViewTest(TestCase):
         self.assertTemplateUsed(response, "maps/hiking.html")
         self.assertContains(response, MAPBOX_TOKEN)
 
-class FacilitiesViewTest(TestCase):
-    def test_returns_success(self):
-        response = self.client.get("/facilities/17308")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "maps/facilities.html")
+# class FacilitiesViewTest(TestCase):
+#     def test_returns_success(self):
+#         response = self.client.get("/facilities/17308")
+#         self.assertEqual(response.status_code, 200)
+#         self.assertTemplateUsed(response, "maps/facilities.html")
 
-    def test_can_see_name(self):
-        response=self.client.get("/facilities/18627")
-        self.assertContains(response, "Bridge Park 3")
+#     def test_can_see_name(self):
+#         response=self.client.get("/facilities/18627")
+#         self.assertContains(response, "Bridge Park 3")
 
-    #decided that checking that response contains coords suffices
-    def test_can_see_lattitue(self):
-        response=self.client.get("/facilities/18627")
-        self.assertContains(response, "-73.98585882204912,40.70050871357319")
+#     #decided that checking that response contains coords suffices
+#     def test_can_see_lattitue(self):
+#         response=self.client.get("/facilities/18627")
+#         self.assertContains(response, "-73.98585882204912,40.70050871357319")
         
-    def test_can_see_sport(self):
-        response=self.client.get("/facilities/15184")
-        self.assertContains(response, "Baseball")
+#     def test_can_see_sport(self):
+#         response=self.client.get("/facilities/15184")
+#         self.assertContains(response, "Baseball")
 
 class MapsFacilitiesDataTest(TestCase):
     # test idea: checking if particular key (objectid) with a particular name is in parsed json file
