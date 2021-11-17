@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 from multiselectfield import MultiSelectField
-from django.core.files.storage import default_storage as storage
+# from django.core.files.storage import default_storage as storage
 
 
 LOCATION_CHOICES = (
