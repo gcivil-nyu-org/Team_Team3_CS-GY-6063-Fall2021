@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 from multiselectfield import MultiSelectField
+from django.core.files.storage import default_storage as storage
+
 
 LOCATION_CHOICES = (
     ("select", "SELECT"),
@@ -71,10 +73,11 @@ class Profile(models.Model):
 
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)
-
-        img = Image.open(self.image.path)
-
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+        if self.image:
+            size = 200, 200
+            image = Image.open(self.image)
+            image.thumbnail(size, Image.ANTIALIAS)
+            fh = storage.open(self.image.name, "w")
+            format = 'png'  # You need to set the correct image format here
+            image.save(fh, format)
+            fh.close()
