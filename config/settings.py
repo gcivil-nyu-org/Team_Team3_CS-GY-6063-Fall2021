@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "maps",
     "events.apps.EventsConfig",
     "multiselectfield",
+    "storages",
+    "messaging"
 ]
 
 MIDDLEWARE = [
@@ -129,7 +131,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = "/static/"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -144,11 +145,28 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = str(os.getenv("EMAIL_HOST_USER"))
 EMAIL_HOST_PASSWORD = str(os.getenv("EMAIL_HOST_PASSWORD"))
 EMAIL_PORT = 587
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "static/media")
+MEDIA_URL = "static/media/"
 
 MAPBOX_TOKEN = str(os.getenv("MAPBOX_TOKEN"))
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
+
+AWS_ACCESS_KEY_ID = str(os.getenv("AWS_ACCESS_KEY_ID"))
+AWS_SECRET_ACCESS_KEY = str(os.getenv("AWS_SECRET_ACCESS_KEY"))
+AWS_STORAGE_BUCKET_NAME = 'outdoor-squad'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 if "/app" in os.environ["HOME"]:

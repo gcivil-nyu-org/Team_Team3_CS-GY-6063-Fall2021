@@ -6,26 +6,32 @@
     <p>{{object.description}}</p>
     <p>Sport: {{object.sport}}</p>
     <p>Number of People Needed: {{event.numberOfPlayers}}</p>
-    <p>{{object.address}}</p>
+    <p>Address: {{event.address}}</p>
     {% if event.borough != "" %}
       <p>Borough: {{event.borough}}</p>
     {% endif %}
     <p>{{object.date}}</p>
     <p>Creator: {{object.owner}}</p>
   
-  {% if isAttending %}
+    {% if isAttending and canUnjoin %}
       <a class="btn btn-primary" href="{% url 'unjoin-event' object.id %}">Unjoin Event</a>
-  {% else %}
-    <a class="btn btn-primary" href="{% url 'join-event' object.id %}">Join Event</a>
-  {% endif %}
+    {% elif not isAttending %}
+      <a class="btn btn-primary" href="{% url 'join-event' object.id %}">Join Event</a>
+    {% endif %}
 
-    <a class="btn btn-primary" href="{% url 'event-update' object.id %}">Update Event</a>
-    <a class="btn btn-danger" href="{% url 'event-delete' object.id %}">Delete Event</a>
+    {% if isOwner %}
+     <a class="btn btn-primary" href="{% url 'event-update' object.id %}">Update Event</a>
+    {% endif %}
+
+    {% if canDelete and isOwner %}
+      <a class="btn btn-danger" href="{% url 'event-delete' object.id %}">Delete Event</a>
+    {% endif %}
+
     <div style="margin-top: 1rem">
       {% if object.sport == 'Hiking' %}
         <a href="{% url 'trails' object.locationId %}">View all events at this location</a>
       {% else %}
-        <a href="{% url 'show' object.locationId %}">View all events at this location</a>
+        <a href="{% url 'show' object.locationId event.address %}">View all events at this location</a>
       {% endif %}    
     <div>
 

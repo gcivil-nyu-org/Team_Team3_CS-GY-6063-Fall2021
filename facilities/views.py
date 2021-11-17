@@ -8,15 +8,19 @@ import json
 # import ast
 
 
-def show(request, id):
+def show(request, id, address):
     data = json.loads(read_facilities_data())
     currentFacility = data[str(id)]
+
+    if str(id) in request.session:
+        address = request.session[str(id)]
+    elif str(id) not in request.session:
+        request.session[str(id)] = address
 
     sports = {
          'Bocce': currentFacility['bocce'],
          'Track': currentFacility["track_and"],
          'Frisbee': currentFacility["frisbee"],
-         'T Ball': currentFacility["t_ball"],
          'Baseball': currentFacility["adult_base"],
          'Football': currentFacility["adult_foot"],
          'Softball': currentFacility["adult_soft"],
@@ -50,6 +54,7 @@ def show(request, id):
         {
             "sports": sports,
             "id": id,
+            "address": address,
             "currentFacility": currentFacility,
             "name": name,
             "accessible": accessible,

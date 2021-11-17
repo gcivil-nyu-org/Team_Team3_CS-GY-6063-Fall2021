@@ -20,7 +20,7 @@
 </style>
 
 <body>
-  
+
   <nav class="navbar navbar-expand-sm navbar-dark">
     <div class="container-fluid">
       <a style="margin-left: 1rem" class="navbar-brand ml-5" href="{% url 'home' %}">Outdoor Squad</a>
@@ -67,6 +67,9 @@
           <li class="nav-item">
             <a class="nav-link" style="color: white" href="{% url 'events-list'%}">Events</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color: white" href="{% url 'squad'%}">My Squad</a>
+          </li>
         </ul>
         <ul style="margin-right: 4rem" class="navbar-nav ms-auto">
           <li>
@@ -77,6 +80,7 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-dark text-large shadow" aria-labelledby="dropdownUser1">
                 <li><a class="dropdown-item" href="{% url 'profile_page'%}">Profile</a></li>
+                <li><a class="dropdown-item" href="{% url 'inbox'%}">Inbox</a></li>
                 <li><a class="dropdown-item" href="#">Contact Us</a></li>
                 <li><a class="dropdown-item" href="{% url 'password_reset' %}">Reset Password</a></li>
                 <li><hr class="dropdown-divider"></li>
