@@ -13,5 +13,5 @@ urlpatterns = [
   path(
         "<pk>/delete/", login_required(EventDeleteView.as_view()), name="event-delete"
     ),
-  path("new/<sport>/<id>", login_required(EventsCreateView.as_view()), name="add-event"),
+  path("new/<sport>/<id>/", login_required(EventsCreateView.as_view()), name="add-event"),
 ]

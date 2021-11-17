@@ -105,7 +105,9 @@ class EventsCreateView(LoginRequiredMixin, CreateView):
 
     if self.kwargs.get('sport', None) != 'Hiking':
       if str(current_id) in self.request.session:
-        saved_address = self.request.session[str(id)]
+
+        saved_address = self.request.session[str(current_id)]
+        
         form.instance.address = str(saved_address)
       
       currentFacility = data[str(self.kwargs.get('id', None))]
