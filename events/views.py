@@ -11,6 +11,8 @@ from django.views.generic import (
   )
 from django.core.exceptions import ValidationError
 from django import forms
+from django.utils import timezone
+from datetime import timedelta
 from maps.facilities_data import read_facilities_data, read_hiking_data
 import json
 
@@ -33,6 +35,12 @@ class EventDetailView(DetailView):
       if attendee.user == self.request.user:
         isAttending = True
     context['isAttending'] = isAttending
+    context['isOwner'] = self.object.owner == self.request.user
+    deleteTime = self.object.date - timedelta(hours =24)
+    unjoinTime = self.object.date - timedelta(hours =2)
+    context['canDelete'] = deleteTime > timezone.now()
+    context['canUnjoin'] = unjoinTime > timezone.now()
+    
     return context
 
 @login_required
@@ -139,4 +147,5 @@ class EventDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     if self.request.user == event.owner:
       return True
     return False
+
 
