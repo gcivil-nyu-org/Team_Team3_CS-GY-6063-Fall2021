@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "events.apps.EventsConfig",
     "multiselectfield",
     "storages"
+    "messaging"
 ]
 
 MIDDLEWARE = [

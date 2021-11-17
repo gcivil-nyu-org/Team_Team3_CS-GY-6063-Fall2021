@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}My Squad{% endblock %}
+
+{% block content %}
+  <div style="text-align: center; background-color: white; height: 800px; width: 100%;">
+    <h2>My Squad</h2>
+    {% for attendee in attendees %}
+      <p>{{attendee}}</p>
+    {% endfor %}
+  </div>
+{% endblock %}

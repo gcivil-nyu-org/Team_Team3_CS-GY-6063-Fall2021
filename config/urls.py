@@ -43,6 +43,8 @@ urlpatterns = [
     path("facilities/", include("facilities.urls")),
     path("events/", include("events.urls")),
     path("userprofile/", include("userprofile.urls")),
+    path("", include("squad.urls")),
+    path("messaging/", include("messaging.urls")),
 ]
 
 if settings.DEBUG:
