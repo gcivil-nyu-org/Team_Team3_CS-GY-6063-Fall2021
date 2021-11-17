@@ -61,13 +61,13 @@ class DateInput(forms.DateTimeInput):
 class CreateEventForm(forms.ModelForm):
   class Meta:
     model = Event
-    fields = ['name', 'description', 'address', 'date', 'numberOfPlayers']
+    fields = ['name', 'description', 'date', 'numberOfPlayers']
     widgets = {'date' : DateInput()}
 
 class UpdateEventForm(forms.ModelForm):
   class Meta:
     model = Event
-    fields = ['name', 'description', 'address', 'date', 'numberOfPlayers']
+    fields = ['name', 'description', 'date', 'numberOfPlayers']
     widgets = {'date' : DateInput()}
 
 def get_sport_key(sport):
@@ -90,6 +90,7 @@ def get_sport_key(sport):
   'Tennis':"tennis",
   'Volleyball': "volleyball"
   }[sport]
+  
 class EventsCreateView(LoginRequiredMixin, CreateView):
   form_class = CreateEventForm
   model = Event
@@ -100,7 +101,13 @@ class EventsCreateView(LoginRequiredMixin, CreateView):
     form.instance.sport = self.kwargs.get('sport', None)
     data =  json.loads(read_hiking_data()) if self.kwargs.get('sport', None) == 'Hiking' else json.loads(read_facilities_data())
 
+    current_id = self.kwargs.get('id', None)
+
     if self.kwargs.get('sport', None) != 'Hiking':
+      if str(current_id) in self.request.session:
+        saved_address = self.request.session[str(id)]
+        form.instance.address = str(saved_address)
+      
       currentFacility = data[str(self.kwargs.get('id', None))]
 
       sportIsAvailable = currentFacility[get_sport_key(str(self.kwargs.get('sport', None)))]
@@ -110,7 +117,6 @@ class EventsCreateView(LoginRequiredMixin, CreateView):
         )
     
       borough = currentFacility['borough']
-
       if borough == 'B':
         form.instance.borough = 'Brooklyn'
       elif borough == 'M':
@@ -121,6 +127,17 @@ class EventsCreateView(LoginRequiredMixin, CreateView):
         form.instance.borough = 'Staten Island'
       else:
         form.instance.borough = 'Queens'
+
+    elif self.kwargs.get('sport', None) == 'Hiking':
+      if 1 <= int(current_id) <= 37: 
+        currentTrail = data[str(self.kwargs.get('id', None))]
+        park = currentTrail['Park_Name']
+        form.instance.address = park
+      else:
+        raise ValidationError(
+          "Invalid location id"
+        )
+
     return super().form_valid(form)
 
 class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

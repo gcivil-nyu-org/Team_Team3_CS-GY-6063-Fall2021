@@ -6,7 +6,7 @@
     <p>{{object.description}}</p>
     <p>Sport: {{object.sport}}</p>
     <p>Number of People Needed: {{event.numberOfPlayers}}</p>
-    <p>{{object.address}}</p>
+    <p>Address: {{event.address}}</p>
     {% if event.borough != "" %}
       <p>Borough: {{event.borough}}</p>
     {% endif %}
@@ -31,7 +31,7 @@
       {% if object.sport == 'Hiking' %}
         <a href="{% url 'trails' object.locationId %}">View all events at this location</a>
       {% else %}
-        <a href="{% url 'show' object.locationId %}">View all events at this location</a>
+        <a href="{% url 'show' object.locationId event.address %}">View all events at this location</a>
       {% endif %}    
     <div>
 
