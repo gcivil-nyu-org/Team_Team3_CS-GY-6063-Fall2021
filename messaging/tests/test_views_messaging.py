@@ -4,7 +4,6 @@ from messaging.models import ThreadModel, MessageModel
 from django.urls import reverse
 
 class CreateThreadViewsTests(TestCase):
-
     def setUp(self):
         self.user1 = User.objects.create(username = 'sender')
         self.user2 = User.objects.create(username = 'receiver')
@@ -45,7 +44,6 @@ class CreateThreadViewsTests(TestCase):
         self.assertEqual(response.status_code, 302)
 
 class ListThreadViewsTests(TestCase):
-
     def setUp(self):
         self.user1 = User.objects.create(username = 'sender')
         self.user1.set_password("secret_111")
