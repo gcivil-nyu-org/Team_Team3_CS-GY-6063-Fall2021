@@ -1,7 +1,8 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from messaging.models import ThreadModel, MessageModel
 from django.urls import reverse
+from messaging.models import ThreadModel, MessageModel
+
 
 class CreateThreadViewsTests(TestCase):
     def setUp(self):
@@ -78,7 +79,7 @@ class CreateMessageViewsTests(TestCase):
         response = self.c.post("/messaging/inbox/"+str(pk)+"/create-message/", {'message':'hello this is a test message'})
         self.assertRedirects(response, '/messaging/inbox/'+str(pk)+'/', status_code=302) 
 
-class CreateMessageViewsTests(TestCase):
+class ThreadViewsTests(TestCase):
     def setUp(self):
         self.user1 = User.objects.create(username = 'sender')
         self.user2 = User.objects.create(username = 'receiver')
