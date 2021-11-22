@@ -23,20 +23,14 @@
 
 	{% for message in message_list %}
 	<div class="row" style="background-color: white">
-		{% if message.sender_user == request.user %}
-		<div class="col-md-12 offset-10">
-			<div class="sent-message my-3">
-				<p>{{ message.body }}</p>
-			</div>
-		</div>
-			{% elif message.receiver_user == request.user %}
-			<div class="col-md-12 my-1">
-				<div class="received-message my-3">
-					<p>{{ message.body }}</p>
-				</div>
-			</div>
-			{% endif %}
-		</div>
+		{% if message.receiver_user == request.user %}
+			<div class="col"><p>{{ message.body }}</p></div>
+			<div class="col"></div>
+		{% elif message.sender_user == request.user %}
+			<div class="col"></div>
+			<div class="col"><p class="text-end">{{ message.body }}</p></div>
+		{% endif %}
+	</div>
 	{% endfor %}
 
 	<div class="row">
@@ -47,6 +41,7 @@
 
 				<div class="d-grid gap-2 mt-3">
 					<button class="btn btn-light" type="submit">Send Message</button>
+					<a href="{% url 'inbox' %}" class="btn btn-light">Back to Your Inbox</a>
 				</div>
 			</form>
 		</div>
