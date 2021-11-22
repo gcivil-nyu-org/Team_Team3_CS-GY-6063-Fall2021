@@ -48,11 +48,13 @@ INSTALLED_APPS = [
     "events.apps.EventsConfig",
     "multiselectfield",
     "storages",
-    "messaging"
+    "messaging",
+    "whitenoise.runserver_nostatic"
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -133,8 +135,7 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
-PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 # EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
@@ -145,28 +146,29 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = str(os.getenv("EMAIL_HOST_USER"))
 EMAIL_HOST_PASSWORD = str(os.getenv("EMAIL_HOST_PASSWORD"))
 EMAIL_PORT = 587
-MEDIA_ROOT = os.path.join(BASE_DIR, "static/media")
-MEDIA_URL = "static/media/"
 
 MAPBOX_TOKEN = str(os.getenv("MAPBOX_TOKEN"))
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
-AWS_ACCESS_KEY_ID = str(os.getenv("AWS_ACCESS_KEY_ID"))
-AWS_SECRET_ACCESS_KEY = str(os.getenv("AWS_SECRET_ACCESS_KEY"))
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = 'outdoor-squad'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = 'static'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_REGION_NAME = "us-east-2"
 
+STATIC_URL = "/static/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
+
+# https://whitenoise.evans.io/en/stable/django.html
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, "static"),
 ]
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 if "/app" in os.environ["HOME"]:

@@ -32,7 +32,7 @@ CAR = (
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profilename = models.CharField(default="Outdoor Squad Member", max_length=50)
-    image = models.ImageField(default="default.jpg", upload_to="profile_pics")
+    image = models.ImageField(default="media/profile_pics/default.jpg", upload_to="profile_pics")
     bocce = models.BooleanField(default=False)
     frisbee = models.BooleanField(default=False)
     tBall = models.BooleanField(default=False)

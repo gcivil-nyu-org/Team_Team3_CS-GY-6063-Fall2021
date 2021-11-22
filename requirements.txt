@@ -11,3 +11,4 @@ Pillow
 django-multiselectfield
 django-storages
 boto3
+whitenoise
