@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from .models import Event, EventRegistration
-from django.shortcuts import redirect 
+from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
   CreateView,
@@ -15,6 +15,7 @@ from django.utils import timezone
 from datetime import timedelta
 from maps.facilities_data import read_facilities_data, read_hiking_data
 import json
+from django.contrib import messages
 
 
 class EventsListView(ListView):
@@ -46,6 +47,11 @@ class EventDetailView(DetailView):
 @login_required
 def event_add_attendance(request, pk):
   this_event = Event.objects.get(pk=pk)
+  num_registered = this_event.get_registrations().count()
+  if num_registered == this_event.numberOfPlayers:
+    messages.success(request, 'Event Already Full!')
+    return redirect("event-detail", pk)
+  
   this_event.add_user_to_list_of_attendees(user=request.user)
   return redirect("event-detail", pk)
 
@@ -54,6 +60,9 @@ def event_cancel_attendance(request, pk):
   this_event = Event.objects.get(pk=pk)
   this_event.remove_user_from_list_of_attendees(request.user)
   return redirect("event-detail", pk)
+
+def event_full(request):
+  return render(request, "events/event_full.html", {'pk':request.pk})
 
 class DateInput(forms.DateTimeInput):
   input_type='datetime-local'
