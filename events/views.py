@@ -15,7 +15,7 @@ from django.utils import timezone
 from datetime import timedelta
 from maps.facilities_data import read_facilities_data, read_hiking_data
 import json
-
+from django.contrib import messages
 
 class EventsListView(ListView):
   model = Event
@@ -46,6 +46,11 @@ class EventDetailView(DetailView):
 @login_required
 def event_add_attendance(request, pk):
   this_event = Event.objects.get(pk=pk)
+  num_registered = this_event.get_registrations().count()
+  if num_registered == this_event.numberOfPlayers:
+    messages.success(request, 'Event Already Full!')
+    return redirect("event-detail", pk)
+    
   this_event.add_user_to_list_of_attendees(user=request.user)
   return redirect("event-detail", pk)
 
