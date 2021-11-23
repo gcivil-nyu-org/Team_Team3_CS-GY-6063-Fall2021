@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Event, EventRegistration
 from django.shortcuts import redirect 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.urls import reverse
 from django.views.generic import (
   CreateView,
   ListView, 
@@ -144,8 +145,12 @@ class EventsCreateView(LoginRequiredMixin, CreateView):
         raise ValidationError(
           "Invalid location id"
         )
-
     return super().form_valid(form)
+  
+  def get_success_url(self):
+    return reverse('join-event', kwargs={'pk': self.object.pk})
+
+
 
 class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
   form_class = UpdateEventForm
