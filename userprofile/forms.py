@@ -30,7 +30,6 @@ class ProfileUpdateForm(forms.ModelForm):
             "netball",
             "rugby",
             "tennis",
-            "track",
             "volleyball",
             "hiking",
             "location",

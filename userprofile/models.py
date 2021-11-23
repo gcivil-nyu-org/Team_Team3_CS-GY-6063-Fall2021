@@ -49,7 +49,6 @@ class Profile(models.Model):
     rugby = models.BooleanField(default=False)
     tennis = models.BooleanField(default=False)
     volleyball = models.BooleanField(default=False)
-    track = models.BooleanField(default=False)
     hiking = models.BooleanField(default=False)
     location = models.CharField(
         verbose_name="Borough",
