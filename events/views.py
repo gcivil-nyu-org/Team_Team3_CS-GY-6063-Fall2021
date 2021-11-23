@@ -36,9 +36,9 @@ class EventDetailView(DetailView):
         isAttending = True
     context['isAttending'] = isAttending
     context['isOwner'] = self.object.owner == self.request.user
-    deleteTime = self.object.date - timedelta(hours =24)
+    updateTime = self.object.date - timedelta(hours =24)
     unjoinTime = self.object.date - timedelta(hours =2)
-    context['canDelete'] = deleteTime > timezone.now()
+    context['canUpdate'] = updateTime > timezone.now()
     context['canUnjoin'] = unjoinTime > timezone.now()
     
     return context
@@ -156,8 +156,10 @@ class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     return super().form_valid(form)
 
   def test_func(self):
-    event = self.get_object()
-    if self.request.user == event.owner:
+    event = self.get_object();
+    updateTime = event.date - timedelta(hours =24)
+    canUpdate = updateTime > timezone.now()
+    if self.request.user == event.owner and canUpdate:
       return True
     return False
 
@@ -168,7 +170,9 @@ class EventDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
   def test_func(self):
     event = self.get_object()
-    if self.request.user == event.owner:
+    updateTime = event.date - timedelta(hours =24)
+    canUpdate = updateTime > timezone.now()
+    if self.request.user == event.owner and canUpdate:
       return True
     return False
 
