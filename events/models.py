@@ -3,17 +3,22 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.exceptions import ValidationError
+from datetime import timedelta
 
 class Event(models.Model):
   def no_past(value):
     if value < timezone.now():
       raise ValidationError("The date cannot be in the past!")
-      
+
+  def more_than_48hrs(value):
+    if (timezone.now() + timedelta(hours=47,minutes=59) > value) and value > timezone.now():
+      raise ValidationError("Cannot create an event within 48hrs!")
+
   name = models.CharField(max_length=100)
   description = models.TextField()
   address = models.TextField()
   locationId = models.CharField(max_length=100)
-  date = models.DateTimeField(verbose_name="Event Date", validators=[no_past])
+  date = models.DateTimeField(verbose_name="Event Date", validators=[no_past,more_than_48hrs])
   dateCreated = models.DateTimeField(default=timezone.now)
   owner = models.ForeignKey(User, on_delete=models.CASCADE)
   borough = models.CharField(max_length=20)
