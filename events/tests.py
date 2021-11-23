@@ -18,7 +18,7 @@ class EventsViewTest(TestCase):
   def test_events_list_view(self):
     response = self.client.get('/events/')
     self.assertEqual(response.status_code, 302)
-      
+
   def test_events_detail_view(self):
     c = Client()
     c.login(username = 'test_login', password = 'secret_111')
@@ -66,7 +66,7 @@ class EventsViewTest(TestCase):
     c = Client()
     c.login(username = 'test_login', password = 'secret_111')
     response = c.get(reverse('event-detail', kwargs={'pk':1}))
-    self.assertEqual(response.status_code, 200)    
+    self.assertEqual(response.status_code, 200)
     response.user = self.user
     event_add_attendance(response, 1)
     event_cancel_attendance(response, 1)
@@ -76,8 +76,26 @@ class EventsViewTest(TestCase):
     c = Client()
     c.login(username = 'test_login', password = 'secret_111')
     response = c.get(reverse('add-event', kwargs={'id':15385, 'sport': 'baseball'}))
-    self.assertEqual(response.status_code, 200)  
+    self.assertEqual(response.status_code, 200)
 
   def test_get_sport_key(self):
     key = get_sport_key('Baseball');
     self.assertEqual(key, 'adult_base')
+
+class SquadTest(TestCase):
+  def test_squad(self):
+    time = timezone.now() + datetime.timedelta(days=30)
+    self.user = User.objects.create(username = 'test_login')
+    self.user.set_password('secret_111')
+    self.user.save()
+    event = Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user, numberOfPlayers=5)
+    self.user2 = User.objects.create(username = 'test_login_2')
+    self.user2.set_password('secret_1112')
+    self.user2.save()
+    c = Client()
+    c.login(username = 'test_login', password = 'secret_111')
+    registration = event.add_user_to_list_of_attendees(self.user)
+    registration2 = event.add_user_to_list_of_attendees(self.user2)
+    response = c.get("/squad")
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, "test_login_2")
