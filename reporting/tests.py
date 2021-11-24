@@ -11,6 +11,4 @@ class TestReportingViews(TestCase):
     def test_ContactUs_view(self):
         response = self.client.get('reporting/contactus.html')
         self.assertEqual(response.status_code, 404)
-    
-    
        

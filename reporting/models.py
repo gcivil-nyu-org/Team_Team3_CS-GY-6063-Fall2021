@@ -14,5 +14,3 @@ class Misbehavior(models.Model):
   name = models.ForeignKey(User, on_delete=models.CASCADE,related_name='+')
   description = models.TextField()
   date = models.DateTimeField(default=timezone.now)
-
-  

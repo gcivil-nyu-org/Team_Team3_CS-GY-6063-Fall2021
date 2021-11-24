@@ -39,3 +39,4 @@ def misbehavior(request):
     form = ReportMisbehaviorForm()
     context = {"form": form}
     return render(request, "reporting/misbehavior.html", context)
+    
