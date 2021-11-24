@@ -10,7 +10,7 @@ class Event(models.Model):
     if value < timezone.now():
       raise ValidationError("The date cannot be in the past!")
 
-  def more_than_48hrs(value):
+  def more_than_3hrs(value):
     if (timezone.now() + timedelta(hours=2,minutes=59) > value) and value > timezone.now():
       raise ValidationError("Cannot create an event within 3hrs!")
 
@@ -18,7 +18,7 @@ class Event(models.Model):
   description = models.TextField()
   address = models.TextField()
   locationId = models.CharField(max_length=100)
-  date = models.DateTimeField(verbose_name="Event Date", validators=[no_past,more_than_48hrs])
+  date = models.DateTimeField(verbose_name="Event Date", validators=[no_past,more_than_3hrs])
   dateCreated = models.DateTimeField(default=timezone.now)
   owner = models.ForeignKey(User, on_delete=models.CASCADE)
   borough = models.CharField(max_length=20)
