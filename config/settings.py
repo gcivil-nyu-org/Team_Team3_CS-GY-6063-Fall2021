@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "multiselectfield",
     "storages",
     "messaging",
+    "reporting",
     "whitenoise.runserver_nostatic"
 ]
 

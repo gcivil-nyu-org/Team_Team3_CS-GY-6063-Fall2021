@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column align-items-center">
+<div style="background-color: white;">
+<div style="margin-left: 1rem", align= "center">
+  <h1> Report To Us </h1>
+    <br><br>
+    <div>
+    <p>Report No Show</p>
+    <a class="btn btn-primary" href="{% url 'report_noshow' %}" >Report No Show</a>
+    </div>
+    <br>
+    <div>
+    <p>Report Inappropriate behavior</p>
+    <a class="btn btn-primary" href="{% url 'report_misbehavior' %}" >Report Inappropriate behavior</a>
+    </div>
+    <br>
+    <br>
+    <div>
+    <h3>
+         For any other feedback, please write to us at:
+         <a href="mailto: outdoorsquadf21@gmail.com">Email</a>    
+    </h3>
+    </div>
+    <br>
+</div>
+</div>
+</div>
+
+{% endblock %}
