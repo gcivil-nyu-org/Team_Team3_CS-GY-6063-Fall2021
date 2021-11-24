@@ -6,7 +6,6 @@ from django.core.files.storage import default_storage as storage
 
 
 LOCATION_CHOICES = (
-    ("select", "SELECT"),
     ("manhattan", "MANHATTAN"),
     ("queens", "QUEENS"),
     ("bronx", "BRONX"),
@@ -23,7 +22,6 @@ BOROUGH_CHOICES = (
 )
 
 CAR = (
-    ("select", "SELECT"),
     ("yes", "YES"),
     ("no", "NO"),
 )
@@ -35,10 +33,9 @@ class Profile(models.Model):
     image = models.ImageField(default="media/profile_pics/default.jpg", upload_to="profile_pics")
     bocce = models.BooleanField(default=False)
     frisbee = models.BooleanField(default=False)
-    tBall = models.BooleanField(default=False)
-    adultBaseball = models.BooleanField(default=False)
-    adultFootball = models.BooleanField(default=False)
-    adultSoftball = models.BooleanField(default=False)
+    baseball = models.BooleanField(default=False)
+    football = models.BooleanField(default=False)
+    softball = models.BooleanField(default=False)
     basketball = models.BooleanField(default=False)
     cricket = models.BooleanField(default=False)
     flagFootball = models.BooleanField(default=False)
@@ -46,19 +43,16 @@ class Profile(models.Model):
     hockey = models.BooleanField(default=False)
     kickball = models.BooleanField(default=False)
     lacrosse = models.BooleanField(default=False)
-    littleLeagueBaseball = models.BooleanField(default=False)
-    littleLeagueSoftball = models.BooleanField(default=False)
     netball = models.BooleanField(default=False)
     rugby = models.BooleanField(default=False)
     tennis = models.BooleanField(default=False)
     volleyball = models.BooleanField(default=False)
-    youthFootball = models.BooleanField(default=False)
     hiking = models.BooleanField(default=False)
     location = models.CharField(
         verbose_name="Borough",
         max_length=20,
         choices=LOCATION_CHOICES,
-        default="select",
+        blank=True,
     )
     distance = MultiSelectField(
         verbose_name="Boroughs Willing to Travel:",
@@ -66,7 +60,7 @@ class Profile(models.Model):
         max_choices=5,
         blank=True,
     )
-    car = models.CharField(max_length=10, choices=CAR, default="select")
+    car = models.CharField(max_length=10, choices=CAR, blank=True)
 
     def __str__(self):
         return f"{self.user.username} Profile"

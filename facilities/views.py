@@ -19,7 +19,6 @@ def show(request, id, address):
 
     sports = {
          'Bocce': currentFacility['bocce'],
-         'Track': currentFacility["track_and"],
          'Frisbee': currentFacility["frisbee"],
          'Baseball': currentFacility["adult_base"],
          'Football': currentFacility["adult_foot"],

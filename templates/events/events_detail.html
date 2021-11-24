@@ -12,18 +12,26 @@
     {% endif %}
     <p>{{object.date}}</p>
     <p>Creator: {{object.owner}}</p>
-  
+    
+    {% if messages %}
+    <div class="messages" style="text-align: center; font-size:25px; color: red">
+      {% for message in messages %}
+      <b><ul  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </ul></b>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     {% if isAttending and canUnjoin %}
       <a class="btn btn-primary" href="{% url 'unjoin-event' object.id %}">Unjoin Event</a>
     {% elif not isAttending %}
       <a class="btn btn-primary" href="{% url 'join-event' object.id %}">Join Event</a>
     {% endif %}
 
-    {% if isOwner %}
+    {% if isOwner and canUpdate %}
      <a class="btn btn-primary" href="{% url 'event-update' object.id %}">Update Event</a>
     {% endif %}
 
-    {% if canDelete and isOwner %}
+    {% if canUpdate and isOwner %}
       <a class="btn btn-danger" href="{% url 'event-delete' object.id %}">Delete Event</a>
     {% endif %}
 

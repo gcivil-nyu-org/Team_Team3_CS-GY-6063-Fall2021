@@ -2,12 +2,15 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.db.models import Q
 from .models import ThreadModel, MessageModel
+from events.models import Event, EventRegistration
 from .forms import ThreadForm, MessageForm
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
-# Create your views here.
+@method_decorator(login_required, name='dispatch')
 class CreateThread(View):
 
 
@@ -22,8 +25,10 @@ class CreateThread(View):
     form = ThreadForm(request.POST)
     username = request.POST.get('username')
     
+    
     if User.objects.filter(username=username).exists(): 
       receiver = User.objects.get(username=username)
+
       if ThreadModel.objects.filter(user=request.user, receiver=receiver).exists():
         thread = ThreadModel.objects.filter(user=request.user, receiver=receiver)[0]
         return redirect('thread', pk=thread.pk)
@@ -31,17 +36,32 @@ class CreateThread(View):
         thread = ThreadModel.objects.filter(user=receiver, receiver=request.user)[0]
         return redirect('thread', pk=thread.pk)
       else: 
-        if form.is_valid():
+        attendees_dupes = []
+        attendees = []
+        for er in EventRegistration.objects.filter(user = request.user):
+          for er2 in EventRegistration.objects.filter(event = er.event).exclude(user = request.user):
+            attendees_dupes.append(er2.user)
+            [attendees.append(x) for x in attendees_dupes if x not in attendees]
+        for e in Event.objects.filter(owner = request.user):
+          for er in EventRegistration.objects.filter(event = e).exclude(user = request.user):
+            attendees_dupes.append(er.user)
+            [attendees.append(x) for x in attendees_dupes if x not in attendees] 
+
+        if receiver in attendees and form.is_valid():
           thread = ThreadModel(
           user=request.user,
           receiver=receiver
           )
-        thread.save()
-        return redirect('thread', pk=thread.pk)
+          thread.save()
+          return redirect('thread', pk=thread.pk)
+        else: 
+          messages.error(request, 'User is not in your squad!')
+          return redirect('create-thread')
     else:
       messages.error(request, 'Invalid username!')
       return redirect('create-thread')
-        
+
+@method_decorator(login_required, name='dispatch')        
 class ListThreads(View):
 
   def get(self, request, *args, **kwargs):
@@ -69,6 +89,7 @@ class CreateMessage(View):
     message.save()
     return redirect('thread', pk=pk)
 
+@method_decorator(login_required, name='dispatch')
 class ThreadView(View):
   def get(self, request, pk, *args, **kwargs):
     form = MessageForm()
@@ -80,5 +101,3 @@ class ThreadView(View):
       'message_list': message_list
     }
     return render(request, 'messaging/thread.html', context)
-    
-    

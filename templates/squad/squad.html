@@ -6,7 +6,13 @@
   <div style="text-align: center; background-color: white; height: 800px; width: 100%;">
     <h2>My Squad</h2>
     {% for attendee in attendees %}
-      <p>{{attendee}}</p>
+      <span>{{attendee}}</span>
+      <span><form action="/messaging/inbox/create-thread" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="username" value="{{ attendee }}">
+        <button type="submit" class="btn btn-success mt-3">Message</button>
+      </form></span>
+      <br>
     {% endfor %}
   </div>
 {% endblock %}
