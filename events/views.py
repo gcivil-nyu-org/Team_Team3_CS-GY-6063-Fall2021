@@ -17,6 +17,8 @@ from datetime import timedelta
 from maps.facilities_data import read_facilities_data, read_hiking_data
 import json
 from django.contrib import messages
+from django.core.mail import EmailMessage
+from django.contrib.auth.models import User
 
 class EventsListView(ListView):
   model = Event
@@ -53,12 +55,36 @@ def event_add_attendance(request, pk):
     return redirect("event-detail", pk)
     
   this_event.add_user_to_list_of_attendees(user=request.user)
+  
+  new_num_registered = this_event.get_registrations().count()
+  if new_num_registered == this_event.numberOfPlayers:
+    attendees = this_event.get_registrations()
+    for x in attendees:
+      user = User.objects.get(username=x)
+      to_email = user.email
+      mail_subject = "Squad Ready"
+      message = "Hi " + str(user) + "! Your squad has been formed."
+      email = EmailMessage(mail_subject, message, to=[to_email])
+      email.send()
+  
   return redirect("event-detail", pk)
 
 @login_required
 def event_cancel_attendance(request, pk):
   this_event = Event.objects.get(pk=pk)
-  this_event.remove_user_from_list_of_attendees(request.user)
+  num_registered = this_event.get_registrations().count()
+  if num_registered == this_event.numberOfPlayers:
+    this_event.remove_user_from_list_of_attendees(request.user)
+    attendees = this_event.get_registrations()
+    for x in attendees:
+      user = User.objects.get(username=x)
+      to_email = user.email
+      mail_subject = "Squad Opening"
+      message = "Hi " + str(user) + "! There is an open spot for your upcoming event."
+      email = EmailMessage(mail_subject, message, to=[to_email])
+      email.send()
+  else:
+    this_event.remove_user_from_list_of_attendees(request.user)
   return redirect("event-detail", pk)
 
 class DateInput(forms.DateTimeInput):
