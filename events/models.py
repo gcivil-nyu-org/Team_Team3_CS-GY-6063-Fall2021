@@ -11,8 +11,8 @@ class Event(models.Model):
       raise ValidationError("The date cannot be in the past!")
 
   def more_than_48hrs(value):
-    if (timezone.now() + timedelta(hours=47,minutes=59) > value) and value > timezone.now():
-      raise ValidationError("Cannot create an event within 48hrs!")
+    if (timezone.now() + timedelta(hours=2,minutes=59) > value) and value > timezone.now():
+      raise ValidationError("Cannot create an event within 3hrs!")
 
   name = models.CharField(max_length=100)
   description = models.TextField()
