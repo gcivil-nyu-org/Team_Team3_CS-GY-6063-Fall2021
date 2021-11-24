@@ -27,11 +27,11 @@
       <a class="btn btn-primary" href="{% url 'join-event' object.id %}">Join Event</a>
     {% endif %}
 
-    {% if isOwner %}
+    {% if isOwner and canUpdate %}
      <a class="btn btn-primary" href="{% url 'event-update' object.id %}">Update Event</a>
     {% endif %}
 
-    {% if canDelete and isOwner %}
+    {% if canUpdate and isOwner %}
       <a class="btn btn-danger" href="{% url 'event-delete' object.id %}">Delete Event</a>
     {% endif %}
 

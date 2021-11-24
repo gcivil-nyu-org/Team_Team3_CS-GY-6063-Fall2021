@@ -6,7 +6,6 @@ from django.core.files.storage import default_storage as storage
 
 
 LOCATION_CHOICES = (
-    ("select", "SELECT"),
     ("manhattan", "MANHATTAN"),
     ("queens", "QUEENS"),
     ("bronx", "BRONX"),
@@ -23,7 +22,6 @@ BOROUGH_CHOICES = (
 )
 
 CAR = (
-    ("select", "SELECT"),
     ("yes", "YES"),
     ("no", "NO"),
 )
@@ -54,7 +52,7 @@ class Profile(models.Model):
         verbose_name="Borough",
         max_length=20,
         choices=LOCATION_CHOICES,
-        default="select",
+        blank=True,
     )
     distance = MultiSelectField(
         verbose_name="Boroughs Willing to Travel:",
@@ -62,7 +60,7 @@ class Profile(models.Model):
         max_choices=5,
         blank=True,
     )
-    car = models.CharField(max_length=10, choices=CAR, default="select")
+    car = models.CharField(max_length=10, choices=CAR, blank=True)
 
     def __str__(self):
         return f"{self.user.username} Profile"
