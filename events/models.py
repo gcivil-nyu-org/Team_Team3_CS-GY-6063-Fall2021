@@ -5,6 +5,11 @@ from django.urls import reverse
 from django.core.exceptions import ValidationError
 from datetime import timedelta
 
+
+@property
+def is_past_due(self):
+    return timezone.now() > self.date
+
 class Event(models.Model):
   def no_past(value):
     if value < timezone.now():
