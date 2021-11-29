@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     "storages",
     "messaging",
     "reporting",
-    "whitenoise.runserver_nostatic"
+    "whitenoise.runserver_nostatic",
+    "django_filters",
+    "bootstrapform"
 ]
 
 MIDDLEWARE = [

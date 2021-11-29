@@ -19,12 +19,22 @@ import json
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
+from .filters import EventFilter
 
 class EventsListView(ListView):
   model = Event
   template_name = 'events/events_list.html'
   context_object_name = 'events'
   ordering=['-dateCreated']
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    print(context)
+
+    context["filter"] = EventFilter(self.request.GET, queryset=self.get_queryset())
+    
+    return context
+  
 
 class EventDetailView(DetailView):
   model = Event

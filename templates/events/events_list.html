@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
+{% load bootstrap %}
 
 {% block content %}
-  <div style="display: flex; flex-direction:row; flex-wrap: wrap; margin: 1rem">
 
-    {% for event in events %}
+  <div >
+    <form method="GET" style="color: white; margin: 2rem">
+    {{ filter.form|bootstrap }}
+    <button type="submit" style="margin-top: 1rem" class="btn btn-primary">Search</button>
+  </div>
+
+  <div style="display: flex; flex-direction:row; flex-wrap: wrap; margin: 1rem">
+    
+    {% for event in filter.qs %}
       <div class="card" style="width: 20rem; margin: 1rem; border: 0.1rem solid black">
         <div class="card-body">
         <h1>    
