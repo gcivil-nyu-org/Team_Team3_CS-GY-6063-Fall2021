@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.exceptions import ValidationError
 from datetime import timedelta
-from django.http import HttpRequest
 
 class Event(models.Model):
   def no_past(value):
