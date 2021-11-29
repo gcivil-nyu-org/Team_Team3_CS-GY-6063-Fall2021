@@ -12,5 +12,5 @@ django-multiselectfield
 django-storages
 boto3
 whitenoise
-django_filters
-bootstrapform
+django-filter
+django-bootstrap-form
