@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.exceptions import ValidationError
 from datetime import timedelta
+from django.http import HttpRequest
 
 class Event(models.Model):
   def no_past(value):
@@ -29,7 +30,10 @@ class Event(models.Model):
     if self.date < timezone.now():
       raise ValidationError("The date cannot be in the past!")
       super(Event, self).clean(*args, **kwargs)
-  
+
+    if Event.objects.filter(name=self.name, description=self.description, date=self.date, numberOfPlayers=self.numberOfPlayers).count() > 0:
+      raise ValidationError("A similar event already exists!")
+    
   class Meta:
         verbose_name = "event"
         verbose_name_plural = "events"
