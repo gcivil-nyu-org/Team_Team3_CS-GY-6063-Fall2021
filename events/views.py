@@ -12,8 +12,8 @@ from django.views.generic import (
   )
 from django.core.exceptions import ValidationError
 from django import forms
-from django.utils import timezone
 from datetime import timedelta
+from django.utils import timezone
 from maps.facilities_data import read_facilities_data, read_hiking_data
 import json
 from django.contrib import messages
@@ -29,8 +29,9 @@ class EventsListView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
+    now = timezone.now()
+    context["filter"] = EventFilter(self.request.GET, queryset=self.get_queryset().filter(date__gte=now))
 
-    context["filter"] = EventFilter(self.request.GET, queryset=self.get_queryset())
     
     return context
   
