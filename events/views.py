@@ -22,7 +22,6 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from userprofile.models import Profile
 import random
-from datetime import timedelta
 
 class EventsListView(ListView):
   model = Event
