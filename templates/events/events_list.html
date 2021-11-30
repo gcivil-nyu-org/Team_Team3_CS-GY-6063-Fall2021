@@ -14,12 +14,9 @@
     {% for event in filter.qs|dictsort:"date" %}
       <div class="card" style="width: 20rem; margin: 1rem; border: 0.1rem solid black">
         <div class="card-body">
-        {% if now > event.date %}
-        {% else %}
           <h1>    
             <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
           </h1> 
-          <p>{{now}}</p>
           <p>{{event.description}}</p>
           <p>Sport: {{event.sport}}</p>
           <p>Number of People Needed: {{event.numberOfPlayers}}</p>   
@@ -29,7 +26,6 @@
           {% endif %}
           <p>{{event.date}}</p>
           <p>Creator: {{event.owner}}</p>
-        {% endif %}
         </div>
       </div>
     {% endfor %}
