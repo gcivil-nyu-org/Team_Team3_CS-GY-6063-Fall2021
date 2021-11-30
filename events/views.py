@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
+from django.http import request
 from .models import Event, EventRegistration
-from django.shortcuts import redirect 
+from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
 from django.views.generic import (
@@ -19,6 +20,7 @@ import json
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
+
 
 class EventsListView(ListView):
   model = Event
@@ -134,6 +136,10 @@ class EventsCreateView(LoginRequiredMixin, CreateView):
     data =  json.loads(read_hiking_data()) if self.kwargs.get('sport', None) == 'Hiking' else json.loads(read_facilities_data())
 
     current_id = self.kwargs.get('id', None)
+
+    if Event.objects.filter(owner=self.request.user, locationId=current_id, name=self.request.POST.get('name'),date=self.request.POST.get('date')).count() > 0:
+      messages.success(self.request, 'A similar event already exists!')
+      return redirect(reverse("add-event", kwargs={'sport':self.kwargs.get('sport', None),'id': current_id}))
 
     if self.kwargs.get('sport', None) != 'Hiking':
       if str(current_id) in self.request.session:

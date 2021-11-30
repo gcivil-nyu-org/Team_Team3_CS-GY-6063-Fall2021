@@ -9,6 +9,13 @@
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Event Details</legend>
+                {% if messages %}
+                <div class="messages" style="text-align: center; font-size:25px; color: red">
+                  {% for message in messages %}
+                  <b><ul  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </ul></b>
+                  {% endfor %}
+                </div>
+                {% endif %}
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
