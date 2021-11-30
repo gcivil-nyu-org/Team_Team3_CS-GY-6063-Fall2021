@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.http import request
 from .models import Event, EventRegistration
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
