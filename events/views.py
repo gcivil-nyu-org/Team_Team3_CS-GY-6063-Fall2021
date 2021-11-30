@@ -21,7 +21,7 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
 from django.db.models import Q
 from userprofile.models import Profile
-import rando
+import random
 from .filters import EventFilter
 
 
