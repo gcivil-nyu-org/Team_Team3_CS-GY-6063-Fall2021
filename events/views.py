@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from .models import Event, EventRegistration
-from django.shortcuts import redirect 
+from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
 from django.views.generic import (
@@ -12,19 +12,34 @@ from django.views.generic import (
   )
 from django.core.exceptions import ValidationError
 from django import forms
-from django.utils import timezone
 from datetime import timedelta
+from django.utils import timezone
 from maps.facilities_data import read_facilities_data, read_hiking_data
 import json
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
+from django.db.models import Q
+from userprofile.models import Profile
+import random
+from .filters import EventFilter
+
+
 
 class EventsListView(ListView):
   model = Event
   template_name = 'events/events_list.html'
   context_object_name = 'events'
   ordering=['-dateCreated']
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    now = timezone.now()
+    context["filter"] = EventFilter(self.request.GET, queryset=self.get_queryset().filter(date__gte=now))
+
+    
+    return context
+  
 
 class EventDetailView(DetailView):
   model = Event
@@ -85,6 +100,30 @@ def event_cancel_attendance(request, pk):
       email.send()
   else:
     this_event.remove_user_from_list_of_attendees(request.user)
+
+  if timezone.now() + timedelta(hours=24, minutes=0) > this_event.date:
+    users_to_notify = Profile.objects.filter((Q(distance__contains=str(this_event.borough)) | Q(location=this_event.borough.lower())), **{this_event.sport.lower(): True})
+    if 0 < users_to_notify.count() < 21:
+      for x in users_to_notify:
+        user = User.objects.get(username=x.user)
+        if str(user.username) != str(request.user):
+          to_email = user.email
+          mail_subject = "Upcoming Event"
+          message = "Hi " + str(user) + "! There is an upcoming event that matches your interests."
+          email = EmailMessage(mail_subject, message, to=[to_email])
+          email.send()
+    elif users_to_notify.count() >= 21:
+      userlist = list(users_to_notify)
+      random_users = random.sample(userlist, 20)
+      for x in random_users:
+        user = User.objects.get(username=x.user)
+        if str(user.username) != str(request.user):
+          to_email = user.email
+          mail_subject = "Upcoming Event"
+          message = "Hi " + str(user) + "! There is an upcoming event that matches your interests."
+          email = EmailMessage(mail_subject, message, to=[to_email])
+          email.send()
+
   return redirect("event-detail", pk)
 
 class DateInput(forms.DateTimeInput):
@@ -134,6 +173,10 @@ class EventsCreateView(LoginRequiredMixin, CreateView):
     data =  json.loads(read_hiking_data()) if self.kwargs.get('sport', None) == 'Hiking' else json.loads(read_facilities_data())
 
     current_id = self.kwargs.get('id', None)
+
+    if Event.objects.filter(owner=self.request.user, locationId=current_id, name=self.request.POST.get('name'),date=self.request.POST.get('date')).count() > 0:
+      messages.success(self.request, 'A similar event already exists!')
+      return redirect(reverse("add-event", kwargs={'sport':self.kwargs.get('sport', None),'id': current_id}))
 
     if self.kwargs.get('sport', None) != 'Hiking':
       if str(current_id) in self.request.session:

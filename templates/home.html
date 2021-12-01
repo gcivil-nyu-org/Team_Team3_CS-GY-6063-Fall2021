@@ -15,6 +15,8 @@
 </div>
   <div style="display: flex; flex-direction:row; flex-wrap: wrap; margin: 1rem">
   {% for event in events %}
+      {% now "Y-m-d H:i:s" as todays_date %}
+      {% if todays_date < event.event.date|date:"Y-m-d H:i:s" %}
         <div class="card" style="width: 20rem; margin: 1rem; border: 0.1rem solid black">
           <div class="card-body">
           <h1>    
@@ -31,6 +33,7 @@
           <p>Creator: {{event.event.owner}}</p>
           </div>
         </div>
+      {% endif %}
   {% endfor %}
   </div>
 {% else %}

@@ -5,6 +5,11 @@ from django.urls import reverse
 from django.core.exceptions import ValidationError
 from datetime import timedelta
 
+
+@property
+def is_past_due(self):
+    return timezone.now() > self.date
+
 class Event(models.Model):
   def no_past(value):
     if value < timezone.now():
@@ -29,7 +34,7 @@ class Event(models.Model):
     if self.date < timezone.now():
       raise ValidationError("The date cannot be in the past!")
       super(Event, self).clean(*args, **kwargs)
-  
+
   class Meta:
         verbose_name = "event"
         verbose_name_plural = "events"
