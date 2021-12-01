@@ -101,27 +101,28 @@ def event_cancel_attendance(request, pk):
   else:
     this_event.remove_user_from_list_of_attendees(request.user)
 
-  
   if timezone.now() + timedelta(hours=24, minutes=0) > this_event.date:
-    users_to_notify = Profile.objects.filter((Q(distance__contains=this_event.borough) | Q(location=this_event.borough.lower())), **{this_event.sport.lower(): True})
-    if 0 < users_to_notify.count() < 20:
+    users_to_notify = Profile.objects.filter((Q(distance__contains=str(this_event.borough)) | Q(location=this_event.borough.lower())), **{this_event.sport.lower(): True})
+    if 0 < users_to_notify.count() < 21:
       for x in users_to_notify:
         user = User.objects.get(username=x.user)
-        to_email = user.email
-        mail_subject = "Upcoming Event"
-        message = "Hi " + str(user) + "! There is an upcoming event that matches your interests."
-        email = EmailMessage(mail_subject, message, to=[to_email])
-        email.send()
-    elif users_to_notify.count() >= 20:
+        if str(user.username) != str(request.user):
+          to_email = user.email
+          mail_subject = "Upcoming Event"
+          message = "Hi " + str(user) + "! There is an upcoming event that matches your interests."
+          email = EmailMessage(mail_subject, message, to=[to_email])
+          email.send()
+    elif users_to_notify.count() >= 21:
       userlist = list(users_to_notify)
       random_users = random.sample(userlist, 20)
       for x in random_users:
         user = User.objects.get(username=x.user)
-        to_email = user.email
-        mail_subject = "Upcoming Event"
-        message = "Hi " + str(user) + "! There is an upcoming event that matches your interests."
-        email = EmailMessage(mail_subject, message, to=[to_email])
-        email.send()
+        if str(user.username) != str(request.user):
+          to_email = user.email
+          mail_subject = "Upcoming Event"
+          message = "Hi " + str(user) + "! There is an upcoming event that matches your interests."
+          email = EmailMessage(mail_subject, message, to=[to_email])
+          email.send()
 
   return redirect("event-detail", pk)
 
