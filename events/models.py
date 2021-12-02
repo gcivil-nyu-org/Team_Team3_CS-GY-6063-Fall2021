@@ -33,8 +33,11 @@ class Event(models.Model):
   def clean(self, *args, **kwargs):
     if self.date < timezone.now():
       raise ValidationError("The date cannot be in the past!")
-      super(Event, self).clean(*args, **kwargs)
-
+      
+    if self.numberOfPlayers <= 1:
+      raise ValidationError("Enter a number greater than 1!")
+    super(Event, self).clean(*args, **kwargs)
+    
   class Meta:
         verbose_name = "event"
         verbose_name_plural = "events"
