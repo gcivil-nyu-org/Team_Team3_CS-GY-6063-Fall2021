@@ -17,7 +17,6 @@ from django.utils import timezone
 from maps.facilities_data import read_facilities_data, read_hiking_data
 import json
 from django.contrib import messages
-from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
 from django.db.models import Q
 from userprofile.models import Profile
