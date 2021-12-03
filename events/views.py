@@ -23,7 +23,9 @@ from django.db.models import Q
 from userprofile.models import Profile
 import random
 from .filters import EventFilter
-
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMultiAlternatives
+from config.settings import EMAIL_HOST_USER
 
 
 class EventsListView(ListView):
@@ -74,55 +76,74 @@ def event_add_attendance(request, pk):
   new_num_registered = this_event.get_registrations().count()
   if new_num_registered == this_event.numberOfPlayers:
     attendees = this_event.get_registrations()
+    sport = this_event.sport
     for x in attendees:
       user = User.objects.get(username=x)
-      to_email = user.email
-      mail_subject = "Squad Ready"
-      message = "Hi " + str(user) + "! Your squad has been formed."
-      email = EmailMessage(mail_subject, message, to=[to_email])
-      email.send()
+      to = user.email
+      subject = 'Squad Ready'
+      text_content = 'Hi' + str(user) + '! Your squad has been formed for a ' + str(sport.lower()) +  ' event.'
+      link = str(get_current_site(request)) + '/events/' + str(this_event.pk)
+      html_content = '<p> Hi ' + str(user) + '! Your squad has been formed for a <strong>' + str(sport.lower()) +  '</strong> event.</p> <a href="http://' + str(link) + '/">See Event Details</a>'
+      msg = EmailMultiAlternatives(subject, text_content, EMAIL_HOST_USER, [to])
+      msg.attach_alternative(html_content, "text/html")
+      msg.send() 
   
   return redirect("event-detail", pk)
 
 @login_required
 def event_cancel_attendance(request, pk):
   this_event = Event.objects.get(pk=pk)
+  borough = this_event.borough
+  sport = this_event.sport
   num_registered = this_event.get_registrations().count()
   if num_registered == this_event.numberOfPlayers:
     this_event.remove_user_from_list_of_attendees(request.user)
     attendees = this_event.get_registrations()
     for x in attendees:
-      user = User.objects.get(username=x)
-      to_email = user.email
-      mail_subject = "Squad Opening"
-      message = "Hi " + str(user) + "! There is an open spot for your upcoming event."
-      email = EmailMessage(mail_subject, message, to=[to_email])
-      email.send()
+      user = User.objects.get(username=x) 
+      to = user.email
+      subject = 'Squad Opening'
+      text_content = 'Hi' + str(user) + '! There is an open spot for your upcoming ' + str(sport.lower()) +  ' event.'
+      link = str(get_current_site(request)) + '/events/' + str(this_event.pk)
+      html_content = '<p> Hi ' + str(user) + '! There is an open spot for your upcoming <strong>' + str(sport.lower()) +  '</strong> event.</p> <a href="http://' + str(link) + '/">See Event Details</a>'
+      msg = EmailMultiAlternatives(subject, text_content, EMAIL_HOST_USER, [to])
+      msg.attach_alternative(html_content, "text/html")
+      msg.send()  
   else:
     this_event.remove_user_from_list_of_attendees(request.user)
 
   if timezone.now() + timedelta(hours=24, minutes=0) > this_event.date:
-    users_to_notify = Profile.objects.filter((Q(distance__contains=str(this_event.borough)) | Q(location=this_event.borough.lower())), **{this_event.sport.lower(): True})
-    if 0 < users_to_notify.count() < 21:
-      for x in users_to_notify:
-        user = User.objects.get(username=x.user)
-        if str(user.username) != str(request.user):
-          to_email = user.email
-          mail_subject = "Upcoming Event"
-          message = "Hi " + str(user) + "! There is an upcoming event that matches your interests."
-          email = EmailMessage(mail_subject, message, to=[to_email])
-          email.send()
-    elif users_to_notify.count() >= 21:
-      userlist = list(users_to_notify)
-      random_users = random.sample(userlist, 20)
+    interested_users = Profile.objects.filter((Q(distance__contains=borough.upper()) | Q(location=borough.lower())), **{sport.lower(): True})
+    attendees = this_event.get_registrations()
+    int_users_list = list(interested_users.values('user_id'))
+    attendees_list = list(attendees.values('user_id'))
+    attendees_list.append({'user_id':request.user.pk})
+
+    notification_list = [i for i in int_users_list if i not in attendees_list]
+
+    if 0 < len(notification_list) < 21:
+      for x in notification_list:
+        user = User.objects.get(pk=x["user_id"])
+        to = user.email
+        subject = 'Upcoming Event'
+        text_content = 'Hi' + str(user) + '! There is an upcoming ' + str(sport.lower()) +  ' event you may be interested in.'
+        link = str(get_current_site(request)) + '/events/' + str(this_event.pk)
+        html_content = '<p> Hi ' + str(user) + '! There is an upcoming <strong>' + str(sport.lower()) +  '</strong> event you may be interested in.</p> <a href="http://' + str(link) + '/">Learn more about this event.</a>'
+        msg = EmailMultiAlternatives(subject, text_content, EMAIL_HOST_USER, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()    
+    elif len(notification_list) > 20:
+      random_users = random.sample(notification_list, 20)
       for x in random_users:
-        user = User.objects.get(username=x.user)
-        if str(user.username) != str(request.user):
-          to_email = user.email
-          mail_subject = "Upcoming Event"
-          message = "Hi " + str(user) + "! There is an upcoming event that matches your interests."
-          email = EmailMessage(mail_subject, message, to=[to_email])
-          email.send()
+        user = User.objects.get(pk=x["user_id"])
+        to = user.email
+        subject = 'Upcoming Event'
+        text_content = 'Hi' + str(user) + '! There is an upcoming ' + str(sport.lower()) +  ' event you may be interested in.'
+        link = str(get_current_site(request)) + '/events/' + str(this_event.pk)
+        html_content = '<p> Hi ' + str(user) + '! There is an upcoming <strong>' + str(sport.lower()) +  '</strong> event you may be interested in.</p> <a href="http://' + str(link) + '/">Learn more about this event.</a>'
+        msg = EmailMultiAlternatives(subject, text_content, EMAIL_HOST_USER, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send() 
 
   return redirect("event-detail", pk)
 
