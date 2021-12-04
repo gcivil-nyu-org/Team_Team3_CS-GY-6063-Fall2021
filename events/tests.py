@@ -16,13 +16,19 @@ class EventsViewTest(TestCase):
     Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user, numberOfPlayers=5)
 
   def test_events_list_view(self):
-    response = self.client.get('/events/')
-    self.assertEqual(response.status_code, 302)
+    c = Client()
+    c.login(username = 'test_login', password = 'secret_111')
+    response = c.get('/events/')
+    self.assertEqual(response.status_code, 200)
 
   def test_events_detail_view(self):
     c = Client()
     c.login(username = 'test_login', password = 'secret_111')
-    response = c.get(reverse('event-detail', kwargs={'pk':1}))
+    time = timezone.now()
+    event =  Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user, numberOfPlayers=5)
+    event.add_user_to_list_of_attendees(self.user)
+    pk = event.pk
+    response = c.get(reverse('event-detail', kwargs={'pk':pk}))
     self.assertEqual(response.status_code, 200)
 
   def test_create_event(self):
@@ -51,16 +57,27 @@ class EventsViewTest(TestCase):
 
   def test_add_user_to_list_of_attendees(self):
     time = timezone.now() + datetime.timedelta(days=30)
-    event =  Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user, numberOfPlayers=5)
-    registration = event.add_user_to_list_of_attendees(self.user)
+    event =  Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user, numberOfPlayers=2)
+    user2 = User.objects.create(username = 'test_login2')
+    registration = event.add_user_to_list_of_attendees(user2)
+    c = Client()
+    c.login(username = 'test_login', password = 'secret_111')
+    c.post(reverse('join-event', kwargs={'pk':event.pk}))
+    test = event.get_registrations()
     self.assertEqual(type(registration).__name__, 'EventRegistration')
+    self.assertEqual(test.count(), 2)
 
-  def test_remove_user_from_list_of_attendees(self):
+  def test_remove_user_from_full_list_of_attendees(self):
     time = timezone.now() + datetime.timedelta(days=30)
-    event =  Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user, numberOfPlayers=5)
+    user2 = User.objects.create(username = 'test_login2')
+    event =  Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user, numberOfPlayers=2)
     event.add_user_to_list_of_attendees(self.user)
-    removeRegistration = event.remove_user_from_list_of_attendees(self.user)
-    self.assertEqual(removeRegistration, True)
+    event.add_user_to_list_of_attendees(user2)
+    c = Client()
+    c.login(username = 'test_login', password = 'secret_111')
+    c.post(reverse('unjoin-event', kwargs={'pk':event.pk}))
+    test = event.get_registrations()
+    self.assertEqual(test.count(), 1)
 
   def test_event_add_and_cancel_attendance(self):
     c = Client()
@@ -81,6 +98,37 @@ class EventsViewTest(TestCase):
   def test_get_sport_key(self):
     key = get_sport_key('Baseball');
     self.assertEqual(key, 'adult_base')
+
+  def test_join_full_event(self):
+    time = timezone.now() + datetime.timedelta(days=30)
+    event =  Event.objects.create(name="testevent", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user, numberOfPlayers=2)
+    user2 = User.objects.create(username = 'test_login2')
+    user3 = User.objects.create(username = 'test_login3')
+    event.add_user_to_list_of_attendees(user3)
+    event.add_user_to_list_of_attendees(user2)
+    c = Client()
+    c.login(username = 'test_login', password = 'secret_111')
+    c.post(reverse('join-event', kwargs={'pk':event.pk}))
+    test = event.get_registrations()
+    self.assertEqual(test.count(), 2)
+
+  def test_leave_full_event(self):
+    time = timezone.now() + datetime.timedelta(days=30)
+    event =  Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user, numberOfPlayers=2)
+    user2 = User.objects.create(username = 'test_login2')
+    event.add_user_to_list_of_attendees(self.user)
+    event.add_user_to_list_of_attendees(user2)
+    event.remove_user_from_list_of_attendees(self.user)
+    test = event.get_registrations()
+    self.assertEqual(test.count(), 1)
+  
+  def test_delete_event(self):
+    c = Client()
+    c.login(username = 'test_login', password = 'secret_111')
+    time = timezone.now()
+    event =  Event.objects.create(name="test event", description="description", address="123 abc st", locationId="12", date=time, dateCreated=time, owner=self.user, numberOfPlayers=5)
+    response = c.post(reverse('event-delete', kwargs={'pk':event.pk}))
+    self.assertTrue(response)
 
 class SquadTest(TestCase):
   def test_squad(self):
