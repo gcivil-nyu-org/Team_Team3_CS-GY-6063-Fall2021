@@ -14,11 +14,12 @@
         <li>Name : {{ name }}</li>
         <li>Park : {{ park }}</li>
         <li>Location : {{ location }}</li>
+        {% if length %}
         <li>Length : {{ length }}</li>
+        {% endif %}
         {% if difficulty %}
           <li>Difficulty : {{ difficulty }}</li>
         {% endif %}
-        <li>Details : {{details|safe}} </li>
         {% if accessible == "N" %}
           <li>Accesible : No</li>
         {% elif accessible == "Y" %}
@@ -29,6 +30,7 @@
         {% elif limited_access == "Y" %}
           <li>Limited Accesibilty : Yes</li>
         {% endif %}
+        <li>Details : {{details|safe}} </li>
         
       <ul>
     </div>
