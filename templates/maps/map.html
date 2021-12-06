@@ -18,72 +18,74 @@
         center: [-73.98627859258755, 40.695065862718806],
         zoom: 17
       });
-
       map.on('load', () => {
-      map.addSource('outdoorsquad', {
-        type: 'geojson',
-      // Use a URL for the value for the `data` property.
-        data: 'https://api.mapbox.com/datasets/v1/jk1257/ckw19brsi08fp20mlmsm8m0rk/features?access_token={{ mapbox_access_token }}'
-      });
-
-      map.addControl(new mapboxgl.NavigationControl());
-
-      map.addLayer({
-        'id': 'places',
-        'type': 'circle',
-        'source': 'outdoorsquad',
-        'paint': {
-        'circle-radius': 8,
-        'circle-stroke-width': 2,
-        'circle-color': 'red',
-        'circle-stroke-color': 'white'
+        map.loadImage(
+        'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
+        (error, image) => {
+        if (error) throw error;
+        map.addImage('custom-marker', image);
+        map.addSource('outdoorsquad', {
+          type: 'geojson',
+        // Use a URL for the value for the `data` property.
+          data: 'https://api.mapbox.com/datasets/v1/jk1257/ckw19brsi08fp20mlmsm8m0rk/features?access_token={{ mapbox_access_token }}'
+        });
+  
+        map.addControl(new mapboxgl.NavigationControl());
+  
+        map.addLayer({
+          'id': 'places',
+          'type': 'symbol',
+          'source': 'outdoorsquad',
+          'layout': {
+          'icon-image': 'custom-marker'}
+        });
+  
+        map.on('click', 'places', (e) => {
+          //  coordinates array.
+          const coordinates = e.features[0].geometry. coordinates.slice();
+          const description = '<a href="{% url 'login' %}" class="btn d-block btn-primary btn-sm" target="_blank">Login for more info</a>';
+          //const description = '<h2>For more info, please login</h2>'
+  
+          // Ensure that if the map is zoomed out such that multiple
+          // copies of the feature are visible, the popup appears
+          // over the copy being pointed to.
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0]   ? 360 : -360;
+          }
+  
+  
+          const getAddress = async () => {
+          await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?access_token={{ mapbox_access_token }}`)
+          .then((response) => {
+            return response.json();
+          })
+          .then((myJson) => {  
+            const ADDRESS_INDEX = 0;
+            const address = myJson.features[ADDRESS_INDEX].place_name; 
+  
+            new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(address + description)
+            .addTo(map);
+  
+            return address;
+            });
+          }
+  
+        getAddress().then(data => (address = data));
+        });
+  
+        // Change the cursor to a pointer when the mouse is over the places layer.
+        map.on('mouseenter', 'places', () => {
+          map.getCanvas().style.cursor = 'pointer';
+        });
+  
+        // Change it back to a pointer when it leaves.
+        map.on('mouseleave', 'places', () => {
+          map.getCanvas().style.cursor = '';
+        });
         }
+        );
       });
-
-      map.on('click', 'places', (e) => {
-        // Copy coordinates array.
-        const coordinates = e.features[0].geometry. coordinates.slice();
-        // const description = '<a href="/facilities/' + e.features[0].properties.objectid + '" class="btn d-block btn-primary btn-sm" target="_blank">See more info</a>';
-
-
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0]   ? 360 : -360;
-        }
-
-
-        const getAddress = async () => {
-        await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?access_token={{ mapbox_access_token }}`)
-        .then((response) => {
-          return response.json();
-        })
-        .then((myJson) => {
-          const ADDRESS_INDEX = 0;
-          const address = myJson.features[ADDRESS_INDEX].place_name;
-
-          new mapboxgl.Popup()
-          .setLngLat(coordinates)
-          .setHTML(address)
-          .addTo(map);
-
-          return address;
-          });
-        }
-
-      getAddress().then(data => (address = data));
-      });
-
-      // Change the cursor to a pointer when the mouse is over the places layer.
-      map.on('mouseenter', 'places', () => {
-        map.getCanvas().style.cursor = 'pointer';
-      });
-
-      // Change it back to a pointer when it leaves.
-      map.on('mouseleave', 'places', () => {
-        map.getCanvas().style.cursor = '';
-      });
-    });
-    </script>
-{% endblock %}
+      </script>
+  {% endblock %}
