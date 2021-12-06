@@ -15,10 +15,21 @@
         <li>Park : {{ park }}</li>
         <li>Location : {{ location }}</li>
         <li>Length : {{ length }}</li>
-        <li>Difficulty : {{ difficulty }}</li>
-        <li>Details : {{details}} </li>
-        <li>Accesible : {{ accessible }}</li>
-        <li>Limited Accesibilty : {{ limited_access }}</li>
+        {% if difficulty %}
+          <li>Difficulty : {{ difficulty }}</li>
+        {% endif %}
+        <li>Details : {{details|safe}} </li>
+        {% if accessible == "N" %}
+          <li>Accesible : No</li>
+        {% elif accessible == "Y" %}
+          <li>Accesible : Yes</li>
+        {% endif %}
+        {% if limited_access == "N" %}
+          <li>Limited Accesibilty : No</li>
+        {% elif limited_access == "Y" %}
+          <li>Limited Accesibilty : Yes</li>
+        {% endif %}
+        
       <ul>
     </div>
     
