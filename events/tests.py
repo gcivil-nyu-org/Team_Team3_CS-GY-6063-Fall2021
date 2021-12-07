@@ -104,7 +104,6 @@ class EventsViewTest(TestCase):
   
   def test_delete_event(self):
     self.c.login(username = 'test_login', password = 'secret_111')
-    time = timezone.now()
     response = self.c.post(reverse('event-delete', kwargs={'pk':self.event1.pk}))
     self.assertTrue(response)
 
