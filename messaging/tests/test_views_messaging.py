@@ -4,14 +4,17 @@ from django.urls import reverse
 from messaging.models import ThreadModel, MessageModel
 
 class CreateThreadViewsTests(TestCase):
-    def setUp(self):
-        self.user1 = User.objects.create(username = 'sender')
-        self.user2 = User.objects.create(username = 'receiver')
-        self.user1.set_password("secret_111")
-        self.user2.set_password("secret_111")
-        self.user1.save()
-        self.user2.save()
-        self.c = Client()
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.user1 = User.objects.create(username="sender")
+        cls.user2 = User.objects.create(username="receiver")
+        cls.user1.set_password("secret_111")
+        cls.user2.set_password("secret_111")
+        cls.user1.save()
+        cls.user2.save()
+        cls.c = Client()
 
     def test_create_thread_view_accessible(self):
         self.c.login(username="sender", password="secret_111")
@@ -44,11 +47,14 @@ class CreateThreadViewsTests(TestCase):
         self.assertEqual(response.status_code, 302)
 
 class ListThreadViewsTests(TestCase):
-    def setUp(self):
-        self.user1 = User.objects.create(username = 'sender')
-        self.user1.set_password("secret_111")
-        self.user1.save()
-        self.c = Client()
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.user1 = User.objects.create(username = 'sender')
+        cls.user1.set_password("secret_111")
+        cls.user1.save()
+        cls.c = Client()
 
     def test_inbox_view_accessible(self):
         self.c.login(username="sender", password="secret_111")
@@ -57,12 +63,14 @@ class ListThreadViewsTests(TestCase):
         self.assertTemplateUsed(response, "messaging/inbox.html")
 
 class CreateMessageViewsTests(TestCase):
-    def setUp(self):
-        self.user1 = User.objects.create(username = 'sender')
-        self.user2 = User.objects.create(username = 'receiver')
-        self.user1.set_password("secret_111")
-        self.user1.save()
-        self.c = Client()
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.user1 = User.objects.create(username = 'sender')
+        cls.user2 = User.objects.create(username = 'receiver')
+        cls.user1.set_password("secret_111")
+        cls.user1.save()
+        cls.c = Client()
 
     def test_send_message_to_senders_thread(self):
         self.c.login(username="sender", password="secret_111")

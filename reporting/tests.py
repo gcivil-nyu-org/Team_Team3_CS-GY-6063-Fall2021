@@ -5,10 +5,13 @@ from reporting.forms import ReportNoShowForm, ReportMisbehaviorForm
 
 
 class TestReportingViews(TestCase):
-    def setUp(self):
-        self.user = User.objects.create(username = 'test_login')
-        self.user.set_password('secret_111')
-        self.user.save()
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.user = User.objects.create(username="test_login")
+        cls.user.set_password("secret_111")
+        cls.user.save()
 
     def test_ContactUs_view(self):
         response = self.client.get('reporting/contactus.html')
