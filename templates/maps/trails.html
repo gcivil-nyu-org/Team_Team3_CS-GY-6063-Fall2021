@@ -13,7 +13,7 @@
       <ul>
         <li>Name : {{ name }}</li>
         <li>Park : {{ park }}</li>
-        <li>Location : {{ location }}</li>
+        <li>Location : {{ location|safe }}</li>
         {% if length %}
         <li>Length : {{ length }}</li>
         {% endif %}
