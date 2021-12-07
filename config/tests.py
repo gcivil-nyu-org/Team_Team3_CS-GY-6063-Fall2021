@@ -76,3 +76,9 @@ class TestHomePageView(TestCase, RequestFactory):
         request.user = self.user
         response = HomePageView.as_view(template_name="home.html")(request)
         self.assertIsInstance(response.context_data, dict)
+
+class TestAboutPage(TestCase):
+    def test_about_view_url(self):
+        response = self.client.get("/about")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "About Us")
