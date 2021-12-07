@@ -3,10 +3,13 @@ from django.contrib.auth.models import User
 from userprofile.forms import ProfileUpdateForm
 
 class TestUserProfileCreation(TestCase):
-    def setUp(self):
-        self.user = User.objects.create(username="test_login")
-        self.user.set_password("secret_111")
-        self.user.save()
+    
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.user = User.objects.create(username="test_login")
+        cls.user.set_password("secret_111")
+        cls.user.save()
 
     def test_form_valid(self):
         form_data = {
