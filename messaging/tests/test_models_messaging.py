@@ -4,10 +4,12 @@ from messaging.models import ThreadModel, MessageModel
 
 class ThreadModelTest(TestCase):
 
-    def setUp(self):
-        self.user1 = User.objects.create(username = 'sender')
-        self.user2 = User.objects.create(username = 'receiver')
-        ThreadModel.objects.create(user = self.user1, receiver = self.user2)
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.user1 = User.objects.create(username="sender")
+        cls.user2 = User.objects.create(username="receiver")
+        ThreadModel.objects.create(user = cls.user1, receiver = cls.user2)
 
     def test_thread_model_defaults(self):
         thread = ThreadModel.objects.get(user = self.user1, receiver = self.user2)
@@ -15,11 +17,13 @@ class ThreadModelTest(TestCase):
 
 class MessageModelTest(TestCase):
 
-    def setUp(self):
-        self.user1 = User.objects.create(username = 'sender')
-        self.user2 = User.objects.create(username = 'receiver')
-        ThreadModel.objects.create(user = self.user1, receiver = self.user2)
-        self.thread = ThreadModel.objects.get(user = self.user1, receiver = self.user2)
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.user1 = User.objects.create(username="sender")
+        cls.user2 = User.objects.create(username="receiver")
+        ThreadModel.objects.create(user = cls.user1, receiver = cls.user2)
+        cls.thread = ThreadModel.objects.get(user = cls.user1, receiver = cls.user2)
 
     def test_check_default_values(self):
         message = "test"

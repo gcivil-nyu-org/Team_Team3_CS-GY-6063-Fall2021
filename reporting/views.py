@@ -5,8 +5,6 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
-
 @login_required
 def ContactUs(request):
   return render(request,"reporting/contactus.html")
@@ -21,11 +19,10 @@ def no_show(request):
       post.save()
       return HttpResponseRedirect(reverse("home"))
   else:
-    form = ReportNoShowForm()
+    form = ReportNoShowForm(user=request.user)
     context = {"form": form}
     return render(request, "reporting/noshow.html", context)
 
- 
 @login_required
 def misbehavior(request):
   if request.method == "POST":
@@ -36,7 +33,6 @@ def misbehavior(request):
       post.save()
       return HttpResponseRedirect(reverse("home"))
   else:
-    form = ReportMisbehaviorForm()
+    form = ReportMisbehaviorForm(user=request.user)
     context = {"form": form}
     return render(request, "reporting/misbehavior.html", context)
-    

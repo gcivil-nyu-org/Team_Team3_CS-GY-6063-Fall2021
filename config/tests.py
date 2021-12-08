@@ -10,19 +10,21 @@ from .views import HomePageView
 
 
 class TestUserLogin(TestCase):
-    def setUp(self):
-        self.user = User.objects.create(username="test_login")
-        self.user.set_password("secret_111")
-        self.user.save()
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.user = User.objects.create(username="test_login")
+        cls.user.set_password("secret_111")
+        cls.user.save()
+        cls.c = Client()
 
     def test_login_success(self):
-        c = Client()
-        status = c.login(username="test_login", password="secret_111")
+        status = self.c.login(username="test_login", password="secret_111")
         self.assertTrue(status)
 
     def test_login_failure(self):
-        c = Client()
-        status = c.login(username="test_login", password="incorrectpassword")
+        status = self.c.login(username="test_login", password="incorrectpassword")
         self.assertFalse(status)
 
     def test_unknown_username(self):
@@ -34,33 +36,34 @@ class TestUserLogin(TestCase):
     # Idea: Log Out is only in the dropdown.
     #Only a logged in user can see this string in the dropdown
     def test_logged_in_user_sees_dashboard_dropdown(self):
-        c = Client()
-        c.login(username="test_login", password="secret_111")
-        response = c.get(reverse("login"))
+        self.c.login(username="test_login", password="secret_111")
+        response = self.c.get(reverse("login"))
         self.assertContains(response, "Log Out")
 
     # Idea: Tets that a logged out user cannot see the dropdown
     #because response does not contain Log Out
     def  logged_out_user_can_log_in(self):
-        c = Client()
-        c.logout()
-        response = c.get(reverse("logout"))
+        self.c.logout()
+        response = self.c.get(reverse("logout"))
         self.assertNotContains(response, "Log Out")
 
 
 class TestUserLoginViews(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.c = Client()
+
     def test_view_url_exists_in_expected_location(self):
         response = self.client.get("/accounts/login/")
         self.assertEqual(response.status_code, 200)
 
     def test_view_url_accessible_by_name(self):
-        c = Client()
-        response = c.get(reverse("login"))
+        response = self.c.get(reverse("login"))
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
-        c = Client()
-        response = c.get(reverse("login"))
+        response = self.c.get(reverse("login"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "registration/login.html")
 
@@ -76,3 +79,9 @@ class TestHomePageView(TestCase, RequestFactory):
         request.user = self.user
         response = HomePageView.as_view(template_name="home.html")(request)
         self.assertIsInstance(response.context_data, dict)
+
+class TestAboutPage(TestCase):
+    def test_about_view_url(self):
+        response = self.client.get("/about")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "About Us")

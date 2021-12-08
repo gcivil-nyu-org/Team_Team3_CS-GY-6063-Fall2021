@@ -18,12 +18,17 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, RedirectView
+from django.contrib.staticfiles.storage import staticfiles_storage
 from config.views import HomePageView
 from accounts.forms import EmailValidationOnForgotPassword
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path(
+        "favicon.ico",
+        RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),
+    ),
     path(
         "accounts/password_reset/",
         auth_views.PasswordResetView.as_view(
@@ -34,6 +39,7 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("", HomePageView.as_view(template_name="home.html"), name="home"),  # new
+    path("about", TemplateView.as_view(template_name="about.html"), name="about"),
     path(
         "accounts/signup/",
         TemplateView.as_view(template_name="signup.html"),
@@ -46,7 +52,6 @@ urlpatterns = [
     path("", include("squad.urls")),
     path("messaging/", include("messaging.urls")),
     path("reporting/", include("reporting.urls")),
-
 ]
 
 if settings.DEBUG:
