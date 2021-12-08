@@ -4,10 +4,13 @@ from django.urls import reverse
 
 
 class TestUserProfileViews(TestCase):
-    def setUp(self):
-        self.user = User.objects.create(username="test_login")
-        self.user.set_password("secret_111")
-        self.user.save()
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.user = User.objects.create(username="test_login")
+        cls.user.set_password("secret_111")
+        cls.user.save()
 
     def test_view_userprofile_access_requires_login(self):
         c = Client()

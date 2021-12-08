@@ -1,13 +1,56 @@
 {% extends 'base.html' %}
+{% load bootstrap %}
 
 {% block content %}
-  <div style="display: flex; flex-direction:row; flex-wrap: wrap; margin: 1rem">
 
-    {% for event in events.all|dictsort:"date" %}
-      <div class="card" style="width: 20rem; margin: 1rem; border: 0.1rem solid black">
-        <div class="card-body">
-        {% if event.date.is_past_due %}
-        {% else %}
+  <div >
+    <form method="GET" style="color: white; margin: 2rem; width: 60%">
+    {{ filter.form|bootstrap }}
+    <button type="submit" style="margin-top: 1rem; margin-left: 45%" class="btn btn-primary">Search</button>
+  </div>
+
+  <div style="display: flex; flex-direction:row; flex-wrap: wrap; margin: 1rem">
+    
+    {% for event in filter.qs|dictsort:"date" %}
+      <div class="card" style="width: 20rem; margin: 1rem">
+
+        {% if event.sport == "Bocce" %}
+          <img class="card-img-top" src="../media/sports/bocce.jpg">
+        {% elif event.sport == "Baseball" %}
+          <img class="card-img-top" src="../media/sports/baseball.jpg">
+        {% elif event.sport == "Basketball" %}
+          <img class="card-img-top" src="../media/sports/basketball.jpg">
+        {% elif event.sport == "Cricket" %}
+          <img class="card-img-top" src="../media/sports/cricket.jpg">
+        {% elif event.sport == "Flag Football" %}
+          <img class="card-img-top" src="../media/sports/flag_football.jpg">
+        {% elif event.sport == "Football" %}
+          <img class="card-img-top" src="../media/sports/football.jpg">
+        {% elif event.sport == "Frisbee" %}
+          <img class="card-img-top" src="../media/sports/frisbee.jpg">
+        {% elif event.sport == "Handball" %}
+          <img class="card-img-top" src="../media/sports/handball.jpg">
+        {% elif event.sport == "Hiking" %}
+          <img class="card-img-top" src="../media/sports/hiking.jpg">
+        {% elif event.sport == "Hockey" %}
+          <img class="card-img-top" src="../media/sports/hockey.jpg">
+        {% elif event.sport == "Kickball" %}
+          <img class="card-img-top" src="../media/sports/kickball.jpg">
+        {% elif event.sport == "Lacrosse" %}
+          <img class="card-img-top" src="../media/sports/lacrosse.jpg">
+        {% elif event.sport == "Netball" %}
+          <img class="card-img-top" src="../media/sports/netball.jpg">
+        {% elif event.sport == "Rugby" %}
+          <img class="card-img-top" src="../media/sports/rugby.jpg">
+        {% elif event.sport == "Softball" %}
+          <img class="card-img-top" src="../media/sports/softball.jpg">
+        {% elif event.sport == "Tennis" %}
+          <img class="card-img-top" src="../media/sports/tennis.jpg">
+        {% elif event.sport == "Volleyball" %}
+          <img class="card-img-top" src="../media/sports/volleyball.jpg">
+        {%endif%}
+
+        <div class="card-body" style="text-align: center">
           <h1>    
             <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
           </h1> 
@@ -20,7 +63,6 @@
           {% endif %}
           <p>{{event.date}}</p>
           <p>Creator: {{event.owner}}</p>
-        {% endif %}
         </div>
       </div>
     {% endfor %}

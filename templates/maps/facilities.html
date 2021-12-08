@@ -4,66 +4,73 @@
 {% block title %}Facilities{% endblock %}
 
 {% block content %}
-<div style="background-color: white;">
-<div style="margin-left: 1rem">
-  <h1> Location {{ id }} </h1>
-  <div>Name : {{ name }}</div>
-  <div>Address : <span id="address"></span></div>
-  {% comment %} <div>Description : {{ description }}</div>   {% endcomment %}
+  
+  <div style="background-color: white;">
+  <div style="margin-left: 1rem;">
+    <div class="flex-container" style="display:flex; gap:20px; flex-grow: 1;">
 
-    <h2>Facility information</h2>
-    <div>
-      <ul>
-        <li>Dimensions : {{ dimensions }}</li>
-        <li>Accessible : {{ accessible }}</li>
-        <li>Wheelchair : {{ wheelchair }}</li>
-      <ul>
-    </div>
-    <div>
-    <h2>Sports Available</h2>
-    {% for key, value in sports.items %}
-      {% if value == 'Yes' %}
-        <ul> 
-          <li>
-            {{ key }}
-            <div>
-              <a class="btn btn-primary" href="{% url 'add-event' key id %}" style="margin-bottom: 1rem">Create A {{key}} Event</a>
-            </div>
-          </li>
-        </ul>
-      {% endif %}
-    {% endfor %}
-  </div>
-
-
-  <h2>Events at this location</h2>
-  <div style="display: flex; flex-direction:row; flex-wrap: wrap">
-    {% for event in events %}
-      <div class="card" style="width: 20rem; margin: 1rem; border: 0.1rem solid black">
-        <div class="card-body">
-        <h1>
-          <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
-        </h1>
-        <p>{{event.description}}</p>
-        <p>Sport: {{event.sport}}</p>
-        <p>Number of People Needed: {{event.numberOfPlayers}}</p>
-        <p>Address: {{event.address}}</p>
-        {% if event.borough != "" %}
-          <p>Borough: {{event.borough}}</p>
-        {% endif %}
-        <p>{{event.date}}</p>
-        <p>Creator: {{event.owner}}</p>
-        </div>
+      <div class="flex-child"style="flex-basis:50%">
+        <h1 class= "border-bottom mb-4">Sports Available (#{{ id }})</h1>
+        {% for key, value in sports.items %}
+          {% if value == 'Yes' %}
+            <ul> 
+              <ul>
+                <h4>{{ key }}</h4>
+                <div>
+                  <a class="btn btn-primary" href="{% url 'add-event' key id %}" style="margin-bottom: 1rem">Create A {{key}} Event</a>
+                </div>
+              </ul>
+            </ul>
+          {% endif %}
+        {% endfor %}
       </div>
-    {% endfor %}
 
+      <div class="flex-child" style="flex-basis:50%; flex-direction: column;"> 
+
+          <h1 class= "border-bottom mb-4"> Facility information </h1>
+          <div style = "font-size: 18px;"><b>Name:</b> {{ name }}</div>
+          <br>
+          <div style = "font-size: 18px;"><b>Address</b> : <span id="address"></span></div>
+          <br>
+          <div style = "font-size: 18px;"><b>Location ID:</b> {{ id }}</div>
+          {% comment %} <div>Description : {{ description }}</div>   {% endcomment %}
+          <br>
+          <div style = "font-size: 18px;"><b>Dimensions:</b> {{ dimensions }}</div>
+          <br>
+          <div style = "font-size: 18px;"><b>Wheelchair Accessible:</b> {{ wheelchair }}</div>
+
+        
+      </div>
+    
+    </div>
+
+    <div style="margin-top: 4rem">
+      <h2 class = "border-bottom mb-4">Events at this location:</h2>
+      <div style="display: flex; flex-direction:row; flex-wrap: wrap">
+        {% for event in events %}
+          <div class="card" style="width: 20rem; margin: 1rem; border: 0.1rem solid black">
+            <div class="card-body">
+            <h1>
+              <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
+            </h1>
+            <p>{{event.description}}</p>
+            <p>Sport: {{event.sport}}</p>
+            <p>Number of People Needed: {{event.numberOfPlayers}}</p>
+            <p>Address: {{event.address}}</p>
+            {% if event.borough != "" %}
+              <p>Borough: {{event.borough}}</p>
+            {% endif %}
+            <p>{{event.date}}</p>
+            <p>Creator: {{event.owner}}</p>
+            </div>
+          </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  
   </div>
-
-
-
-
-</div>
-</div>
+  </div>
 
 <script>
   const getAddress = async () => {
