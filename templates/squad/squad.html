@@ -3,22 +3,24 @@
 {% block title %}My Squad{% endblock %}
 
 {% block content %}
-  <div style="text-align: center; background-color: white; height: 800px; width: 100%;">
-    <h2>My Squad</h2>
-    {% for attendee in attendees %}
-      <div style="display: flex; flexDirection: row; flexWrap: wrap">
-          <img src="{{ attendee.profile.image.url }}" alt="" width="120" height="120" class="rounded">
+  <div style="text-align: center; color: white">
+    <h2 style="margin-bottom: 3rem">My Squad</h2>
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly">
+      {% for attendee in attendees %}
+        <div class="card" style="width: 18rem">
+          <img class="card-img-top" src="{{ attendee.profile.image.url }}">
           <div style="margin: 1rem">
-            <span>{{attendee}}</span>
-            <span><form action="/messaging/inbox/create-thread" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="username" value="{{ attendee }}">
-            <button type="submit" class="btn btn-success mt-3">Message</button>
-            </form></span>
+            <h5 class="card-title" style="color: black">{{attendee}}</h5>
+            <span>
+              <form action="/messaging/inbox/create-thread" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="username" value="{{ attendee }}">
+                <button type="submit" class="btn btn-success mt-3">Message</button>
+              </form>
+            </span>
+          </div>
         </div>
-      <div>
-
-      <br>
-    {% endfor %}
+      {% endfor %}
+    <div>
   </div>
 {% endblock %}
