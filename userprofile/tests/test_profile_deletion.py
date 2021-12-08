@@ -6,12 +6,15 @@ from userprofile.views import delete_profile
 
 
 class TestUserProfileCreation(TestCase):
-    def setUp(self):
-        self.user = User.objects.create(username="testuser")
-        self.user.set_password("secret_111")
-        self.user.save()
-        self.c = Client()
-        self.c.login(username="testuser", password="secret_111")
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.user = User.objects.create(username="testuser")
+        cls.user.set_password("secret_111")
+        cls.user.save()
+        cls.c = Client()
+        cls.c.login(username="testuser", password="secret_111")
 
     def test_delete_existing_user(self):
         #check that the user and their profile exists

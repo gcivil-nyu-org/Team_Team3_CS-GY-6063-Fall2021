@@ -112,7 +112,7 @@ def event_cancel_attendance(request, pk):
     this_event.remove_user_from_list_of_attendees(request.user)
 
   if timezone.now() + timedelta(hours=24, minutes=0) > this_event.date:
-    interested_users = Profile.objects.filter((Q(distance__contains=borough.upper()) | Q(location=borough.lower())), **{sport.lower(): True})
+    interested_users = Profile.objects.filter(Q(distance__contains=borough.upper()) | Q(location=borough.lower()), **{sport.lower(): True})
     attendees = this_event.get_registrations()
     int_users_list = list(interested_users.values('user_id'))
     attendees_list = list(attendees.values('user_id'))
