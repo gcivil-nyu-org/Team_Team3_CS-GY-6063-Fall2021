@@ -9,7 +9,7 @@
       {% for attendee in attendees %}
         <div class="card" style="width: 18rem">
           <img class="card-img-top" src="{{ attendee.profile.image.url }}">
-          <div style="margin: 1rem">
+          <div style="margin: 0.5rem">
             <h5 class="card-title" style="color: black">{{attendee}}</h5>
             <span>
               <form action="/messaging/inbox/create-thread" method="POST">
