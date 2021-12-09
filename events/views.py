@@ -24,7 +24,7 @@ import random
 from .filters import EventFilter
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
-from config.settings import EMAIL_HOST_USER
+from config.settings import EMAIL_HOST_USER, MAPBOX_TOKEN
 
 
 class EventsListView(ListView):
@@ -59,7 +59,9 @@ class EventDetailView(DetailView):
     unjoinTime = self.object.date - timedelta(hours =2)
     context['canUpdate'] = updateTime > timezone.now()
     context['canUnjoin'] = unjoinTime > timezone.now()
-    
+    address = context['event'].address
+    context['address'] = address
+    context['mapbox_access_token'] = MAPBOX_TOKEN
     return context
 
 @login_required
