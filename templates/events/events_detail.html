@@ -70,15 +70,20 @@
 
 <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
 <script>
-  console.log('{{mapbox_access_token}}')
-  console.log('{{address}}' + ', NY')
-
+    const sport = '{{event.sport}}';
+    var address;
+	
+    if (sport == 'Hiking'){
+        address = '{{event.address}}' + ', NY';
+    } else {
+        address = '{{event.address}}';
+    }
       
-	mapboxgl.accessToken = '{{mapbox_access_token}}';
+    mapboxgl.accessToken = '{{mapbox_access_token}}';
     const mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
     mapboxClient.geocoding
         .forwardGeocode({
-            query: '{{address}}',
+            query: address,
             autocomplete: false,
             limit: 1
         })
