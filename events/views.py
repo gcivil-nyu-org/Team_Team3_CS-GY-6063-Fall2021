@@ -59,9 +59,8 @@ class EventDetailView(DetailView):
     unjoinTime = self.object.date - timedelta(hours =2)
     context['canUpdate'] = updateTime > timezone.now()
     context['canUnjoin'] = unjoinTime > timezone.now()
-    address = context['event'].address
-    context['address'] = address
     context['mapbox_access_token'] = MAPBOX_TOKEN
+    
     return context
 
 @login_required
