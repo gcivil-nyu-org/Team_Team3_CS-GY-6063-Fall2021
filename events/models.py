@@ -20,7 +20,7 @@ class Event(models.Model):
       raise ValidationError("Cannot create an event within 3hrs!")
 
   name = models.CharField(max_length=100)
-  description = models.TextField()
+  description = models.TextField(blank=True, default="")
   address = models.TextField()
   locationId = models.CharField(max_length=100)
   date = models.DateTimeField(verbose_name="Event Date", validators=[no_past,more_than_3hrs])
