@@ -76,7 +76,6 @@
           <h1>    
             <a href="{% url 'event-detail' event.event.id %}">{{event.event.name}}</a>
           </h1>
-          <div style = "font-size: 18px;"><b>Details: </b>{{event.event.description}}</div> 
           <div style = "font-size: 18px;"><b>Sport: </b> {{event.event.sport.capitalize}}</div>
           <div style = "font-size: 18px;"><b>Squad Capacity: </b> {{event.event.numberOfPlayers}}</div>
           <div style = "font-size: 18px;"><b>Venue: </b> {{event.event.address}}</div>
