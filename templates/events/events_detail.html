@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
 
+{% block title %}Event Details{% endblock %}
+{% block headcontent %}
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+{% endblock %}
+
 {% block content %}
-  <div style="text-align: center; background-color: white; height: 800px; width: 100%;">
+<div class="container-fluid" style="background-color: white; height: 800px;">
+  <div class="row">
+  <div class="col-sm-8">
+  <div style="text-align: center; padding-top: 60px;">
     <h1>{{object.name}} </h1> 
     <p>{{object.description}}</p>
     <p>Sport: {{object.sport}}</p>
@@ -41,12 +52,73 @@
       {% else %}
         <a href="{% url 'show' object.locationId event.address %}">View all events at this location</a>
       {% endif %}    
-    <div>
+    </div>
 
     <h2>Attendees</h2>
       {% for attendee in attendees %}  
         <p>{{attendee}}</p>
     {% endfor %}
   </div>
+  </div>
+  <div class="col-sm-4">
+  <div class="mx-auto" style="width: 400px; padding-top: 110px; padding-right: 35px;">
+    <div  id="map" style='width: 100%; height: 300px'></div>
+  </div>
+  </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+<script>
+    const sport = '{{event.sport}}';
+    var address;
+	
+    if (sport == 'Hiking'){
+        address = '{{event.address}}' + ', NY';
+    } else {
+        address = '{{event.address}}';
+    }
+      
+    mapboxgl.accessToken = '{{mapbox_access_token}}';
+    const mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
+    mapboxClient.geocoding
+        .forwardGeocode({
+            query: address,
+            autocomplete: false,
+            limit: 1
+        })
+        .send()
+        .then((response) => {
+            if (
+                !response ||
+                !response.body ||
+                !response.body.features ||
+                !response.body.features.length
+            ) {
+                console.error('Invalid response:');
+                console.error(response);
+                return;
+            }
+            const feature = response.body.features[0];
+              
+            const map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: feature.center,
+                zoom: 10
+            });
+
+            const el = document.createElement('div');
+            el.className = 'marker';
+            el.style.backgroundImage = `url(https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png)`;
+            el.style.width = `32px`;
+            el.style.height = `40px`;
+            el.style.backgroundSize = '100%';
+
+            new mapboxgl.Marker(el).setLngLat(feature.center).addTo(map);
+            map.addControl(new mapboxgl.NavigationControl());
+        });
+</script>
+
 
 {% endblock content %} 
