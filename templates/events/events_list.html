@@ -72,9 +72,9 @@
             <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
           </h3>
           <div style = "font-size: 18px;"><b>Sport: </b> {{event.sport.capitalize}}</div>
-          <div style = "font-size: 18px;"><b>Squad Capacity: </b> {{event.event.numberOfPlayers}}</div>
+          <div style = "font-size: 18px;"><b>Squad Capacity: </b> {{event.numberOfPlayers}}</div>
           <div style = "font-size: 18px;"><b>Venue: </b> {{event.address}}</div>
-          {% if event.event.borough != "" %}
+          {% if event.borough != "" %}
             <div style = "font-size: 18px;"><b>Borough: </b> {{event.borough}}</div>
           {% endif %}
           <div style = "font-size: 18px;"><b>Date: </b> {{event.date}}</div>
