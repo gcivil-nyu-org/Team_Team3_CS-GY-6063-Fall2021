@@ -3,11 +3,11 @@
 {% block title %}My Squad{% endblock %}
 
 {% block content %}
-  <div style="text-align: center; color: white">
+  <div style="text-align: center; color: white;">
     <h2 style="margin-bottom: 3rem">My Squad</h2>
-    <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly">
+    <div class="justify-content-center" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content:start; margin: 3rem;">      
       {% for attendee in attendees %}
-        <div class="card" style="width: 18rem">
+        <div class="card" style="width: 10rem; margin: 1rem;">
           <img class="card-img-top" src="{{ attendee.profile.image.url }}">
           <div style="margin: 0.5rem">
             <h5 class="card-title" style="color: black">{{attendee}}</h5>
