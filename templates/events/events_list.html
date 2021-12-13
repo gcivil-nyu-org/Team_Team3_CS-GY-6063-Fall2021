@@ -3,10 +3,41 @@
 
 {% block content %}
 
-  <div >
-    <form method="GET" style="color: white; margin: 2rem; width: 60%">
-    {{ filter.form|bootstrap }}
-    <button type="submit" style="margin-top: 1rem; margin-left: 45%" class="btn btn-primary">Search</button>
+  <div class="flex-container" style="display:flex; gap:20px; flex-grow: 1;">
+    <div class="flex-child"style="flex-basis:40%">
+      <form method="GET" style="color: white; margin: 2rem; width: 100%">
+      {{ filter.form|bootstrap }}
+      <button type="submit" style="margin-top: 1rem;" class="btn btn-primary">Search</button>
+      <a class="btn btn-light btn-sm" style="margin-top: 1rem;"href="/events/">Clear</a>
+    </div>
+
+    <div class="flex-child;"style="flex-basis:60%;">
+      <div style="text-align:center; padding:70px">
+        <h3 style="color: white;">Want to Create an Event?</h3>
+          <div class="dropdown">
+            <a class="btn btn-success" style="margin-top: 1rem;" href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"></i>Get Started!</a>
+            <ul class="dropdown-menu dropdown-menu-dark text-large shadow" style="overflow: scroll; max-height: 150px;height:150px;" aria-labelledby="dropdownUser1">
+              <li><a class="dropdown-item" href="{% url 'baseball'%}">Baseball</a></li>
+              <li><a class="dropdown-item" href="{% url 'basketball'%}">Basketball</a></li>
+              <li><a class="dropdown-item" href="{% url 'bocce'%}">Bocce</a></li>
+              <li><a class="dropdown-item" href="{% url 'cricket'%}">Cricket</a></li>
+              <li><a class="dropdown-item" href="{% url 'flag_football'%}">Flag Football</a></li>
+              <li><a class="dropdown-item" href="{% url 'football'%}">Football</a></li>
+              <li><a class="dropdown-item" href="{% url 'frisbee'%}">Frisbee</a></li>
+              <li><a class="dropdown-item" href="{% url 'handball'%}">Handball</a></li>
+              <li><a class="dropdown-item" href="{% url 'hiking'%}">Hiking</a></li>
+              <li><a class="dropdown-item" href="{% url 'hockey'%}">Hockey</a></li>
+              <li><a class="dropdown-item" href="{% url 'kickball'%}">Kickball</a></li>
+              <li><a class="dropdown-item" href="{% url 'lacrosse'%}">Lacrosse</a></li>
+              <li><a class="dropdown-item" href="{% url 'netball'%}">Netball</a></li>
+              <li><a class="dropdown-item" href="{% url 'rugby'%}">Rugby</a></li>
+              <li><a class="dropdown-item" href="{% url 'softball'%}">Softball</a></li>
+              <li><a class="dropdown-item" href="{% url 'tennis'%}">Tennis</a></li>
+              <li><a class="dropdown-item" href="{% url 'volleyball'%}">Volleyball</a></li>
+            </ul>
+          </div>
+      </div>
+    </div>
   </div>
 
   <div style="display: flex; flex-direction:row; flex-wrap: wrap; margin: 1rem">
