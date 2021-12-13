@@ -5,70 +5,111 @@
 
 {% block content %}
   
-  <div style="background-color: white;">
+  <div style="background-color: white; padding: 2rem" class="container">
   <div style="margin-left: 1rem;">
-    <div class="flex-container" style="display:flex; gap:20px; flex-grow: 1;">
+    <div class="flex-container" style="display:flex; justify-content: space-evenly; flex-wrap: wrap">
 
-      <div class="flex-child"style="flex-basis:50%">
-        <h1 class= "border-bottom mb-4">Sports Available (#{{ id }})</h1>
+      <div class="flex-child" style="flex-basis:40%; flex-direction: column; margin-bottom: 4rem"> 
+          <h1 class= "border-bottom mb-4"> Facility Information </h1>
+          <div style = "font-size: 18px;"><b>Name:</b> {{ name }}</div>
+          <div style = "font-size: 18px;"><b>Address</b> : <span id="address"></span></div>
+          <div style = "font-size: 18px;"><b>Location ID:</b> {{ id }}</div>
+          <div style = "font-size: 18px;"><b>Dimensions:</b> {{ dimensions }}</div>
+          <div style = "font-size: 18px;"><b>Wheelchair Accessible:</b> {{ wheelchair }}</div>
+      </div>
+
+      <div class="flex-child"style="flex-basis:40%; margin-bottom: 4rem; margin-top: 4rem">
+        <h3 class= "mb-2">Sports Available</h3>
         {% for key, value in sports.items %}
           {% if value == 'Yes' %}
-            <ul> 
-              <ul>
-                <h4>{{ key }}</h4>
-                <div>
-                  <a class="btn btn-primary" href="{% url 'add-event' key id %}" style="margin-bottom: 1rem">Create A {{key}} Event</a>
-                </div>
-              </ul>
-            </ul>
+            <div style="margin:1rem"> 
+                 <h5>{{ key }}</h5>
+                  <a class="btn btn-sm btn-outline-primary" href="{% url 'add-event' key id %}">Create {{ key }} Event</a>
+            </div>
           {% endif %}
         {% endfor %}
       </div>
-
-      <div class="flex-child" style="flex-basis:50%; flex-direction: column;"> 
-
-          <h1 class= "border-bottom mb-4"> Facility information </h1>
-          <div style = "font-size: 18px;"><b>Name:</b> {{ name }}</div>
-          <br>
-          <div style = "font-size: 18px;"><b>Address</b> : <span id="address"></span></div>
-          <br>
-          <div style = "font-size: 18px;"><b>Location ID:</b> {{ id }}</div>
-          {% comment %} <div>Description : {{ description }}</div>   {% endcomment %}
-          <br>
-          <div style = "font-size: 18px;"><b>Dimensions:</b> {{ dimensions }}</div>
-          <br>
-          <div style = "font-size: 18px;"><b>Wheelchair Accessible:</b> {{ wheelchair }}</div>
-
-        
-      </div>
     
     </div>
-
-    <div style="margin-top: 4rem">
-      <h2 class = "border-bottom mb-4">Events at this location:</h2>
+    {% if events|length != 0 %}
+    <div>
+      <h3 class = "mb-4" style="margin-left: 2rem">Events at this location</h3>
       <div style="display: flex; flex-direction:row; flex-wrap: wrap">
         {% for event in events %}
-          <div class="card" style="width: 20rem; margin: 1rem; border: 0.1rem solid black">
-            <div class="card-body">
-            <h1>
-              <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
-            </h1>
-            <p>Sport: {{event.sport}}</p>
-            <p>Number of People Needed: {{event.numberOfPlayers}}</p>
-            <p>Address: {{event.address}}</p>
-            {% if event.borough != "" %}
-              <p>Borough: {{event.borough}}</p>
-            {% endif %}
-            <p>{{event.date}}</p>
-            <p>Creator: {{event.owner}}</p>
+           <div class="card" style="width: 20rem; margin: 1rem">
+            {% if event.sport == "Bocce" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/bocce.jpg">
+            {% elif event.sport == "Baseball" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/baseball.jpg">
+            {% elif event.sport == "Basketball" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/basketball.jpg">
+            {% elif event.sport == "Cricket" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/cricket.jpg">
+            {% elif event.sport == "Flag Football" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/flag_football.jpg">
+            {% elif event.sport == "Football" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/football.jpg">
+            {% elif event.sport == "Frisbee" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/frisbee.jpg">
+            {% elif event.sport == "Handball" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/handball.jpg">
+            {% elif event.sport == "Hiking" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/hiking.jpg">
+            {% elif event.sport == "Hockey" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/hockey.jpg">
+            {% elif event.sport == "Kickball" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/kickball.jpg">
+            {% elif event.sport == "Lacrosse" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/lacrosse.jpg">
+            {% elif event.sport == "Netball" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/netball.jpg">
+            {% elif event.sport == "Rugby" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/rugby.jpg">
+            {% elif event.sport == "Softball" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/softball.jpg">
+            {% elif event.sport == "Tennis" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/tennis.jpg">
+            {% elif event.sport == "Volleyball" %}
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/volleyball.jpg">
+            {%endif%}
+            <div class="card-body" style="text-align: left">
+              <h4>    
+                <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
+              </h4>
+              <div style = "font-size: 18px;"><b>Sport: </b> {{event.sport.capitalize}}</div>
+              <div style = "font-size: 18px;"><b>Squad Capacity: </b> {{event.numberOfPlayers}}</div>
+              <div style = "font-size: 18px;"><b>Venue: </b> {{event.address}}</div>
+              {% if event.borough != "" %}
+                <div style = "font-size: 18px;"><b>Borough: </b> {{event.borough}}</div>
+              {% endif %}
+              <div style = "font-size: 18px;"><b>Date: </b> {{event.date}}</div>
+              <div style = "font-size: 18px;"><b>Creator: </b> {{event.owner}}</div> 
             </div>
           </div>
         {% endfor %}
 
       </div>
     </div>
-  
-  </div>
+    {% endif %}
+
+    </div>
   </div>
 
 <script>
