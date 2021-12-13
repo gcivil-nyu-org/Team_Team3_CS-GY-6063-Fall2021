@@ -15,53 +15,70 @@
       <div class="card" style="width: 20rem; margin: 1rem">
 
         {% if event.sport == "Bocce" %}
-          <img class="card-img-top" src="../media/sports/bocce.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/bocce.jpg">
         {% elif event.sport == "Baseball" %}
-          <img class="card-img-top" src="../media/sports/baseball.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/baseball.jpg">
         {% elif event.sport == "Basketball" %}
-          <img class="card-img-top" src="../media/sports/basketball.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/basketball.jpg">
         {% elif event.sport == "Cricket" %}
-          <img class="card-img-top" src="../media/sports/cricket.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/cricket.jpg">
         {% elif event.sport == "Flag Football" %}
-          <img class="card-img-top" src="../media/sports/flag_football.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/flag_football.jpg">
         {% elif event.sport == "Football" %}
-          <img class="card-img-top" src="../media/sports/football.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/football.jpg">
         {% elif event.sport == "Frisbee" %}
-          <img class="card-img-top" src="../media/sports/frisbee.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/frisbee.jpg">
         {% elif event.sport == "Handball" %}
-          <img class="card-img-top" src="../media/sports/handball.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/handball.jpg">
         {% elif event.sport == "Hiking" %}
-          <img class="card-img-top" src="../media/sports/hiking.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/hiking.jpg">
         {% elif event.sport == "Hockey" %}
-          <img class="card-img-top" src="../media/sports/hockey.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/hockey.jpg">
         {% elif event.sport == "Kickball" %}
-          <img class="card-img-top" src="../media/sports/kickball.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/kickball.jpg">
         {% elif event.sport == "Lacrosse" %}
-          <img class="card-img-top" src="../media/sports/lacrosse.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/lacrosse.jpg">
         {% elif event.sport == "Netball" %}
-          <img class="card-img-top" src="../media/sports/netball.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/netball.jpg">
         {% elif event.sport == "Rugby" %}
-          <img class="card-img-top" src="../media/sports/rugby.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/rugby.jpg">
         {% elif event.sport == "Softball" %}
-          <img class="card-img-top" src="../media/sports/softball.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/softball.jpg">
         {% elif event.sport == "Tennis" %}
-          <img class="card-img-top" src="../media/sports/tennis.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/tennis.jpg">
         {% elif event.sport == "Volleyball" %}
-          <img class="card-img-top" src="../media/sports/volleyball.jpg">
-        {%endif%}
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/volleyball.jpg">
+        {%endif%}   
 
-        <div class="card-body" style="text-align: center">
-          <h1>    
+        <div class="card-body" style="text-align: left">
+          <h3>    
             <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
-          </h1> 
-          <p>Sport: {{event.sport}}</p>
-          <p>Number of People Needed: {{event.numberOfPlayers}}</p>   
-          <p>Address: {{event.address}}</p>
+          </h3>
+          <div style = "font-size: 18px;"><b>Sport: </b> {{event.sport.capitalize}}</div>
+          <div style = "font-size: 18px;"><b>Squad Capacity: </b> {{event.numberOfPlayers}}</div>
+          <div style = "font-size: 18px;"><b>Venue: </b> {{event.address}}</div>
           {% if event.borough != "" %}
-            <p>Borough: {{event.borough}}</p>
+            <div style = "font-size: 18px;"><b>Borough: </b> {{event.borough}}</div>
           {% endif %}
-          <p>{{event.date}}</p>
-          <p>Creator: {{event.owner}}</p>
+          <div style = "font-size: 18px;"><b>Date: </b> {{event.date}}</div>
+          <div style = "font-size: 18px;"><b>Creator: </b> {{event.owner}}</div> 
         </div>
       </div>
     {% endfor %}
