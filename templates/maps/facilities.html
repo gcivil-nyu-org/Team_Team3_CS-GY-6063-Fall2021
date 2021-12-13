@@ -4,20 +4,21 @@
 {% block title %}Facilities{% endblock %}
 
 {% block content %}
-  
-  <div style="background-color: white;">
-  <div style="margin-left: 1rem;">
-    <div class="flex-container" style="display:flex; gap:20px; flex-grow: 1;">
 
-      <div class="flex-child"style="flex-basis:50%">
-        <h1 class= "border-bottom mb-4">Sports Available (#{{ id }})</h1>
+<div class="d-flex flex-column align-items-center container" style="background-color: white">
+  <div class="content-section container" style="margin: 1rem">
+
+    <div class="flex-container" style="display:flex; gap:20px;">
+
+      <div class="flex-child"style="flex-basis:60%">
+        <h2 class= "border-bottom mb-4">Sports Available:</h2>
         {% for key, value in sports.items %}
           {% if value == 'Yes' %}
             <ul> 
               <ul>
-                <h4>{{ key }}</h4>
+                <h6>{{ key }}</h6>
                 <div>
-                  <a class="btn btn-primary" href="{% url 'add-event' key id %}" style="margin-bottom: 1rem">Create A {{key}} Event</a>
+                  <a class="btn btn-primary btn-sm" href="{% url 'add-event' key id %}" style="margin-bottom: 1rem">Create A {{key}} Event</a>
                 </div>
               </ul>
             </ul>
@@ -25,27 +26,20 @@
         {% endfor %}
       </div>
 
-      <div class="flex-child" style="flex-basis:50%; flex-direction: column;"> 
-
-          <h1 class= "border-bottom mb-4"> Facility information </h1>
-          <div style = "font-size: 18px;"><b>Name:</b> {{ name }}</div>
-          <br>
-          <div style = "font-size: 18px;"><b>Address</b> : <span id="address"></span></div>
-          <br>
-          <div style = "font-size: 18px;"><b>Location ID:</b> {{ id }}</div>
-          {% comment %} <div>Description : {{ description }}</div>   {% endcomment %}
-          <br>
-          <div style = "font-size: 18px;"><b>Dimensions:</b> {{ dimensions }}</div>
-          <br>
-          <div style = "font-size: 18px;"><b>Wheelchair Accessible:</b> {{ wheelchair }}</div>
-
-        
+      <div class="flex-child my-auto" style="flex-basis:40%; flex-direction: column;"> 
+        <h3> Facility Information: </h3>
+        <div style = "font-size: 17px;"><b>Name:</b> {{ name }}</div>         
+        <div style = "font-size: 17px;"><b>Address</b> : <span id="address"></span></div>
+        <div style = "font-size: 17px;"><b>Location ID:</b> {{ id }}</div>
+        {% comment %} <div>Description : {{ description }}</div>   {% endcomment %}          
+        <div style = "font-size: 17px;"><b>Dimensions:</b> {{ dimensions }}</div>
+        <div style = "font-size: 17px;"><b>Wheelchair Accessible:</b> {{ wheelchair }}</div>
       </div>
     
     </div>
 
     <div style="margin-top: 4rem">
-      <h2 class = "border-bottom mb-4">Events at this location:</h2>
+      <h3 class = "border-bottom mb-4">Events at this location:</h3>
       <div style="display: flex; flex-direction:row; flex-wrap: wrap">
         {% for event in events %}
           <div class="card" style="width: 20rem; margin: 1rem; border: 0.1rem solid black">
