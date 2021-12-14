@@ -14,5 +14,9 @@ Coveralls: [![Coverage Status](https://coveralls.io/repos/github/gcivil-nyu-org/
 ## Website:
 Our code for the Master Branch is deployed at the following site: http://outdoor-squad-prod.herokuapp.com/
 
+## Data:
+
+Our facilities data comes from the following website: https://www.nycgovparks.org/about/data
+
 ## To fork this code:
-Run pip install -r requirements.txt from your terminal. 
+You may need to install -r requirements.txt from your terminal to get things running locally. 
