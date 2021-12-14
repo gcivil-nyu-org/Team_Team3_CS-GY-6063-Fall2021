@@ -5,7 +5,7 @@
 
 {% block content %}
   
-  <div style="background-color: white; padding: 2rem" class="container">
+  <div style="background-color: white; padding: 2rem" class="container-fluid">
   <div style="margin-left: 1rem;">
     <div class="flex-container" style="display:flex; justify-content: space-evenly; flex-wrap: wrap">
 
@@ -32,7 +32,7 @@
     
     </div>
     {% if events|length != 0 %}
-    <div>
+    <div style="margin-left: 6rem;">
       <h3 class = "mb-4" style="margin-left: 2rem">Events at this location</h3>
       <div style="display: flex; flex-direction:row; flex-wrap: wrap">
         {% for event in events %}
