@@ -55,7 +55,7 @@
           const ADDRESS_INDEX = 0;
           const address = myJson.features[ADDRESS_INDEX].place_name; 
           console.log(address); 
-          const description = '<a href="/facilities/' + objectid + '/' + encodeURIComponent(address) + '" class="btn d-block btn-primary btn-sm" target="_blank">See more info</a>';
+          const description = '<a href="/facilities/' + objectid + '/' + encodeURIComponent(address) + '" class="btn d-block btn-primary mt-2 btn-sm" target="_blank">See more info</a>';
           new mapboxgl.Popup()
           .setLngLat(coordinates)
           .setHTML(address + ' ' + (description))

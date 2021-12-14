@@ -4,61 +4,67 @@
 
 {% block content %}
 
-<div style="background-color: white;">
-<div style="margin-left: 1rem">
-  <h1> {{ name }} </h1> 
+  <div style="background-color: white; padding: 2rem" class="container">
+    <div style="margin-left: 1rem;">
+    <div class="flex-container" style="display:flex; justify-content: space-evenly; flex-wrap: wrap">
+      <div class="flex-child" style="flex-basis:40%; flex-direction: column; margin-bottom: 4rem"> 
+      <h1 class= "border-bottom mb-4"> {{ name }} Information </h1> 
+              <div style = "font-size: 18px;"><b>Name:</b> {{ name }}</div>
+              <div style = "font-size: 18px;"><b>Park:</b> {{ park }}</div>
+              <div style = "font-size: 18px;"><b>Location:</b> {{ location|safe }}</div>
+              {% if length %}
+              <div style = "font-size: 18px;"><b>Length:</b> {{ length }}</div>
+              {% endif %}
+              {% if difficulty %}
+                <div style = "font-size: 18px;"><b>Difficulty:</b> {{ difficulty }}</div>
+              {% endif %}
+              {% if accessible == "N" %}
+                <div style = "font-size: 18px;"><b>Accesible:</b> No</div>
+              {% elif accessible == "Y" %}
+                <div style = "font-size: 18px;"><b>Accesible:</b> Yes</div>
+              {% endif %}
+              {% if limited_access == "N" %}
+                <div style = "font-size: 18px;"><b>Limited Accesibilty:</b> No</div>
+              {% elif limited_access == "Y" %}
+                <div style = "font-size: 18px;"><b>Limited Accesibilty:</b> Yes</div>
+              {% endif %}
+                <div style = "font-size: 18px;"><b>Details:</b> {{details|safe}} </div>
 
-    <h2>Information</h2>
-    <div>
-      <ul>
-        <li>Name : {{ name }}</li>
-        <li>Park : {{ park }}</li>
-        <li>Location : {{ location|safe }}</li>
-        {% if length %}
-        <li>Length : {{ length }}</li>
-        {% endif %}
-        {% if difficulty %}
-          <li>Difficulty : {{ difficulty }}</li>
-        {% endif %}
-        {% if accessible == "N" %}
-          <li>Accesible : No</li>
-        {% elif accessible == "Y" %}
-          <li>Accesible : Yes</li>
-        {% endif %}
-        {% if limited_access == "N" %}
-          <li>Limited Accesibilty : No</li>
-        {% elif limited_access == "Y" %}
-          <li>Limited Accesibilty : Yes</li>
-        {% endif %}
-        <li>Details : {{details|safe}} </li>
-        
-      <ul>
-    </div>
-    
-  <h2>Events at this location</h2>
-  <div style="display: flex; flex-direction:row; flex-wrap: wrap">
-    {% for event in events %}
-      <div class="card" style="width: 20rem; margin: 1rem; border: 0.1rem solid black">
-        <div class="card-body">
-        <h1>    
-          <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
-        </h1> 
-        <p>Sport: {{event.sport}}</p>
-        <p>Number of People Needed: {{event.numberOfPlayers}}</p>
-        <p>Address: {{event.address}}</p>
-        {% if event.borough != "" %}
-          <p>Borough: {{event.borough}}</p>
-        {% endif %}
-        <p>{{event.date}}</p>
-        <p>Creator: {{event.owner}}</p>
-        </div>
+            </div>
+          <div class="flex-child"style="flex-basis:40%; margin-bottom: 4rem; margin-top: 4rem">
+            <h4>Hiking Available Here</h4>
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'add-event' 'Hiking' id %}" style="margin-bottom: 1rem">Create Hiking Event</a>
+          </div>
       </div>
-    {% endfor %}
-  </div>
+    
+ {% if events|length != 0 %}
+    <div>
+      <h3 class = "mb-4" style="margin-left: 2rem">Events at this location</h3>
+      <div style="display: flex; flex-direction:row; flex-wrap: wrap">
+        {% for event in events %}
+           <div class="card" style="width: 20rem; margin: 1rem">
+              <img class="card-img-top" style="max-height: 200px;
+              min-height: 200px;" src="../../../media/sports/hiking.jpg">
 
+            <div class="card-body" style="text-align: left">
+              <h4>    
+                <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
+              </h4>
+              <div style = "font-size: 18px;"><b>Sport: </b> {{event.sport.capitalize}}</div>
+              <div style = "font-size: 18px;"><b>Squad Capacity: </b> {{event.numberOfPlayers}}</div>
+              <div style = "font-size: 18px;"><b>Venue: </b> {{event.address}}</div>
+              {% if event.borough != "" %}
+                <div style = "font-size: 18px;"><b>Borough: </b> {{event.borough}}</div>
+              {% endif %}
+              <div style = "font-size: 18px;"><b>Date: </b> {{event.date}}</div>
+              <div style = "font-size: 18px;"><b>Creator: </b> {{event.owner}}</div> 
+            </div>
+          </div>
+        {% endfor %}
 
-
-  <a class="btn btn-primary" href="{% url 'add-event' 'Hiking' id %}" style="margin-bottom: 1rem">Create Hiking Event</a>
+      </div>
+    </div>
+    {% endif %}
 
 </div>
 </div>
