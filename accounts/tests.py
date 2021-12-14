@@ -28,7 +28,7 @@ class RegistrationTest(BaseTest):
 
     def test_can_register_user(self):
         response = self.client.post(self.signup_url, self.user)
-        self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, '/', status_code=302, target_status_code=200)
 
 
 class UserActivationTest(TestCase):
