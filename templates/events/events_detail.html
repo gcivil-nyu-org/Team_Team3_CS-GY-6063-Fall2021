@@ -10,19 +10,24 @@
 
 {% block content %}
 <div class="container" style="background-color: white;">
-  <div class="row">
+  <div class="row" style="margin: 2rem">
+  <h1 style="text-align: center; margin-top: 2rem">{{object.name}} </h1> 
   <div class="col-sm-8">
-  <div style="text-align: center; padding-top: 60px;">
-    <h1>{{object.name}} </h1> 
-    <p>{{object.description}}</p>
-    <p>Sport: {{object.sport}}</p>
-    <p>Number of People Needed: {{event.numberOfPlayers}}</p>
-    <p>Address: {{event.address}}</p>
+  <div style=" padding-top: 2rem;">
+    {%if event.description != ''%}
+      <p style = "font-size: 18px;"><b>Description: </b>{{object.description}}</p>
+    {%endif%}
+    <p style = "font-size: 18px;"><b>Sport: </b> {{object.sport}}</p>
+    {%if object.sport == 'Tennis' %}
+      <h5><b>Note: For all tennis matches, once your squad is complete please make a reservation through the <a href="https://www.nycgovparks.org/tennisreservation/">Online Tennis Court Reservations</a> website.</b></h5>
+    {%endif%}
+    <p style = "font-size: 18px;"><b>Squad Capacity: </b> {{event.numberOfPlayers}}</p>
+    <p style = "font-size: 18px;"><b>Venue: </b> {{event.address}}</p>
     {% if event.borough != "" %}
-      <p>Borough: {{event.borough}}</p>
+      <p style = "font-size: 18px;"><b>Borough: </b>  {{event.borough}}</p>
     {% endif %}
-    <p>{{object.date}}</p>
-    <p>Creator: {{object.owner}}</p>
+    <p style = "font-size: 18px;"><b>Creator: </b>  {{object.owner}}</p>
+    <p style = "font-size: 18px;"><b>Date: </b> {{object.date}}</p>
     
     {% if messages %}
     <div class="messages" style="text-align: center; font-size:25px; color: red">
@@ -48,16 +53,20 @@
 
     <div style="margin-top: 1rem">
       {% if object.sport == 'Hiking' %}
-        <a href="{% url 'trails' object.locationId %}">View all events at this location</a>
+        <a href="{% url 'trails' object.locationId %}" class="btn btn-outline-primary">View all events at this location</a>
       {% else %}
-        <a href="{% url 'show' object.locationId event.address %}">View all events at this location</a>
+        <a href="{% url 'show' object.locationId event.address %}" class="btn btn-outline-primary">View all events at this location</a>
       {% endif %}    
     </div>
 
+    <div style="margin-top: 2rem">
     <h2>Attendees</h2>
-      {% for attendee in attendees %}  
-        <p>{{attendee}}</p>
-    {% endfor %}
+      <ul>
+        {% for attendee in attendees %}  
+          <li>{{attendee}}</li>
+        {% endfor %}
+      </ul>
+    </div>
   </div>
   </div>
   <div class="col-sm-4">
