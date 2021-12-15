@@ -26,10 +26,6 @@ from accounts.forms import EmailValidationOnForgotPassword
 urlpatterns = [
     path("admin/", admin.site.urls),
     path(
-        "favicon.ico",
-        RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),
-    ),
-    path(
         "accounts/password_reset/",
         auth_views.PasswordResetView.as_view(
             form_class=EmailValidationOnForgotPassword
