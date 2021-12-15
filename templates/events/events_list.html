@@ -3,66 +3,116 @@
 
 {% block content %}
 
-  <div >
-    <form method="GET" style="color: white; margin: 2rem; width: 60%">
-    {{ filter.form|bootstrap }}
-    <button type="submit" style="margin-top: 1rem; margin-left: 45%" class="btn btn-primary">Search</button>
+  <div>
+    <div class="row justify-content-evenly">
+      <div class="col-4">
+        <form method="GET" style="color: white; margin: 2rem; width: 60%">
+          {{ filter.form|bootstrap }}
+          <button type="submit" style="margin-top: 1rem; margin-left: 45%" class="btn btn-primary">Search</button>
+          <a class="btn btn-light btn-sm" style="margin-top: 1rem;"href="/events/">Clear</a>
+      </div>
+      <div class="col-4" style="padding-inline-end: 5%">
+        <div style="text-align:center; padding:50px">
+          <h3 style="color: white;">Want to Create an Event?</h3>
+            <div class="flex" style="padding-inline: 30%; text-align: center;" >
+            <div class="dropdown">
+              <a class="nav-link" style="color:white; background-color: green;" href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false"></i>Get Started!</a>
+              <ul class="dropdown-menu dropdown-menu-dark text-large shadow" aria-labelledby="dropdownUser1">
+                <li><a class="dropdown-item" href="{% url 'baseball'%}">Baseball</a></li>
+                <li><a class="dropdown-item" href="{% url 'basketball'%}">Basketball</a></li>
+                <li><a class="dropdown-item" href="{% url 'bocce'%}">Bocce</a></li>
+                <li><a class="dropdown-item" href="{% url 'cricket'%}">Cricket</a></li>
+                <li><a class="dropdown-item" href="{% url 'flag_football'%}">Flag Football</a></li>
+                <li><a class="dropdown-item" href="{% url 'football'%}">Football</a></li>
+                <li><a class="dropdown-item" href="{% url 'frisbee'%}">Frisbee</a></li>
+                <li><a class="dropdown-item" href="{% url 'handball'%}">Handball</a></li>
+                <li><a class="dropdown-item" href="{% url 'hiking'%}">Hiking</a></li>
+                <li><a class="dropdown-item" href="{% url 'hockey'%}">Hockey</a></li>
+                <li><a class="dropdown-item" href="{% url 'kickball'%}">Kickball</a></li>
+                <li><a class="dropdown-item" href="{% url 'lacrosse'%}">Lacrosse</a></li>
+                <li><a class="dropdown-item" href="{% url 'netball'%}">Netball</a></li>
+                <li><a class="dropdown-item" href="{% url 'rugby'%}">Rugby</a></li>
+                <li><a class="dropdown-item" href="{% url 'softball'%}">Softball</a></li>
+                <li><a class="dropdown-item" href="{% url 'tennis'%}">Tennis</a></li>
+                <li><a class="dropdown-item" href="{% url 'volleyball'%}">Volleyball</a></li>
+              </ul>
+            </div>
+          </div>
+         </div>
+      </div>
+    </div> 
   </div>
-
+  
   <div style="display: flex; flex-direction:row; flex-wrap: wrap; margin: 1rem">
     
     {% for event in filter.qs|dictsort:"date" %}
       <div class="card" style="width: 20rem; margin: 1rem">
 
         {% if event.sport == "Bocce" %}
-          <img class="card-img-top" src="../media/sports/bocce.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/bocce.jpg">
         {% elif event.sport == "Baseball" %}
-          <img class="card-img-top" src="../media/sports/baseball.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/baseball.jpg">
         {% elif event.sport == "Basketball" %}
-          <img class="card-img-top" src="../media/sports/basketball.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/basketball.jpg">
         {% elif event.sport == "Cricket" %}
-          <img class="card-img-top" src="../media/sports/cricket.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/cricket.jpg">
         {% elif event.sport == "Flag Football" %}
-          <img class="card-img-top" src="../media/sports/flag_football.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/flag_football.jpg">
         {% elif event.sport == "Football" %}
-          <img class="card-img-top" src="../media/sports/football.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/football.jpg">
         {% elif event.sport == "Frisbee" %}
-          <img class="card-img-top" src="../media/sports/frisbee.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/frisbee.jpg">
         {% elif event.sport == "Handball" %}
-          <img class="card-img-top" src="../media/sports/handball.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/handball.jpg">
         {% elif event.sport == "Hiking" %}
-          <img class="card-img-top" src="../media/sports/hiking.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/hiking.jpg">
         {% elif event.sport == "Hockey" %}
-          <img class="card-img-top" src="../media/sports/hockey.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/hockey.jpg">
         {% elif event.sport == "Kickball" %}
-          <img class="card-img-top" src="../media/sports/kickball.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/kickball.jpg">
         {% elif event.sport == "Lacrosse" %}
-          <img class="card-img-top" src="../media/sports/lacrosse.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/lacrosse.jpg">
         {% elif event.sport == "Netball" %}
-          <img class="card-img-top" src="../media/sports/netball.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/netball.jpg">
         {% elif event.sport == "Rugby" %}
-          <img class="card-img-top" src="../media/sports/rugby.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/rugby.jpg">
         {% elif event.sport == "Softball" %}
-          <img class="card-img-top" src="../media/sports/softball.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/softball.jpg">
         {% elif event.sport == "Tennis" %}
-          <img class="card-img-top" src="../media/sports/tennis.jpg">
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/tennis.jpg">
         {% elif event.sport == "Volleyball" %}
-          <img class="card-img-top" src="../media/sports/volleyball.jpg">
-        {%endif%}
+          <img class="card-img-top" style="max-height: 200px;
+          min-height: 200px;" src="../media/sports/volleyball.jpg">
+        {%endif%}   
 
-        <div class="card-body" style="text-align: center">
-          <h1>    
+        <div class="card-body" style="text-align: left">
+          <h3>    
             <a href="{% url 'event-detail' event.id %}">{{event.name}}</a>
-          </h1> 
-          <p>{{event.description}}</p>
-          <p>Sport: {{event.sport}}</p>
-          <p>Number of People Needed: {{event.numberOfPlayers}}</p>   
-          <p>Address: {{event.address}}</p>
+          </h3>
+          <div style = "font-size: 18px;"><b>Sport: </b> {{event.sport.capitalize}}</div>
+          <div style = "font-size: 18px;"><b>Squad Capacity: </b> {{event.numberOfPlayers}}</div>
+          <div style = "font-size: 18px;"><b>Venue: </b> {{event.address}}</div>
           {% if event.borough != "" %}
-            <p>Borough: {{event.borough}}</p>
+            <div style = "font-size: 18px;"><b>Borough: </b> {{event.borough}}</div>
           {% endif %}
-          <p>{{event.date}}</p>
-          <p>Creator: {{event.owner}}</p>
+          <div style = "font-size: 18px;"><b>Date: </b> {{event.date}}</div>
+          <div style = "font-size: 18px;"><b>Creator: </b> {{event.owner}}</div> 
         </div>
       </div>
     {% endfor %}

@@ -6,12 +6,54 @@
 <div class="d-flex flex-column align-items-center">
 <div style="background-color: white;">
 <div style="margin-left: 1em">
-  <h2> About Us </h2>
-  <div>This project was created by Team 3: Jaspreet, Susmita, Swathi, Marcus, and Indu.</div>
-<div> It was created as part of the fall 2021 graduate Software Engineering course at NYU Tandon. </div>
 
-    <h2> Want to say hi? </h2>
-    <div> Write to us at:
-     <a href="mailto: outdoorsquadf21@gmail.com">Email</a>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-6 col-md-12 pl-0 pr-5">
+			<div>
+        <br>
+				<img src="../media/sports/bocce.jpg" class="img-fluid" alt="">
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-12 pl-4 pt-5">
+			<div>
+				<h3>How to Join an Event</h3>
+				<ol>
+					<li>Click on Events. Filter by Sport, Borough, or Event Date. </li>
+					<li>Select events that look interesting, and click "Join Event" to join!</li>
+					<li>Get excited to meet your squad!</li>
+				</ol>
+				<a class="btn btn-dark btn-wide" href="{% url 'events-list'%}">Search for Events</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-6 col-md-12 pl-5">
+			<div>
+        <br>
+        <br>
+				<h3>How to Create an Event</h3>
+				<ol>
+					<li>Select the Map for the sport you're interested in, to look for available facilities.</li>
+					<li>Click on the map marker to see more detail about the facility.</li>
+					<li>If you like the facility, click "Create an Event."</li>
+					<li>Fill out the necessary information to get the event on the calendar.</li>
+					<li>You'll be notified when your squad is formed! </li>
+				</ol>
+				<a class="btn btn-dark btn-wide" href="{% url 'events-list'%}">Get Started</a>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-12 pl-4">
+			<div>
+				<img src="../media/sports/baseball.jpg" class="img-fluid" alt="">
+			</div>
+		</div>
+	</div>
+</div>
 
+<h2> About Us </h2>
+<div>This project was created by Team 3: Jaspreet, Susmita, Swathi, Marcus, and Indu. It was created as part of the fall 2021 graduate Software Engineering course at NYU Tandon. </div>
+<br>
 {% endblock %}
