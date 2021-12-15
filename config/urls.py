@@ -18,17 +18,12 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic.base import TemplateView, RedirectView
-from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import TemplateView
 from config.views import HomePageView
 from accounts.forms import EmailValidationOnForgotPassword
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path(
-        "favicon.ico",
-        RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),
-    ),
     path(
         "accounts/password_reset/",
         auth_views.PasswordResetView.as_view(
