@@ -18,10 +18,13 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls.conf import re_path
 from django.views.generic.base import TemplateView, RedirectView
 from django.contrib.staticfiles.storage import staticfiles_storage
 from config.views import HomePageView
 from accounts.forms import EmailValidationOnForgotPassword
+from django.views.static import serve 
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -52,6 +55,8 @@ urlpatterns = [
     path("", include("squad.urls")),
     path("messaging/", include("messaging.urls")),
     path("reporting/", include("reporting.urls")),
+    re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}), 
+    re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
 ]
 
 if settings.DEBUG:
